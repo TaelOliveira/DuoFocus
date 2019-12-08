@@ -1,5 +1,7 @@
 {
   "name": "DuoFocus-Student",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

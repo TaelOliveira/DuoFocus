@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "831987706444",
+    "firebase_url": "https://duofocus-c5eca.firebaseio.com",
+    "project_id": "duofocus-c5eca",
+    "storage_bucket": "duofocus-c5eca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831987706444:android:126ab83e63ca88ebbfa2e9",
+        "android_client_info": {
+          "package_name": "com.duofocusstudent.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831987706444-0md066nbalm9llhf2pn12287ske4i72b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDETS-ZkTUbIcpVqg2xFfKNbmM4vugEW3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831987706444-0md066nbalm9llhf2pn12287ske4i72b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "831987706444-7lu3fhqesn7ff80588m05v36i299dg06.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.duofocusstudent.com"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
