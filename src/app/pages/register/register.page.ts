@@ -1,27 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController, MenuController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
+import { NavController, MenuController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class RegisterPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage: string = '';
+  successMessage: string = '';
+ 
+  validation_messages = {
+   'email': [
+     { type: 'required', message: 'Email is required.' },
+     { type: 'pattern', message: 'Enter a valid email.' }
+   ],
+   'password': [
+     { type: 'required', message: 'Password is required.' },
+     { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+   ]
+ };
  
   constructor(
     private navCtrl: NavController,
     private authService: AuthenticationService,
     public menu: MenuController,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
  
-  ngOnInit() {
- 
+  ngOnInit(){
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -34,26 +45,17 @@ export class LoginPage implements OnInit {
     });
   }
  
-  validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Please enter a valid email.' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
-    ]
-  };
- 
-  loginUser(value){
-    this.authService.loginUser(value)
-    .then(res => {
-      console.log(res);
-      this.errorMessage = "";
-      this.navCtrl.navigateForward('/profile');
-    }, err => {
-      this.errorMessage = err.message;
-    })
+  tryRegister(value){
+    this.authService.registerUser(value)
+     .then(res => {
+       console.log(res);
+       this.errorMessage = "";
+       this.successMessage = "Your account has been created. Please log in.";
+     }, err => {
+       console.log(err);
+       this.errorMessage = err.message;
+       this.successMessage = "";
+     })
   }
 
   ionViewWillEnter() {
@@ -64,5 +66,5 @@ export class LoginPage implements OnInit {
     // enable the root left menu when leaving this page
     this.menu.enable(true);
   }
- 
+
 }

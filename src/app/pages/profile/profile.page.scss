@@ -1,0 +1,26 @@
+.text-center {
+    text-align: center;
+  }
+  
+.text-left {
+    text-align: left;
+  }
+  
+.placeholder-profile {
+    color: #cccccc;
+  }
+  
+.dob-label {
+    color: #000000;
+    padding: 10px;
+    max-width: 50%;
+  }
+
+:host {
+    --background: var(--ion-color-myTertiaryColor);
+  }
+
+.alert-button {
+  color: white;
+  background-color: "secondary";
+  }

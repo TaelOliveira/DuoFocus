@@ -17,6 +17,10 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationService } from './services/authentication.service';
+ 
+import * as firebase from 'firebase';
+firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [
     StatusBar,
     SplashScreen,
+    AuthenticationService,
+    ReactiveFormsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
