@@ -1,28 +1,57 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Profile</ion-title>
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Profile
+      </ion-title>
     </ion-toolbar>
-  </ion-header>
-   
-  <ion-content padding>
-   
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          Welcome to Dashboard!
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          Your Registered EmailID : {{userEmail}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>  
-    
-    
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <ion-toolbar color="light">
+
+      <ion-segment color="dark" [(ngModel)]="section">
+
+        <ion-segment-button value="profile" layout="icon-bottom">
+          <ion-label>Profile</ion-label>
+          <ion-icon name="person" slot="start"></ion-icon>
+        </ion-segment-button>
+
+        <ion-segment-button value="settings" checked layout="icon-bottom">
+          <ion-label>Settings</ion-label>
+          <ion-icon name="cog" slot="start"></ion-icon>
+        </ion-segment-button>
+
+      </ion-segment>
+
+    </ion-toolbar>
+  
+      <div [ngSwitch]="section">
+  
+        <ion-list *ngSwitchCase="'profile'">
+          <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-center">
+                  Welcome to Dashboard!
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </ion-list>
+  
+        <ion-list *ngSwitchCase="'settings'">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center">
+                Your Registered EmailID : {{userEmail}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+  
+      </div>  
+  
   </ion-content>
-  <ion-footer (click)="logout()">
-    <ion-toolbar color="secondary">
-      <ion-title>Log out</ion-title>
-    </ion-toolbar>
-  </ion-footer>
+  

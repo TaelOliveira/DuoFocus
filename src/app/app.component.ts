@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private authService: AuthenticationService,
+    private navigationController: NavController,
+    private menu:MenuController,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
@@ -24,4 +29,16 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+  logout(){
+    this.authService.logoutUser()
+    .then(res => {
+      console.log(res);
+      this.navigationController.navigateBack('');
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
 }

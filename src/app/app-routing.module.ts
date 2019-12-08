@@ -21,7 +21,22 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'tutor',
+    loadChildren: () => import('./pages/tutor/tutor.module').then( m => m.TutorPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('./pages/contact/contact.module').then( m => m.ContactPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'forum',
+    loadChildren: () => import('./pages/forum/forum.module').then( m => m.ForumPageModule),
+    canActivate: [AuthGuard]
   },
 ];
 

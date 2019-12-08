@@ -1,0 +1,10 @@
+ion-menu{
+    ion-content{
+        --ion-background-color: var(--ion-color-myTertiaryColor);
+        padding: 20px;
+    }
+    ion-label{
+        font-size: large;
+        font-family: Helvetica;
+    }
+}

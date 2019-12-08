@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
-import { NavController, MenuController } from '@ionic/angular';
+import { NavController, MenuController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -29,6 +29,7 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private authService: AuthenticationService,
     public menu: MenuController,
+    public toastController: ToastController,
     private formBuilder: FormBuilder
   ) {}
  
@@ -49,13 +50,36 @@ export class RegisterPage implements OnInit {
     this.authService.registerUser(value)
      .then(res => {
        console.log(res);
-       this.errorMessage = "";
-       this.successMessage = "Your account has been created. Please log in.";
+       //this.errorMessage = "";
+       //this.successMessage = "Your account has been created. Please log in.";
+       //this.presentToastUnsuccessful(this.errorMessage);
+       this.presentToastSuccessful();
      }, err => {
        console.log(err);
-       this.errorMessage = err.message;
-       this.successMessage = "";
+       this.presentToastUnsuccessful(this.errorMessage = err.message);
+       //this.errorMessage = err.message;
+       //this.successMessage = "";
      })
+  }
+
+  async presentToastUnsuccessful(message) {
+    const toast = await this.toastController.create({
+      color: 'dark',
+      message: this.errorMessage,
+      duration: 3000,
+      showCloseButton: true
+    });
+    toast.present();
+  }
+
+  async presentToastSuccessful() {
+    const toast = await this.toastController.create({
+      color: 'dark',
+      message: "Your account has been created. Please log in.",
+      duration: 3000,
+      showCloseButton: true
+    });
+    toast.present();
   }
 
   ionViewWillEnter() {
