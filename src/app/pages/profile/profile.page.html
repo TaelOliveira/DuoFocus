@@ -13,14 +13,14 @@
 
     <ion-toolbar color="light">
 
-      <ion-segment color="dark" [(ngModel)]="section">
+      <ion-segment color="dark" scrollable [(ngModel)]="section">
 
-        <ion-segment-button value="profile" layout="icon-bottom">
+        <ion-segment-button value="profile" layout="icon-start">
           <ion-label>Profile</ion-label>
           <ion-icon name="person" slot="start"></ion-icon>
         </ion-segment-button>
 
-        <ion-segment-button value="settings" checked layout="icon-bottom">
+        <ion-segment-button value="settings" checked layout="icon-start">
           <ion-label>Settings</ion-label>
           <ion-icon name="cog" slot="start"></ion-icon>
         </ion-segment-button>

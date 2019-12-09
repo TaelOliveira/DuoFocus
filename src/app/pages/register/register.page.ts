@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
-import { NavController, MenuController, ToastController } from '@ionic/angular';
+import { NavController, MenuController, ToastController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
 export class RegisterPage implements OnInit {
 
   validations_form: FormGroup;
@@ -30,6 +31,7 @@ export class RegisterPage implements OnInit {
     private authService: AuthenticationService,
     public menu: MenuController,
     public toastController: ToastController,
+    public loadingController: LoadingController,
     private formBuilder: FormBuilder
   ) {}
  
@@ -46,16 +48,18 @@ export class RegisterPage implements OnInit {
     });
   }
  
-  tryRegister(value){
+  async tryRegister(value){
     this.authService.registerUser(value)
-     .then(res => {
+     .then(async res => {
        console.log(res);
+       await this.presentLoading();
        //this.errorMessage = "";
        //this.successMessage = "Your account has been created. Please log in.";
        //this.presentToastUnsuccessful(this.errorMessage);
        this.presentToastSuccessful();
-     }, err => {
+     }, async err => {
        console.log(err);
+       await this.presentLoading();
        this.presentToastUnsuccessful(this.errorMessage = err.message);
        //this.errorMessage = err.message;
        //this.successMessage = "";
@@ -82,13 +86,21 @@ export class RegisterPage implements OnInit {
     toast.present();
   }
 
+  // disable the root left menu when leaving this page
   ionViewWillEnter() {
     this.menu.enable(false);
   }
 
-  ionViewWillLeave() {
-    // enable the root left menu when leaving this page
-    this.menu.enable(true);
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'PLease wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
   }
 
 }

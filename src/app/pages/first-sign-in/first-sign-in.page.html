@@ -1,0 +1,39 @@
+<ion-slides pager="true" [options]="{pagination: true, allowTouchMove:false}" #slides="">
+
+    <ion-slide class="step-one">
+      <ion-list class="ion-margin-top">
+        <ion-item *ngFor="let school of schools | async">
+          <ion-label><h1>school name{{school.name}}</h1></ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Schools</ion-label>
+            <ion-select>
+              <ion-select-option *ngFor="let school of schools | async">{{school.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      
+      <h1>Watch the videos</h1>
+      <p>Each feature and concept is backed by a video tutorial and source code.</p>
+      <ion-button color="dark" disabled (click)="slides.slideNext()">Next</ion-button>
+      
+    </ion-slide>
+  
+    <ion-slide class="step-two">
+      <ion-img src="/assets/slides/step2.svg"></ion-img>
+      <h1>Watch the videos</h1>
+      <p>Each feature and concept is backed by a video tutorial and source code.</p>
+      <ion-button color="dark" disabled (click)="slides.slideNext()">Next</ion-button>
+    </ion-slide>
+  
+    <ion-slide class="step-three">
+        <ion-img src="/assets/slides/step3.svg"></ion-img>
+        <h1>Deploy your Own</h1>
+        <p>Build and deploy your own app to the web, Apple App Store and Google Play.</p>
+        <ion-button (click)="finish()">Sounds Awesome</ion-button>
+      </ion-slide>
+  
+  </ion-slides>

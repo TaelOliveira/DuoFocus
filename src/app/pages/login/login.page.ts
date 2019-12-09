@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController, MenuController } from '@ionic/angular';
+import { NavController, MenuController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private authService: AuthenticationService,
     public menu: MenuController,
+    public loadingController: LoadingController,
+    public toastController: ToastController,
     private formBuilder: FormBuilder
   ) { }
  
@@ -45,24 +47,46 @@ export class LoginPage implements OnInit {
     ]
   };
  
-  loginUser(value){
+  async loginUser(value){
     this.authService.loginUser(value)
-    .then(res => {
+    .then(async res => {
       console.log(res);
+      await this.presentLoading();
       this.errorMessage = "";
-      this.navCtrl.navigateForward('/profile');
-    }, err => {
-      this.errorMessage = err.message;
+      this.navCtrl.navigateForward('/first-sign-in');
+    }, async err => {
+      console.log(err);
+      await this.presentLoading();
+      this.presentToastUnsuccessful(this.errorMessage = err.message);
+      //this.errorMessage = err.message;
     })
   }
 
+  // disable the root left menu when leaving this page
   ionViewWillEnter() {
     this.menu.enable(false);
   }
 
-  ionViewWillLeave() {
-    // enable the root left menu when leaving this page
-    this.menu.enable(true);
+  async presentToastUnsuccessful(message) {
+    const toast = await this.toastController.create({
+      color: 'dark',
+      message: this.errorMessage,
+      duration: 3000,
+      showCloseButton: true
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'PLease wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
   }
  
 }
