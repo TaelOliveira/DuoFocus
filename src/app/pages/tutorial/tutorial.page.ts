@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 export class TutorialPage implements OnInit {
 
   constructor(
-    private storage:Storage,
-    private router:Router
+    private storage: Storage,
+    private router: Router
     ) { }
 
   ngOnInit() {

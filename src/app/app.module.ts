@@ -18,7 +18,8 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './services/authentication.service';
- 
+import { Firebase } from '@ionic-native/firebase/ngx';
+
 import * as firebase from 'firebase';
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -38,6 +39,7 @@ firebase.initializeApp(environment.firebaseConfig);
     ReactiveFormsModule
   ],
   providers: [
+    Firebase,
     StatusBar,
     SplashScreen,
     AuthenticationService,

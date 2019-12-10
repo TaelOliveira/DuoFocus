@@ -51,4 +51,5 @@ export class AuthenticationService {
    userDetails(){
      return firebase.auth().currentUser;
    }
+
  }

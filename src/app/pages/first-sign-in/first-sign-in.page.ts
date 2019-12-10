@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-import { AuthenticationService } from '../../services/authentication.service';
+import { MenuController, AlertController } from '@ionic/angular';
 import { DatabaseService } from '../../services/database.service';
+import { Router } from '@angular/router';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { ProfileService } from '../../services/profile.service'
+
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-first-sign-in',
@@ -11,19 +15,43 @@ import { DatabaseService } from '../../services/database.service';
 export class FirstSignInPage implements OnInit {
 
   schools;
+  courses;
+  nameForm: FormGroup;
+  public userProfile: any;
 
   constructor(
     public menu: MenuController,
-    public db:DatabaseService,
-    private authService: AuthenticationService,
-  ) { }
+    private formBuilder: FormBuilder,
+    public profileService: ProfileService,
+    public db: DatabaseService,
+    //private storage: Storage,
+    private router: Router,
+    public alertController: AlertController
+  ) {  }
 
   async ngOnInit() {
+
+    this.profileService
+    .getUserProfile()
+    .get()
+    .then( userProfileSnapshot => {
+      this.userProfile = userProfileSnapshot.data();
+    });
+
+    this.nameForm = this.formBuilder.group({
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3)])
+    });
+
     this.schools = this.db.collection$('schools', ref =>
     ref
-      .orderBy('createdAt', 'desc')
+      .orderBy('name', 'desc')
     );
-    console.log(this.schools);
+    
+    this.courses = this.db.collection$('courses', ref =>
+    ref
+      .orderBy('name', 'desc')
+    );
   }
 
   ionViewWillEnter() {
@@ -35,9 +63,18 @@ export class FirstSignInPage implements OnInit {
     this.menu.enable(true);
   }
 
-  /* async finish(){
-    await this.storage.set('tutorialComplete', true);
-    this.router.navigateByUrl('/');
-  } */
+  async finish(){
+    //await this.storage.set('tutorialComplete', true);
+    this.router.navigateByUrl('/profile');
+  }
+
+  async updateName(): Promise<void> {
+    const firstName = this.nameForm.value['firstName'];
+    const lastName = this.nameForm.value['lastName'];
+
+    console.log(firstName, lastName);
+    this.profileService.updateName(firstName, lastName);
+  }
+  
 
 }

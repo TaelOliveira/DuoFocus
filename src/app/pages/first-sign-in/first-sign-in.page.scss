@@ -4,22 +4,16 @@ ion-slide{
     text-align: center;
 }
 
-p{
-    padding: 1em;
-    text-align: center;
+form{
+    color: var(--ion-color-Contrast);
 }
 
-.step-one{
-    background: var(--ion-color-primary);
-    color: var(--ion-color-primary-constrast);
+ion-button{
+    margin-top: 10px;
 }
 
-.step-two{
-    background: var(--ion-color-success);
-    color: var(--ion-color-success-constrast);
-}
-
-.step-three{
-    background: var(--ion-color-dark);
-    color: var(--ion-color-dark-constrast);
+ion-item{
+    ion-label{
+        color: white;
+    }
 }
