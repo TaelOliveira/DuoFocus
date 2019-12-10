@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
-  <ion-button class="ion-padding" (click)="this.slides.slidePrev()">
+  <ion-button (click)="this.slides.slidePrev()">
     <ion-icon name="arrow-back"></ion-icon>
   </ion-button>
 
@@ -16,11 +16,11 @@
       <form [formGroup]="nameForm" onsubmit="processForm(event)">
         <ion-item>
           <ion-label position="floating" color="primary">First Name</ion-label>
-          <ion-input [(ngModel)]="firstName" formControlName="firstName" type="text"></ion-input>
+          <ion-input formControlName="firstName" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating" color="primary">Last Name</ion-label>
-          <ion-input [(ngModel)]="lastName" formControlName="lastName" type="text"></ion-input>
+          <ion-input formControlName="lastName" type="text"></ion-input>
         </ion-item>
       </form>
       <ion-button [disabled]="!nameForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateName(firstName, lastName)]">Next</ion-button>
@@ -28,8 +28,8 @@
 
     <ion-slide class="step-two">
       <ion-item>
-        <ion-label><h1>Select your School</h1></ion-label>
-        <ion-select>
+        <ion-label><h2>Select your School</h2></ion-label>
+        <ion-select placeholder="Select One">
           <ion-select-option *ngFor="let school of schools | async">
             {{school.name}}
           </ion-select-option>
@@ -51,9 +51,23 @@
     </ion-slide>
 
     <ion-slide class="step-four">
-      <ion-button size="large" color="dark">Upload a Picture</ion-button>
-      <ion-button size="large" color="dark">Take a Picture</ion-button>
-      <ion-button shape="round" size="large" color="dark" (click)="finish()">Next</ion-button>
+      <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-button size="large" color="dark">Upload a Picture</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-button size="large" color="dark">Take a Picture</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-button shape="round" size="large" color="dark" (click)="finish()">Next</ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
     </ion-slide>
 
   </ion-slides>

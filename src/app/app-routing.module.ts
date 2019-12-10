@@ -40,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: 'first-sign-in',
-    loadChildren: () => import('./pages/first-sign-in/first-sign-in.module').then( m => m.FirstSignInPageModule)
+    loadChildren: () => import('./pages/first-sign-in/first-sign-in.module').then( m => m.FirstSignInPageModule),
+    canActivate: [AuthGuard]
   },
 ];
 

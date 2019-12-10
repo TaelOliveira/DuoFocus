@@ -12,3 +12,11 @@ ion-item{
         color: white;
     }
 }
+
+ion-content{
+    --ion-background-color: var(--ion-color-myPrimaryColor);
+}
+
+ion-header{
+    --ion-background-color: var(--ion-color-myPrimaryColor);
+}

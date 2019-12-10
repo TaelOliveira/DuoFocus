@@ -11,17 +11,19 @@
 
 <ion-content class="ion-padding">
 
+  <ion-img src="/assets/Login/logo.png"></ion-img>
+
     <ion-toolbar color="light">
 
       <ion-segment color="dark" scrollable [(ngModel)]="section">
 
         <ion-segment-button value="profile" layout="icon-start">
-          <ion-label>Profile</ion-label>
+          <ion-label class="ion-text-center ion-padding"><h2>Profile</h2></ion-label>
           <ion-icon name="person" slot="start"></ion-icon>
         </ion-segment-button>
 
         <ion-segment-button value="settings" checked layout="icon-start">
-          <ion-label>Settings</ion-label>
+          <ion-label class="ion-text-center ion-padding"><h2>Settings</h2></ion-label>
           <ion-icon name="cog" slot="start"></ion-icon>
         </ion-segment-button>
 
@@ -32,23 +34,81 @@
       <div [ngSwitch]="section">
   
         <ion-list *ngSwitchCase="'profile'">
-          <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center">
-                  Welcome to Dashboard!
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+          <ion-row>
+            <ion-col class="ion-text-center" size="7" *ngIf="userProfile?.firstName || userProfile?.lastName">
+                {{userProfile?.firstName}} {{userProfile?.lastName}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-text-center" size="7" *ngIf="userProfile?.email">
+              {{userProfile?.email}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-text-center" size="7" *ngIf="userProfile?.email">
+                <p>Esse</p>{{userEmail}}
+            </ion-col>
+          </ion-row>
+
         </ion-list>
   
         <ion-list *ngSwitchCase="'settings'">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="ion-text-center">
-                Your Registered EmailID : {{userEmail}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+
+          <ion-item (click)="updateName()">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="ion-text-start ion-padding-top"><h1>Name</h1></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="ion-text-start ion-padding-vertical" *ngIf="userProfile?.firstName || userProfile?.lastName">
+                    <h2>{{userProfile?.firstName}} {{userProfile?.lastName}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="placeholder-profile ion-text-start ion-padding-vertical" *ngIf="!userProfile?.firstName">
+                    <span> Tap here to edit. </span>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+
+          <ion-item (click)="updateEmail()">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="ion-text-start"><h1>Email</h1></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="ion-text-start ion-padding-vertical" *ngIf="userProfile?.email">
+                    <h2>{{userProfile?.email}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="placeholder-profile ion-text-start ion-padding-vertical" *ngIf="!userProfile?.email">
+                    <span> Tap here to edit. </span>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+
+          <ion-item (click)="updatePassword()">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="ion-text-start"><h1>Password</h1></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="placeholder-profile ion-text-start ion-padding-vertical">
+                    <span> Tap here to edit. </span>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+
         </ion-list>
   
       </div>  

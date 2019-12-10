@@ -11,4 +11,55 @@
 
 <ion-content>
 
+  <form [formGroup]="contactForm" class="ion-padding" (submit)="addForm()">
+
+    <ion-item>
+      <ion-label>What subjects would you like to teach?</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea type="text" formControlName="question1" placeholder="Enter more information here..."></ion-textarea>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question1">
+        <div class="error-message" *ngIf="contactForm.get('question1').hasError(validation.type) && (contactForm.get('question1').dirty || contactForm.get('question1').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-item>
+      <ion-label>Why do you think you could be a good Tutor?</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea type="text" formControlName="question2" placeholder="Enter more information here..."></ion-textarea>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question2">
+        <div class="error-message" *ngIf="contactForm.get('question2').hasError(validation.type) && (contactForm.get('question2').dirty || contactForm.get('question2').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-item>
+      <ion-label>Tell us little bit about yourself.</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea type="text" formControlName="question3" placeholder="Enter more information here..."></ion-textarea>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question3">
+        <div class="error-message" *ngIf="contactForm.get('question3').hasError(validation.type) && (contactForm.get('question3').dirty || contactForm.get('question3').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-button size="large" type="submit" class="ion-padding" expand="full" color="success" [disabled]="!contactForm.valid">Submit</ion-button>
+
+  </form>
+
 </ion-content>
