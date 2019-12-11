@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { FirebaseService } from '../../services/firebase.service';
+import { AlertController } from '@ionic/angular';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.page.html',
   styleUrls: ['./contact.page.scss'],
 })
+
 export class ContactPage implements OnInit {
 
   contactForm: FormGroup;
@@ -29,6 +32,8 @@ export class ContactPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    public alertController: AlertController,
+    private profileService: ProfileService,
     public firebaseData: FirebaseService
   ) { }
 
@@ -38,6 +43,7 @@ export class ContactPage implements OnInit {
       question2: new FormControl('', [Validators.required, Validators.minLength(20)]),
       question3: new FormControl('', [Validators.required, Validators.minLength(20)])
     });
+
   }
 
   addForm(){
@@ -45,11 +51,23 @@ export class ContactPage implements OnInit {
       console.log("Nice try!");
     } else {
       this.firebaseData.saveForm(this.contactForm.value.question1, this.contactForm.value.question2,
-        this.contactForm.value.question3).then( () => {
+        this.contactForm.value.question3, this.profileService.currentUser.email).then( () => {
           this.contactForm.reset();
         });
+        this.presentAlert();
+        console.log(this.profileService.currentUser.email);
     }
   
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Thanks for applying to be part of our team.',
+      subHeader: 'We will revise your application and get in touch.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

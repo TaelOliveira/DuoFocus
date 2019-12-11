@@ -9,8 +9,8 @@ export class FirebaseService {
 
   constructor() { }
 
-  saveForm(question1: string, question2: string, question3: string): any {
-    return firebase.database().ref('forms').push({ question1, question2, question3 });
+  saveForm(question1: string, question2: string, question3: string, userEmail: string): any {
+    return firebase.database().ref('forms').push({ question1, question2, question3, userEmail });
   }
 
 }

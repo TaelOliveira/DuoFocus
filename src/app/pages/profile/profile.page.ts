@@ -41,7 +41,6 @@ export class ProfilePage implements OnInit {
     });
   }
 
-
   async updateName(): Promise<void> {
     const alert = await this.alertController.create({
       subHeader: 'Your first name & last name',
@@ -121,6 +120,4 @@ export class ProfilePage implements OnInit {
     await alert.present();
   }
 
-
-  
 }
