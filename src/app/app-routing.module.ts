@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { FirstSignInGuard } from './guards/first-sign-in.guard'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, FirstSignInGuard]
   },
   {
     path: 'tutor',

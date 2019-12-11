@@ -19,6 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './services/authentication.service';
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { FirstSignInGuard } from './guards/first-sign-in.guard';
 
 import * as firebase from 'firebase';
 firebase.initializeApp(environment.firebaseConfig);
@@ -42,6 +43,7 @@ firebase.initializeApp(environment.firebaseConfig);
     Firebase,
     StatusBar,
     SplashScreen,
+    FirstSignInGuard,
     AuthenticationService,
     ReactiveFormsModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

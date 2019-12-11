@@ -8,25 +8,25 @@ import { Storage } from '@ionic/storage';
   providedIn: 'root'
 })
 
-export class TutorialGuard implements CanActivate {
+export class FirstSignInGuard implements CanActivate {
 
   constructor(
     private storage: Storage,
     private router: Router
     ){}
-
+    
   async canActivate(
     next:ActivatedRouteSnapshot,
     state:RouterStateSnapshot
   ):Promise<boolean>{
 
-    const isComplete = await this.storage.get('tutorialComplete');
+    const isSignInComplete = await this.storage.get('firstSignInComplete');
 
-    if(!isComplete){
-      this.router.navigateByUrl('/tutorial');
+    if(!isSignInComplete){
+      this.router.navigateByUrl('/profile');
     }
 
-    return isComplete;
+    return isSignInComplete;
   }
   
 }
