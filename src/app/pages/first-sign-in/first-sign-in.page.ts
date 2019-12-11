@@ -42,6 +42,10 @@ export class FirstSignInPage implements OnInit {
       this.navCtrl.navigateBack('');
     }
 
+    if(this.storage.get('firstSignInComplete')){
+      this.router.navigateByUrl('/profile');
+    }
+
     this.validateForm();
     this.getSchools();
     this.getCourses();

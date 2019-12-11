@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent {
     private authService: AuthenticationService,
     private navigationController: NavController,
     private menu:MenuController,
+    private router: Router,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
@@ -35,6 +37,7 @@ export class AppComponent {
     .then(res => {
       console.log(res);
       this.navigationController.navigateBack('');
+      //athis.router.navigateByUrl('/profile');
     })
     .catch(error => {
       console.log(error);

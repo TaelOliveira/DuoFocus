@@ -35,17 +35,7 @@ export class AuthenticationService {
    }
   
    logoutUser(){
-     return new Promise((resolve, reject) => {
-       if(firebase.auth().currentUser){
-         firebase.auth().signOut()
-         .then(() => {
-           console.log("LOG Out");
-           resolve();
-         }).catch((error) => {
-           reject();
-         });
-       }
-     })
+     return firebase.auth().signOut();
    }
   
    userDetails(){
