@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
 
-    <ion-img src="/assets/Login/logo.png"></ion-img>
+  <ion-img src="/assets/Login/logo.png"></ion-img>
 
   <form class="form" [formGroup]="validations_form"  (ngSubmit)="loginUser(validations_form.value)">
  
@@ -28,7 +28,7 @@
       </ng-container>
     </div>
  
-    <ion-button  class="submit-btn" type="submit"  [disabled]="!validations_form.valid">Log In</ion-button>
+    <ion-button color="success" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Log In</ion-button>
  
     <!-- <label class="error-message">{{errorMessage}}</label> -->
     

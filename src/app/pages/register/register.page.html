@@ -1,9 +1,9 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/login"></ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -38,7 +38,7 @@
       </ng-container>
     </div>
   
-    <ion-button class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
+    <ion-button color="success" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
     <!-- <label class="error-message">{{errorMessage}}</label>
     <label class="success-message">{{successMessage}}</label> -->
 

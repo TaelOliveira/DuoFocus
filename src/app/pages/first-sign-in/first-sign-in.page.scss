@@ -19,11 +19,17 @@ ion-item{
 ion-content{
     --ion-background-color: var(--ion-color-myPrimaryColor);
 
-    ion-select{
-        max-width: 70% !important;
-    }
-
     ion-button{
         color: black;
     }
+}
+
+.myClass{
+    max-width: 100% !important;
+    display: flex;
+    text-align: center;
+    align-content: center;
+    word-wrap: break-word;
+    color: white;
+    font-size: large;
 }

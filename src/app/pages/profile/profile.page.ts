@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
 import { Router } from '@angular/router';
@@ -15,12 +15,15 @@ export class ProfilePage implements OnInit {
   userEmail: string;
   public userProfile: any;
   user;
+  errorMessage: string = '';
+  emailMessage: string = 'Email Changed Successfully';
  
   constructor(
     private navCtrl: NavController,
     private authService: AuthenticationService,
     private profileService: ProfileService,
     public db: DatabaseService,
+    public toastController: ToastController,
     private alertController: AlertController,
     private router: Router
   ) { }
@@ -86,10 +89,13 @@ export class ProfilePage implements OnInit {
             this.profileService
               .updateEmail(data.newEmail, data.password)
               .then(() => {
-                console.log('Email Changed Successfully');
+                //console.log('Email Changed Successfully');
+                this.presentToastSuccessful(this.emailMessage);
               })
               .catch(error => {
                 console.log('ERROR: ' + error.message);
+                //this.errorMessage = error.message;
+                this.presentToastUnsuccessful(error.message);
               });
           },
         },
@@ -118,6 +124,26 @@ export class ProfilePage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  async presentToastUnsuccessful(message) {
+    const toast = await this.toastController.create({
+      color: 'dark',
+      message: message,
+      duration: 3000,
+      showCloseButton: true
+    });
+    toast.present();
+  }
+
+  async presentToastSuccessful(message) {
+    const toast = await this.toastController.create({
+      color: 'dark',
+      message: message,
+      duration: 3000,
+      showCloseButton: true
+    });
+    toast.present();
   }
 
 }

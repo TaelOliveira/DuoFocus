@@ -33,6 +33,14 @@ export class ProfileService {
     return this.userProfile.update({ firstName, lastName });
   }
 
+  updateSchool(schoolName: string): Promise<any> {
+    return this.userProfile.update({ schoolName });
+  }
+
+  updateCourse(courseName: string): Promise<any> {
+    return this.userProfile.update({ courseName });
+  }
+
   updateEmail(newEmail: string, password: string): Promise<any> {
     const credential: firebase.auth.AuthCredential = firebase.auth.EmailAuthProvider.credential(
       this.currentUser.email,

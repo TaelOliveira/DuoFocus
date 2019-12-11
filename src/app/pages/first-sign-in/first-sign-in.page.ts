@@ -15,6 +15,8 @@ export class FirstSignInPage implements OnInit {
   schools;
   courses;
   nameForm: FormGroup;
+  schoolForm: FormGroup;
+  courseForm: FormGroup;
 
   constructor(
     public menu: MenuController,
@@ -38,6 +40,8 @@ export class FirstSignInPage implements OnInit {
       firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       lastName: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
+    this.schoolForm = new FormGroup({schoolName: new FormControl('', Validators.required)});
+    this.courseForm = new FormGroup({courseName: new FormControl('', Validators.required)});
   }
 
   getSchools(){
@@ -77,10 +81,16 @@ export class FirstSignInPage implements OnInit {
     this.profileService.updateName(firstName, lastName);
   }
 
-  async updateSchool() {
-    
-    //console.log(school);
-    //this.profileService.updateName(firstName, lastName);
+  async updateSchool(): Promise<void> {
+    const school = this.schoolForm.value['schoolName'];
+    console.log(school);
+    this.profileService.updateSchool(school);
+  }
+
+  async updateCourse(): Promise<void> {
+    const course = this.courseForm.value['courseName'];
+    console.log(course);
+    this.profileService.updateCourse(course);
   }
 
   async presentLoading() {
