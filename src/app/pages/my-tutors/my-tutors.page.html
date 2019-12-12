@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+      <ion-title>My Tutors</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-toolbar color="light">
+
+    <ion-segment color="dark" [(ngModel)]="section">
+
+      <ion-segment-button value="oldTutors">
+        <ion-label class="ion-text-center ion-text-wrap"><h2>Old Tutors</h2></ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="activeTutors">
+        <ion-label class="ion-text-center ion-text-wrapg"><h2>Active Tutors</h2></ion-label>
+      </ion-segment-button>
+
+    </ion-segment>
+
+    <div [ngSwitch]="section">
+
+      <ion-list *ngSwitchCase="'oldTutors'">
+        <p>Old messages will be here</p>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'activeTutors'">
+          <p>Active messages will be here</p>
+      </ion-list>
+  
+    </div>
+
+  </ion-toolbar>
+
+</ion-content>

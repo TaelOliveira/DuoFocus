@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forum.page.scss'],
 })
 export class ForumPage implements OnInit {
+  
+  section: any;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    this.section = "myTopics";    
   }
 
 }

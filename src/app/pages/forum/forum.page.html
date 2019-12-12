@@ -7,6 +7,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <ion-toolbar color="light">
+
+    <ion-segment color="dark" scrollable [(ngModel)]="section">
+
+      <ion-segment-button value="myTopics">
+        <ion-label class="ion-text-center"><h2>My Topics</h2></ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="allTopics">
+        <ion-label class="ion-text-center"><h2>All Topics</h2></ion-label>
+      </ion-segment-button>
+
+    </ion-segment>
+
+    <div [ngSwitch]="section">
+
+      <ion-list *ngSwitchCase="'myTopics'">
+        <p>My questions will be here</p>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'allTopics'">
+        <p>All questions will be here</p>
+      </ion-list>
+  
+    </div>
+
+  </ion-toolbar>
 
 </ion-content>

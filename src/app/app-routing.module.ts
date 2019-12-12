@@ -44,6 +44,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/first-sign-in/first-sign-in.module').then( m => m.FirstSignInPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'my-tutors',
+    loadChildren: () => import('./pages/my-tutors/my-tutors.module').then( m => m.MyTutorsPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

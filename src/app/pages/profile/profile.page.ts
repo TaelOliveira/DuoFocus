@@ -17,6 +17,7 @@ export class ProfilePage implements OnInit {
   user;
   errorMessage: string = '';
   emailMessage: string = 'Email Changed Successfully';
+  section: any;
  
   constructor(
     private navCtrl: NavController,
@@ -42,6 +43,10 @@ export class ProfilePage implements OnInit {
     .then( userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.data();
     });
+  }
+
+  ionViewWillEnter(){
+    this.section = "profile";    
   }
 
   async updateName(): Promise<void> {

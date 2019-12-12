@@ -16,11 +16,11 @@
       <ion-segment color="dark" scrollable [(ngModel)]="section">
 
         <ion-segment-button value="profile">
-          <ion-label class="ion-text-center ion-padding"><h2>Profile</h2></ion-label>
+          <ion-label class="ion-text-center"><h2>Profile</h2></ion-label>
         </ion-segment-button>
 
-        <ion-segment-button value="settings" checked>
-          <ion-label class="ion-text-center ion-padding"><h2>Settings</h2></ion-label>
+        <ion-segment-button value="settings">
+          <ion-label class="ion-text-center"><h2>Settings</h2></ion-label>
         </ion-segment-button>
 
       </ion-segment>
@@ -31,22 +31,46 @@
 
       <ion-list *ngSwitchCase="'profile'">
         <ion-grid>
-          <ion-item>
-            <ion-row><ion-label class="myClass1 ion-text-start ion-padding">Name</ion-label></ion-row>
-            <ion-row><ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.firstName}} {{userProfile?.lastName}}</ion-label></ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row><ion-label class="myClass1 ion-text-start ion-padding">Email</ion-label></ion-row>
-            <ion-row><ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.email}}</ion-label></ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row><ion-label class="myClass1 ion-text-start ion-padding">School</ion-label></ion-row>
-            <ion-row><ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.schoolName}}</ion-label></ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row><ion-label class="myClass1 ion-text-start ion-padding">Course</ion-label></ion-row>
-            <ion-row><ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.courseName}}</ion-label></ion-row>
-          </ion-item>
+          <ion-row>
+            <ion-col class="ion-padding-vertical ion-padding-horizontal">
+              <ion-label class="myClass1 ion-text-start ion-padding">Name</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.firstName}} {{userProfile?.lastName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-padding-vertical ion-padding-horizontal">
+              <ion-label class="myClass1 ion-text-start ion-padding">Email</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.email}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-padding-vertical ion-padding-horizontal">
+              <ion-label class="myClass1 ion-text-start ion-padding">School</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start ion-text-wrap ion-padding-start">{{userProfile?.schoolName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-padding-vertical ion-padding-horizontal">
+              <ion-label class="myClass1 ion-text-start ion-padding">Course</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start ion-padding-start">{{userProfile?.courseName}}</ion-label>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </ion-list>
 
