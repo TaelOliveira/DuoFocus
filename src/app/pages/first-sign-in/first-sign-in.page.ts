@@ -37,13 +37,13 @@ export class FirstSignInPage implements OnInit {
   ) {  }
 
   ionViewWillEnter() {
-    if(this.storage.get('firstSignInComplete')){
-      this.router.navigateByUrl('/my-tutors');
-    }
     this.menu.enable(false);
   }
 
   async ngOnInit() {
+    if(this.storage.get('firstSignInComplete')){
+      this.router.navigateByUrl('/my-tutors');
+    }
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
     }

@@ -52,7 +52,7 @@ export class AuthenticationService {
     })
     .catch((error) => {
       console.log(error.message)
-      this.toast(this.emailError);
+      this.presentToast(this.emailError, false, 'bottom', 3000);
     })
     .catch(error => {
       console.error(error);
@@ -66,12 +66,13 @@ export class AuthenticationService {
         res => {
           if (res.user.emailVerified !== true) {
             console.log('Please validate your email address.');
-          }
+            this.presentToast('Please validate your email address.', false, 'bottom', 3000);
+          }/* 
           else{
             this.ngZone.run(() => {
               this.navCtrl.navigateForward('/first-sign-in');
             });
-          }   
+          }    */
     })
       .catch(error => {
         console.error(error);
@@ -79,12 +80,12 @@ export class AuthenticationService {
    });
   }
 
-   async toast(message) {
+   async presentToast(message, show_button, position, duration) {
     const toast = await this.toastController.create({
-      color: 'dark',
       message: message,
-      duration: 3000,
-      showCloseButton: true
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
     });
     toast.present();
   }

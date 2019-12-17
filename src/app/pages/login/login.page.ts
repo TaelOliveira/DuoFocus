@@ -57,11 +57,13 @@ export class LoginPage implements OnInit {
       console.log(res);
       await this.presentLoading();
       this.errorMessage = "";
+      //this.presentToast(this.errorMessage, false, 'bottom', 3000);
       this.navCtrl.navigateForward('/first-sign-in');
-    }, async err => {
+    },
+    async err => {
       console.log(err);
       await this.presentLoading();
-      this.presentToastUnsuccessful(this.errorMessage = err.message);
+      this.presentToast(this.errorMessage = err.message, false, 'bottom', 3000);
       //this.errorMessage = err.message;
     })
   }
@@ -71,13 +73,12 @@ export class LoginPage implements OnInit {
     this.menu.enable(false);
   }
 
-  // toast unsuccessful login
-  async presentToastUnsuccessful(message) {
+  async presentToast(message, show_button, position, duration) {
     const toast = await this.toastController.create({
-      color: 'dark',
-      message: this.errorMessage,
-      duration: 3000,
-      showCloseButton: true
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
     });
     toast.present();
   }
