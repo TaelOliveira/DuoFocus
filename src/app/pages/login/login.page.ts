@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController, MenuController, LoadingController, ToastController } from '@ionic/angular';
+import { MenuController, LoadingController, ToastController, NavController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +16,13 @@ export class LoginPage implements OnInit {
   errorMessage: string = '';
  
   constructor(
-    private navCtrl: NavController,
     private authService: AuthenticationService,
     public menu: MenuController,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    private navCtrl: NavController,
+    public router: Router,
+    private storage: Storage,
     private formBuilder: FormBuilder
   ) { }
  
@@ -67,6 +71,7 @@ export class LoginPage implements OnInit {
     this.menu.enable(false);
   }
 
+  // toast unsuccessful login
   async presentToastUnsuccessful(message) {
     const toast = await this.toastController.create({
       color: 'dark',
@@ -77,15 +82,14 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
+  // loading alert
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
       duration: 2000
     });
     await loading.present();
-
     const { role, data } = await loading.onDidDismiss();
-
     console.log('Loading dismissed!');
   }
  

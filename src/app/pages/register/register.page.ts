@@ -47,20 +47,21 @@ export class RegisterPage implements OnInit {
       ])),
     });
   }
- 
+
   async tryRegister(value){
+    
     this.authService.registerUser(value)
      .then(async res => {
        console.log(res);
        await this.presentLoading();
        //this.errorMessage = "";
-       //this.successMessage = "Your account has been created. Please log in.";
+       this.successMessage = "Your account has been created. Please validate your email.";
        //this.presentToastUnsuccessful(this.errorMessage);
-       this.presentToastSuccessful();
+       this.presentToastSuccessful(this.successMessage);
      }, async err => {
        console.log(err);
        await this.presentLoading();
-       this.presentToastUnsuccessful(this.errorMessage = err.message);
+       //this.presentToastUnsuccessful(err.message);
        //this.errorMessage = err.message;
        //this.successMessage = "";
      })
@@ -76,10 +77,10 @@ export class RegisterPage implements OnInit {
     toast.present();
   }
 
-  async presentToastSuccessful() {
+  async presentToastSuccessful(message) {
     const toast = await this.toastController.create({
       color: 'dark',
-      message: "Your account has been created. Please log in.",
+      message: this.successMessage,
       duration: 3000,
       showCloseButton: true
     });
@@ -97,9 +98,7 @@ export class RegisterPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-
     const { role, data } = await loading.onDidDismiss();
-
     console.log('Loading dismissed!');
   }
 

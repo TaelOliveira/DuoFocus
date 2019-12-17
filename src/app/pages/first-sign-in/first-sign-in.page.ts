@@ -34,16 +34,19 @@ export class FirstSignInPage implements OnInit {
     public alertController: AlertController
   ) {  }
 
+  ionViewWillEnter() {
+    if(this.storage.get('firstSignInComplete')){
+      this.router.navigateByUrl('/my-tutors');
+    }
+    this.menu.enable(false);
+  }
+
   async ngOnInit() {
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
     }
     else{
       this.navCtrl.navigateBack('');
-    }
-
-    if(this.storage.get('firstSignInComplete')){
-      this.router.navigateByUrl('/profile');
     }
 
     this.validateForm();
@@ -72,10 +75,6 @@ export class FirstSignInPage implements OnInit {
     ref
       .orderBy('name', 'desc')
     );
-  }
-
-  ionViewWillEnter() {
-    this.menu.enable(false);
   }
 
   // enable the root left menu when leaving this page
@@ -109,15 +108,12 @@ export class FirstSignInPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-
     const { role, data } = await loading.onDidDismiss();
-
     console.log('Loading dismissed!');
   }
 
   async finish(){
     await this.storage.set('firstSignInComplete', true);
-    console.log(this.storage.get('firstSignInComplete'));
     await this.presentLoading();
     this.router.navigateByUrl('/profile');
   }
