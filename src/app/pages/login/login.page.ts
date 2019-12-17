@@ -53,19 +53,19 @@ export class LoginPage implements OnInit {
  
   async loginUser(value){
     this.authService.loginUser(value)
-    .then(async res => {
+    /* .then(async res => {
       console.log(res);
       await this.presentLoading();
       this.errorMessage = "";
       //this.presentToast(this.errorMessage, false, 'bottom', 3000);
       this.navCtrl.navigateForward('/first-sign-in');
-    },
+    }, */
     async err => {
       console.log(err);
       await this.presentLoading();
-      this.presentToast(this.errorMessage = err.message, false, 'bottom', 3000);
+      this.presentToast(err.message, false, 'bottom', 3000);
       //this.errorMessage = err.message;
-    })
+    }
   }
 
   // disable the root left menu when leaving this page

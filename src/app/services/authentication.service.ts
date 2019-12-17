@@ -67,15 +67,20 @@ export class AuthenticationService {
           if (res.user.emailVerified !== true) {
             console.log('Please validate your email address.');
             this.presentToast('Please validate your email address.', false, 'bottom', 3000);
-          }/* 
+          }
           else{
             this.ngZone.run(() => {
-              this.navCtrl.navigateForward('/first-sign-in');
+              if(this.storage.get('firstSignInComplete')){
+                this.router.navigateByUrl('/my-tutors');
+                console.log("Cheguei aqui")
+              }
+              //this.navCtrl.navigateForward('/first-sign-in');
             });
-          }    */
+          }
     })
       .catch(error => {
         console.error(error);
+        this.presentToast(error.message, false, 'bottom', 3000);
         throw new Error(error);
    });
   }
