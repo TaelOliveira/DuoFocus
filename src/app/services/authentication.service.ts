@@ -48,7 +48,7 @@ export class AuthenticationService {
       firebase
         .firestore()
         .doc(`/userProfile/${newUserCredential.user.uid}`)
-        .set({'email': value.email, 'tutor': 'false'});
+        .set({'email': value.email, 'tutor': 'false', 'student': 'true'});
     })
     .catch((error) => {
       console.log(error.message)

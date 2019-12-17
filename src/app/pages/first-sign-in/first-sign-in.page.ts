@@ -20,6 +20,8 @@ export class FirstSignInPage implements OnInit {
   schoolForm: FormGroup;
   courseForm: FormGroup;
   userEmail: string;
+  public tutor = false;
+  public student = true;
 
   constructor(
     public menu: MenuController,

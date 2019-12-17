@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { AuthenticationService } from '../services/authentication.service';
-
 import * as firebase from 'firebase/app';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class ProfileService {
 
   constructor(
     private authService: AuthenticationService,
+    public toastController: ToastController,
   ) { 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -41,24 +42,6 @@ export class ProfileService {
     return this.userProfile.update({ courseName });
   }
 
-  updateEmail(newEmail: string, password: string): Promise<any> {
-    const credential: firebase.auth.AuthCredential = firebase.auth.EmailAuthProvider.credential(
-      this.currentUser.email,
-      password
-    );
-  
-    return this.currentUser
-      .reauthenticateWithCredential(credential)
-      .then(() => {
-        this.currentUser.updateEmail(newEmail).then(() => {
-          this.userProfile.update({ email: newEmail });
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
   updatePassword(newPassword: string, oldPassword: string): Promise<any> {
     const credential: firebase.auth.AuthCredential = firebase.auth.EmailAuthProvider.credential(
       this.currentUser.email,
@@ -70,11 +53,23 @@ export class ProfileService {
       .then(() => {
         this.currentUser.updatePassword(newPassword).then(() => {
           console.log('Password Changed');
+          this.presentToast('Password updated', false, 'bottom', 2000);
         });
       })
       .catch(error => {
         console.error(error);
+        this.presentToast('Password not updated', false, 'bottom', 2000);
       });
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

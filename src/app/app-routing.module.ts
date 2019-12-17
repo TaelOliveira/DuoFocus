@@ -53,6 +53,16 @@ const routes: Routes = [
     path: 'reset-password',
     loadChildren: () => import('./pages/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
+  {
+    path: 'messages',
+    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'tutor-profile',
+    loadChildren: () => import('./pages/tutor-profile/tutor-profile.module').then( m => m.TutorProfilePageModule),
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

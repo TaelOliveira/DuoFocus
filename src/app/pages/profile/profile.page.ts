@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +14,12 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class ProfilePage implements OnInit {
   
   userEmail: string;
-  public userProfile: any;
+  userProfile: any;
   user;
   errorMessage: string = '';
-  emailMessage: string = 'Email Changed Successfully';
   section: any;
+  firstName;
+  error: string;
  
   constructor(
     private navCtrl: NavController,
@@ -25,6 +27,7 @@ export class ProfilePage implements OnInit {
     private profileService: ProfileService,
     public db: DatabaseService,
     public toastController: ToastController,
+    private fireauth: AngularFireAuth,
     private alertController: AlertController,
     private router: Router
   ) { }
@@ -36,13 +39,17 @@ export class ProfilePage implements OnInit {
     else{
       this.navCtrl.navigateBack('');
     }
+ 
+    this.refreshUserProfile();
+  }
 
+  refreshUserProfile() {
     this.profileService
-    .getUserProfile()
-    .get()
-    .then( userProfileSnapshot => {
-      this.userProfile = userProfileSnapshot.data();
-    });
+        .getUserProfile()
+        .get()
+        .then(userProfileSnapshot => {
+            this.userProfile = userProfileSnapshot.data();
+        });
   }
 
   ionViewWillEnter(){
@@ -78,36 +85,6 @@ export class ProfilePage implements OnInit {
     });
     await alert.present();
   }
-
-  async updateEmail(): Promise<void> {
-    const alert = await this.alertController.create({
-      cssClass: 'myAlert',
-      inputs: [
-        { type: 'text', name: 'newEmail', placeholder: 'Your new email' },
-        { name: 'password', placeholder: 'Your password', type: 'password' },
-      ],
-      buttons: [
-        { text: 'Cancel' },
-        {
-          text: 'Save',
-          handler: data => {
-            this.profileService
-              .updateEmail(data.newEmail, data.password)
-              .then(() => {
-                //console.log('Email Changed Successfully');
-                this.presentToastSuccessful(this.emailMessage);
-              })
-              .catch(error => {
-                console.log('ERROR: ' + error.message);
-                //this.errorMessage = error.message;
-                this.presentToastUnsuccessful(error.message);
-              });
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
   
   async updatePassword(): Promise<void> {
     const alert = await this.alertController.create({
@@ -129,26 +106,6 @@ export class ProfilePage implements OnInit {
       ],
     });
     await alert.present();
-  }
-
-  async presentToastUnsuccessful(message) {
-    const toast = await this.toastController.create({
-      color: 'dark',
-      message: message,
-      duration: 3000,
-      showCloseButton: true
-    });
-    toast.present();
-  }
-
-  async presentToastSuccessful(message) {
-    const toast = await this.toastController.create({
-      color: 'dark',
-      message: message,
-      duration: 3000,
-      showCloseButton: true
-    });
-    toast.present();
   }
 
 }
