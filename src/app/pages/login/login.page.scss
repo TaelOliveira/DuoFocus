@@ -2,10 +2,10 @@ form{
     color: var(--ion-color-Contrast);
 }
 
-ion-button{
+.myClass1{
     background: var(--ion-color-myTertiaryColor);
-    margin-top: 15px;
     color: white;
+    font-size: medium;
 }
 
 ion-item{
@@ -16,4 +16,9 @@ ion-item{
 
 ion-content{
     --ion-background-color: var(--ion-color-myPrimaryColor);
+}
+
+.myClass2{
+    background: var(--ion-color-secondary);
+    font-size: medium;
 }

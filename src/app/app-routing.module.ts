@@ -50,9 +50,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'blank',
-    loadChildren: () => import('./pages/blank/blank.module').then( m => m.BlankPageModule),
-    canActivate: [AuthGuard]
+    path: 'reset-password',
+    loadChildren: () => import('./pages/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
 ];
 
