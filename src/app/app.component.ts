@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthenticationService } from './services/authentication.service';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +16,8 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
 
+  public student = false;
   public tutor = false;
-  public student = true;
 
   constructor(
     private platform: Platform,
@@ -30,6 +33,21 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    });
+  }
+
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        firebase
+          .firestore()
+          .doc(`/userProfile/${user.uid}`)
+          .get()
+          .then(userProfileSnapshot => {
+            this.student = userProfileSnapshot.data().student;
+            this.tutor = userProfileSnapshot.data().tutor;
+          });
+      }
     });
   }
 

@@ -39,12 +39,12 @@
             <ion-label>My Tutors</ion-label>
           </ion-item>
 
-          <ion-item routerLink="/tutor-profile">
+          <ion-item *ngIf="tutor" routerLink="/tutor-profile">
             <ion-icon name="person" slot="start"></ion-icon>
             <ion-label>Profile</ion-label>
           </ion-item>
 
-          <ion-item routerLink="/messages">
+          <ion-item *ngIf="tutor" routerLink="/messages">
             <ion-icon name="text" slot="start"></ion-icon>
             <ion-label>Messages</ion-label>
           </ion-item>
