@@ -38,6 +38,7 @@ export class DatabaseService {
       );
   }
 
+  //used at forum page to create a topic
   updateAt(path: string, data: Object): Promise<any>{
     const segments = path.split('/').filter(v => v);
     if(segments.length % 2){
@@ -50,6 +51,7 @@ export class DatabaseService {
     }
   }
 
+  // used at forum page to delete topics
   delete(path){
     return this.afs.doc(path).delete();
   }

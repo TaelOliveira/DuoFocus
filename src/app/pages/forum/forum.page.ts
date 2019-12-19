@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
 import { TopicFormComponent } from '../forum/topic-form/topic-form.component'
 import { ProfileService } from 'src/app/services/profile.service';
+import { DetailTopicComponent } from './detail-topic/detail-topic.component';
 
 @Component({
   selector: 'app-forum',
@@ -12,6 +13,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class ForumPage implements OnInit {
   
   topics;
+  topicId: string;
 
   constructor(
     public db: DatabaseService,
@@ -20,12 +22,6 @@ export class ForumPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    /* //get all topics from database
-    this.topics = this.db.collection$('topics', ref =>
-    ref
-      .orderBy('createdAt', 'desc')
-    ); */
-
     //get all topics of user
     const uid = this.profileService.currentUser.uid;
     this.topics = this.db.collection$('topics', ref =>
@@ -33,7 +29,6 @@ export class ForumPage implements OnInit {
       .where('createdBy', '==', uid)
       .orderBy('createdAt', 'desc')
     );
-    
   }
 
   trackById(idx, topic){
@@ -53,6 +48,12 @@ export class ForumPage implements OnInit {
     return await modal.present();
   }
 
-
+  async presentDetailTopic(topic?: any){
+    const modal = await this.modal.create({
+      component: DetailTopicComponent,
+      componentProps: {topic}
+    });
+    return await modal.present();
+  }
 
 }

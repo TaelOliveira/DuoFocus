@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button fill="clear" (click)="dismissModal()">
+      <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+    </ion-button> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{topic.question}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>{{topic.description}}</strong></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item *ngFor="let reply of replies | async; trackBy: trackById">
+    <ion-label class="ion-text-wrap">
+      <p>{{reply.reply}}</p>
+    </ion-label>
+  </ion-item>
+
+  <form [formGroup]="replyForm" (ngSubmit)='createReply()'>
+
+    <ion-textarea placeholder="Write your reply here. 350 characters max." rows="8" formControlName="reply"></ion-textarea>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question">
+        <div class="error-message" *ngIf="replyForm.get('reply').hasError(validation.type) && (replyForm.get('reply').dirty || replyForm.get('reply').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-button [disabled]="replyForm.invalid" type="submit">Post</ion-button>
+
+  </form>
+
+</ion-content>

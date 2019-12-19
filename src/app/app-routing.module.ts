@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { FirstSignInGuard } from './guards/first-sign-in.guard'
+import { DetailTopicComponent } from './pages/forum/detail-topic/detail-topic.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -62,7 +63,7 @@ const routes: Routes = [
     path: 'tutor-profile',
     loadChildren: () => import('./pages/tutor-profile/tutor-profile.module').then( m => m.TutorProfilePageModule),
     canActivate: [AuthGuard]
-  }
+  },
 ];
 
 @NgModule({

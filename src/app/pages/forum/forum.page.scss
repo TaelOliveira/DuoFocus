@@ -1,9 +1,14 @@
 ion-content{
     --ion-background-color: var(--ion-color-myPrimaryColor);
 
+    ion-button{
+      --background: var(--ion-color-myTertiaryColor);
+    }
+
     h1{
       color: white;
       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: xx-large;
     }
 
     ion-list{
