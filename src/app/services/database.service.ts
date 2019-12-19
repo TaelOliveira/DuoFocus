@@ -33,9 +33,25 @@ export class DatabaseService {
       .snapshotChanges()
       .pipe(
         map(doc => {
-          return {id:doc.payload.id, ...doc.payload.data()};
+          return {id:doc.payload.id, ...doc.payload.data};
         })
       );
+  }
+
+  updateAt(path: string, data: Object): Promise<any>{
+    const segments = path.split('/').filter(v => v);
+    if(segments.length % 2){
+      //odd is always a collection
+      return this.afs.collection(path).add(data);
+    }
+    else{
+      //even is always document
+      return this.afs.doc(path).set(data, {merge: true});
+    }
+  }
+
+  delete(path){
+    return this.afs.doc(path).delete();
   }
 
 }

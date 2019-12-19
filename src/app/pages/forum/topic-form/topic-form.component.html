@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button fill="clear" (click)="dismissModal()">
+      <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+      <ion-title>Create New Topic</ion-title>
+    </ion-button> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="topicForm" (ngSubmit)='createTopic()'>
+
+    <ion-text><h1>Question</h1></ion-text>
+    <ion-textarea placeholder="This will show in the forum. 350 characters max." rows="8" formControlName="question"></ion-textarea>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question">
+        <div class="error-message" *ngIf="topicForm.get('question').hasError(validation.type) && (topicForm.get('question').dirty || topicForm.get('question').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-text><h1>Description</h1></ion-text>
+    <ion-textarea placeholder="Give it more details about your question. 350 characters max." rows="8" formControlName="description"></ion-textarea>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.description">
+        <div class="error-message" *ngIf="topicForm.get('description').hasError(validation.type) && (topicForm.get('description').dirty || topicForm.get('description').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+
+    <ion-button [disabled]="topicForm.invalid" type="submit">Create!</ion-button>
+
+  </form>
+
+</ion-content>

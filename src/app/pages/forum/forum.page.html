@@ -9,32 +9,38 @@
 
 <ion-content class="ion-padding">
 
-  <ion-toolbar color="light">
+  <h1>My Questions</h1>
 
-    <ion-segment color="dark" scrollable [(ngModel)]="section">
+  <ion-list>
+    <ion-item (click)="buttonClick()" *ngFor="let topic of topics | async; trackBy: trackById">
+      <ion-grid>
+        <ion-row class="ion-align-items-start">
+          <ion-col size="10">
+            <ion-label class="ion-text-wrap">
+              <p>{{topic.question}}</p>
+            </ion-label>
+          </ion-col>
+          <ion-col class="ion-align-items-end">
+            <ion-button color="danger" (click)="deleteTopic(topic)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 
-      <ion-segment-button value="myTopics">
-        <ion-label class="ion-text-center"><h2>My Topics</h2></ion-label>
-      </ion-segment-button>
+  <ion-footer>
+    <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
 
-      <ion-segment-button value="allTopics">
-        <ion-label class="ion-text-center"><h2>All Topics</h2></ion-label>
-      </ion-segment-button>
+    <section class="full-width ion-padding-top">
+      <ion-button expand="full" size="large">All Topics</ion-button>
+    </section>
 
-    </ion-segment>
-
-    <div [ngSwitch]="section">
-
-      <ion-list *ngSwitchCase="'myTopics'">
-        <p>My questions will be here</p>
-      </ion-list>
-
-      <ion-list *ngSwitchCase="'allTopics'">
-        <p>All questions will be here</p>
-      </ion-list>
+  </ion-footer>
   
-    </div>
-
-  </ion-toolbar>
-
 </ion-content>
+
+

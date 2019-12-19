@@ -70,11 +70,7 @@ export class AuthenticationService {
           }
           else{
             this.ngZone.run(() => {
-              if(this.storage.get('firstSignInComplete')){
-                this.router.navigateByUrl('/my-tutors');
-                console.log("Cheguei aqui")
-              }
-              //this.navCtrl.navigateForward('/first-sign-in');
+              this.router.navigate(['/first-sign-in']);
             });
           }
     })

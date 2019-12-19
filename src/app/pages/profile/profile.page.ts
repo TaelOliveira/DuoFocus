@@ -5,6 +5,9 @@ import { ProfileService } from '../../services/profile.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, Subscription } from 'rxjs';
+import { User } from '../../modals/user.interface';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +22,7 @@ export class ProfilePage implements OnInit {
   errorMessage: string = '';
   section: any;
   firstName;
+  lastName;
   error: string;
  
   constructor(
@@ -29,9 +33,10 @@ export class ProfilePage implements OnInit {
     public toastController: ToastController,
     private fireauth: AngularFireAuth,
     private alertController: AlertController,
+    private afs: AngularFirestore,
     private router: Router
   ) { }
- 
+
   ngOnInit(){
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
@@ -39,7 +44,6 @@ export class ProfilePage implements OnInit {
     else{
       this.navCtrl.navigateBack('');
     }
- 
     this.refreshUserProfile();
   }
 
