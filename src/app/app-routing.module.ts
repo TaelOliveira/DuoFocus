@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { FirstSignInGuard } from './guards/first-sign-in.guard'
-import { DetailTopicComponent } from './pages/forum/detail-topic/detail-topic.component';
+import { AllTopicsPage } from './pages/forum/all-topics/all-topics.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -38,7 +38,7 @@ const routes: Routes = [
   {
     path: 'forum',
     loadChildren: () => import('./pages/forum/forum.module').then( m => m.ForumPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'first-sign-in',
@@ -62,6 +62,16 @@ const routes: Routes = [
   {
     path: 'tutor-profile',
     loadChildren: () => import('./pages/tutor-profile/tutor-profile.module').then( m => m.TutorProfilePageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'all-topics',
+    loadChildren: () => import('./pages/forum/all-topics/all-topics.module').then( m => m.AllTopicsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule),
     canActivate: [AuthGuard]
   },
 ];

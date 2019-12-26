@@ -25,7 +25,8 @@
 
   <form [formGroup]="replyForm" (ngSubmit)='createReply()'>
 
-    <ion-textarea placeholder="Write your reply here. 350 characters max." rows="8" formControlName="reply"></ion-textarea>
+    <ion-textarea [(ngModel)]="count" placeholder="Write your reply here." rows="8" formControlName="reply"></ion-textarea>
+    <span><em>{{ 350 - count.length }} characters left</em></span>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">
         <div class="error-message" *ngIf="replyForm.get('reply').hasError(validation.type) && (replyForm.get('reply').dirty || replyForm.get('reply').touched)">

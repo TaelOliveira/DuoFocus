@@ -41,7 +41,7 @@ export class TopicFormComponent implements OnInit {
       ...this.description
     };
     this.topicForm = this.formBuilder.group({
-      question: new FormControl (data.question, [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
+      question: new FormControl (data.question, [ Validators.required, Validators.minLength(1), Validators.maxLength(50) ]),
       description: new FormControl (data.description, [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
     });
   }

@@ -10,7 +10,7 @@
 <ion-content class="ion-padding">
 
   <section class="full-width ion-padding-top">
-    <ion-button expand="full" size="large">All Topics</ion-button>
+    <ion-button routerLink="/all-topics" expand="full" size="large">All Topics</ion-button>
   </section>
 
   <h1>My Questions</h1>
@@ -18,7 +18,7 @@
   <ion-list>
     <ion-item *ngFor="let topic of topics | async; trackBy: trackById">
       <ion-grid>
-        <ion-row class="ion-align-items-start">
+        <ion-row class="ion-align-items-center">
           <ion-col size="10">
             <ion-label (click)="presentDetailTopic(topic)" class="ion-text-wrap">
               <p>{{topic.question}}</p>

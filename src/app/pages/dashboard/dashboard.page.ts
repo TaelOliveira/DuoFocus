@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-my-tutors',
-  templateUrl: './my-tutors.page.html',
-  styleUrls: ['./my-tutors.page.scss'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.page.html',
+  styleUrls: ['./dashboard.page.scss'],
 })
-export class MyTutorsPage implements OnInit {
-  
-  section: any;
+export class DashboardPage implements OnInit {
 
   constructor(
     public menu: MenuController
@@ -18,7 +16,7 @@ export class MyTutorsPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.section = "activeTutors"; 
+    this.menu.enable(true);   
   }
 
 }

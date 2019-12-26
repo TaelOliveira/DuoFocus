@@ -69,8 +69,14 @@ export class AuthenticationService {
             this.presentToast('Please validate your email address.', false, 'bottom', 3000);
           }
           else{
-            this.ngZone.run(() => {
-              this.router.navigate(['/first-sign-in']);
+            this.ngZone.run(async () => {
+              //this.router.navigate(['/first-sign-in']);
+              if(await this.storage.get('firstSignInComplete') == true){
+                this.router.navigate(['/dashboard']);
+              }
+              else{
+                this.router.navigate(['/first-sign-in'])
+              }
             });
           }
     })

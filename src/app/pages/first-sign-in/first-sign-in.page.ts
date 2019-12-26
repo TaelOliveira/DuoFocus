@@ -41,9 +41,9 @@ export class FirstSignInPage implements OnInit {
   }
 
   async ngOnInit() {
-    if(this.storage.get('firstSignInComplete')){
+    /* if(this.storage.get('firstSignInComplete')){
       this.router.navigate(['/my-tutors']);
-    }
+    } */
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
     }

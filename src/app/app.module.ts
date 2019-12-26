@@ -24,10 +24,11 @@ import { FirstSignInGuard } from './guards/first-sign-in.guard';
 import * as firebase from 'firebase';
 import { TopicFormComponent } from './pages/forum/topic-form/topic-form.component';
 import { DetailTopicComponent } from './pages/forum/detail-topic/detail-topic.component';
+import { AllTopicsPage } from './pages/forum/all-topics/all-topics.page';
 firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
-  declarations: [AppComponent, TopicFormComponent, DetailTopicComponent],
+  declarations: [AppComponent, TopicFormComponent, DetailTopicComponent ],
   entryComponents: [TopicFormComponent, DetailTopicComponent ],
   imports: [
     BrowserModule,

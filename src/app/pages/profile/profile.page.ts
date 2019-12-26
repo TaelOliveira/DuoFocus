@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
-import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
-import { User } from '../../modals/user.interface';
 
 @Component({
   selector: 'app-profile',
@@ -31,10 +26,7 @@ export class ProfilePage implements OnInit {
     private profileService: ProfileService,
     public db: DatabaseService,
     public toastController: ToastController,
-    private fireauth: AngularFireAuth,
     private alertController: AlertController,
-    private afs: AngularFirestore,
-    private router: Router
   ) { }
 
   ngOnInit(){
@@ -45,6 +37,12 @@ export class ProfilePage implements OnInit {
       this.navCtrl.navigateBack('');
     }
     this.refreshUserProfile();
+
+    const userEmail = this.authService.userDetails().email;
+    this.user = this.db.collection$('userProfile', ref =>
+    ref
+      .where('email', '==', userEmail)
+    );
   }
 
   refreshUserProfile() {
@@ -56,10 +54,6 @@ export class ProfilePage implements OnInit {
         });
   }
 
-  ionViewWillEnter(){
-    this.section = "profile";    
-  }
-
   async updateName(): Promise<void> {
     const alert = await this.alertController.create({
       subHeader: 'Your first name & last name',
@@ -68,13 +62,13 @@ export class ProfilePage implements OnInit {
           type: 'text',
           name: 'firstName',
           placeholder: 'Your first name',
-          value: this.userProfile.firstName,
+          //value: this.userProfile.firstName,
         },
         {
           type: 'text',
           name: 'lastName',
           placeholder: 'Your last name',
-          value: this.userProfile.lastName,
+          //value: this.userProfile.lastName,
         },
       ],
       buttons: [

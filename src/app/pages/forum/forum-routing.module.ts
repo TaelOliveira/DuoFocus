@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ForumPage
+  },
+  {
+    path: 'all-topics',
+    loadChildren: () => import('./all-topics/all-topics.module').then( m => m.AllTopicsPageModule)
   }
 ];
 

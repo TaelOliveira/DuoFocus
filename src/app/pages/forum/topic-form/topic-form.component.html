@@ -12,7 +12,7 @@
   <form [formGroup]="topicForm" (ngSubmit)='createTopic()'>
 
     <ion-text><h1>Question</h1></ion-text>
-    <ion-textarea placeholder="This will show in the forum. 350 characters max." rows="8" formControlName="question"></ion-textarea>
+    <ion-textarea placeholder="This will show in the forum. 50 characters max." rows="8" formControlName="question"></ion-textarea>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">
         <div class="error-message" *ngIf="topicForm.get('question').hasError(validation.type) && (topicForm.get('question').dirty || topicForm.get('question').touched)">
