@@ -1,9 +1,135 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>tutor-profile</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+      <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <ion-img src="/assets/Login/logo.png"></ion-img>
+  <ion-button (click)="openImagePicker()" size="large" color="dark">Upload a Picture</ion-button>
+  
+  <ion-list>
+
+    <ion-item *ngFor="let user of user | async">
+      <ion-item (click)="presentUpdateInfoForm()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Name</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start">{{user.firstName}} {{user.lastName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of user | async">
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Email</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start">{{user.email}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of user | async">
+      <ion-item (click)="presentUpdateInfoForm()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Description</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-wrap">{{user.description}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of user | async">
+      <ion-item (click)="presentUpdateInfoForm()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Subjects</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-wrap">{{user.subjects}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of user | async">
+      <ion-item (click)="presentUpdateInfoForm()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Tags</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-wrap">{{user.tags}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item (click)="updatePassword()">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <span class="myClass3 ion-text-end">Tap here to edit password.</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>
+  

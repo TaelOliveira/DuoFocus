@@ -1,0 +1,37 @@
+ion-segment {
+    padding: 5px;
+  }
+  
+  ion-content{
+    --ion-background-color: var(--ion-color-myPrimaryColor);
+  }
+  
+  .placeholder-profile {
+    color: black;
+  }
+  
+  .ion-text-start{
+    color: white;
+  }
+  
+  .ion-text-start .ion-padding{
+    color: red;
+  }
+  
+  .myClass1{
+    font-size: larger;
+    color: var(--ion-color-Contrast);
+  }
+  
+  .myClass2{
+    font-size: larger;
+    margin-left: 10px;
+    color: white;
+    white-space: pre-line;
+  }
+  
+  .myClass3{
+    color: black;
+    font-style: italic;
+  }
+  

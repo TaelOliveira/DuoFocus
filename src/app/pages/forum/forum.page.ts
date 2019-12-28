@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
 import { TopicFormComponent } from '../forum/topic-form/topic-form.component'
 import { ProfileService } from 'src/app/services/profile.service';
@@ -17,11 +17,13 @@ export class ForumPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public loadingController: LoadingController,
     private profileService: ProfileService,
     public modal: ModalController
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
     //get all topics of user
     const uid = this.profileService.currentUser.uid;
     this.topics = this.db.collection$('topics', ref =>
@@ -54,6 +56,16 @@ export class ForumPage implements OnInit {
       componentProps: {topic}
     });
     return await modal.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

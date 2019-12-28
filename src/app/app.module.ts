@@ -24,12 +24,15 @@ import { FirstSignInGuard } from './guards/first-sign-in.guard';
 import * as firebase from 'firebase';
 import { TopicFormComponent } from './pages/forum/topic-form/topic-form.component';
 import { DetailTopicComponent } from './pages/forum/detail-topic/detail-topic.component';
-import { AllTopicsPage } from './pages/forum/all-topics/all-topics.page';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { UpdateInformationComponent } from './pages/tutor-profile/update-information/update-information.component';
+import { TutorDetailComponent } from './pages/tutor/tutor-detail/tutor-detail.component';
 firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
-  declarations: [AppComponent, TopicFormComponent, DetailTopicComponent ],
-  entryComponents: [TopicFormComponent, DetailTopicComponent ],
+  declarations: [AppComponent, TopicFormComponent, DetailTopicComponent, UpdateInformationComponent, TutorDetailComponent ],
+  entryComponents: [TopicFormComponent, DetailTopicComponent, UpdateInformationComponent, TutorDetailComponent ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -49,6 +52,8 @@ firebase.initializeApp(environment.firebaseConfig);
     FirstSignInGuard,
     AuthenticationService,
     ReactiveFormsModule,
+    ImagePicker,
+    WebView,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { DetailTopicComponent } from '../detail-topic/detail-topic.component';
 import { Router } from '@angular/router';
 
@@ -16,11 +16,13 @@ export class AllTopicsPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public loadingController: LoadingController,
     public router: Router,
     public modal: ModalController
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
     //get all topics
     this.topics = this.db.collection$('topics', ref =>
     ref
@@ -38,6 +40,16 @@ export class AllTopicsPage implements OnInit {
 
   goToForum(){
     this.router.navigate(['forum']);
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }
