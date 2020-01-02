@@ -19,8 +19,6 @@ export class ProfilePage implements OnInit {
   user;
   errorMessage: string = '';
   section: any;
-  firstName;
-  lastName;
   error: string;
   image: any;
  
@@ -51,6 +49,7 @@ export class ProfilePage implements OnInit {
     ref
       .where('email', '==', userEmail)
     );
+    
   }
 
   refreshUserProfile() {
@@ -70,13 +69,13 @@ export class ProfilePage implements OnInit {
           type: 'text',
           name: 'firstName',
           placeholder: 'Your first name',
-          //value: this.userProfile.firstName,
+          value: this.userProfile.firstName,
         },
         {
           type: 'text',
           name: 'lastName',
           placeholder: 'Your last name',
-          //value: this.userProfile.lastName,
+          value: this.userProfile.lastName,
         },
       ],
       buttons: [

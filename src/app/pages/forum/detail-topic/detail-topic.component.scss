@@ -12,12 +12,36 @@ ion-header{
 ion-content{
     --ion-background-color: white;
 
+    ion-card{
+
+        ion-card-content{
+
+            div{
+
+                p{
+                    font-style: italic;
+                    font-size: medium;
+                    color: black;
+                }
+            }
+        }
+    }
+
     ion-item{
 
         p{
             font-size: medium;
             color: black;
             line-height: 1.5em;
+        }
+
+        div{
+
+            p{
+                font-style: italic;
+                font-size: medium;
+                color: black;
+            }
         }
     }
 

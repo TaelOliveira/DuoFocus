@@ -12,7 +12,7 @@
   <form [formGroup]="topicForm" (ngSubmit)='createTopic()'>
 
     <ion-text><h1>Question</h1></ion-text>
-    <ion-textarea placeholder="This will show in the forum. 50 characters max." rows="8" formControlName="question"></ion-textarea>
+    <ion-textarea [(ngModel)]="questionCount" placeholder="This will show in the forum." rows="8" formControlName="question"></ion-textarea>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">
         <div class="error-message" *ngIf="topicForm.get('question').hasError(validation.type) && (topicForm.get('question').dirty || topicForm.get('question').touched)">
@@ -21,9 +21,10 @@
       </ng-container>
     </div>
     <label class="error-message">{{errorMessage}}</label>
+    <span><em>{{ 100 - questionCount.length }} characters left</em></span>
 
     <ion-text><h1>Description</h1></ion-text>
-    <ion-textarea placeholder="Give it more details about your question. 350 characters max." rows="8" formControlName="description"></ion-textarea>
+    <ion-textarea [(ngModel)]="descriptionCount" placeholder="Give it more details about your question." rows="8" formControlName="description"></ion-textarea>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.description">
         <div class="error-message" *ngIf="topicForm.get('description').hasError(validation.type) && (topicForm.get('description').dirty || topicForm.get('description').touched)">
@@ -32,6 +33,8 @@
       </ng-container>
     </div>
     <label class="error-message">{{errorMessage}}</label>
+    <span><em>{{ 350 - descriptionCount.length }} characters left</em></span>
+    <br><br>
 
     <ion-button [disabled]="topicForm.invalid" type="submit">Create!</ion-button>
 

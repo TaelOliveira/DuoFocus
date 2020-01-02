@@ -1,3 +1,75 @@
-<p>
-  tutor-detail works!
-</p>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button fill="clear" (click)="dismissModal()">
+      <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+      <ion-title>Tutor View</ion-title>
+    </ion-button> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card class="cards-bg social-cards">
+
+    <ion-item>
+      <ion-avatar>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaXJN7WURF9P0RgiLZSxM92ik38lxYSCgpgv3pgtJQYLCkMYmg&s">
+      </ion-avatar>
+    </ion-item>
+
+    <ion-row>
+      <ion-col class="align-self-center ion-text-center">
+        <h2>{{tutor.firstName}} {{tutor.lastName}}</h2>
+      </ion-col>
+    </ion-row>
+  
+    <ion-card-content>
+      <p>{{tutor.description}}</p><br>
+      <p><strong>{{tutor.subjects}}</strong></p>
+    </ion-card-content>
+  
+    <ion-row>
+      <ion-col class="align-self-center ion-text-center">
+        <ion-button color="warning">
+          <ion-icon slot="start" name="text"></ion-icon>
+          Message
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  
+  </ion-card>
+
+  <ion-item *ngFor="let review of tutorReviews | async;">
+    <ion-label class="ion-text-wrap">
+      <p>{{review.review}}</p><br>
+      <div class="ion-text-end">
+        <p>by {{review.userEmail}}</p>
+      </div>
+    </ion-label>
+  </ion-item>
+  
+
+  <h2>Leave a review</h2>
+
+  <form [formGroup]="reviewForm" onsubmit="processForm(event)">
+
+    <ionic4-star-rating #rating 
+        activeIcon = "ios-star"
+        defaultIcon = "ios-star-outline"
+        activeColor = "#d1301a"
+        defaultColor = "#aaaaaa"
+        readonly = "false"
+        fontSize = "32px"
+        (ratingChanged)="logRatingChange($event)"
+        formControlName="starRating">
+    </ionic4-star-rating>
+
+    <ion-item>
+      <ion-textarea [(ngModel)]="count" formControlName="review" type="text" rows="3"></ion-textarea>
+    </ion-item>
+  </form>
+  <span><em>{{ 350 - count.length }} characters left</em></span>
+  <br><br>
+  <ion-button [disabled]="!reviewForm.valid" shape="round" color="success" (click)="postReview()">Post Review</ion-button>
+
+</ion-content>

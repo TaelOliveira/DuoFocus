@@ -3,6 +3,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { DetailTopicComponent } from '../detail-topic/detail-topic.component';
 import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-all-topics',
@@ -13,16 +14,26 @@ export class AllTopicsPage implements OnInit {
 
   topics;
   topicId: string;
+  userProfile: any;
 
   constructor(
     public db: DatabaseService,
     public loadingController: LoadingController,
+    private profileService: ProfileService,
     public router: Router,
     public modal: ModalController
   ) { }
 
   ngOnInit() {
+    this.profileService
+        .getUserProfile()
+        .get()
+        .then(userProfileSnapshot => {
+            this.userProfile = userProfileSnapshot.data();
+        });
+
     this.presentLoading();
+
     //get all topics
     this.topics = this.db.collection$('topics', ref =>
     ref

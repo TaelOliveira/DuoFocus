@@ -28,6 +28,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { UpdateInformationComponent } from './pages/tutor-profile/update-information/update-information.component';
 import { TutorDetailComponent } from './pages/tutor/tutor-detail/tutor-detail.component';
+import { StarRatingModule } from 'ionic4-star-rating';
+
 firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
@@ -36,6 +38,7 @@ firebase.initializeApp(environment.firebaseConfig);
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    StarRatingModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

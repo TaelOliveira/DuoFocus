@@ -14,10 +14,12 @@ export class TopicFormComponent implements OnInit {
   topicForm: FormGroup;
   question;
   description;
+  descriptionCount = [];
+  questionCount = [];
 
   validation_messages = {
     'question': [
-      { type: 'maxLength', message: 'Cannot have more than 350 characters long.' },
+      { type: 'maxLength', message: 'Cannot have more than 100 characters long.' },
       { type: 'minLength', message: 'Cannot have less than 10 characters long.' }
     ],
     'description': [
@@ -41,7 +43,7 @@ export class TopicFormComponent implements OnInit {
       ...this.description
     };
     this.topicForm = this.formBuilder.group({
-      question: new FormControl (data.question, [ Validators.required, Validators.minLength(1), Validators.maxLength(50) ]),
+      question: new FormControl (data.question, [ Validators.required, Validators.minLength(1), Validators.maxLength(100) ]),
       description: new FormControl (data.description, [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
     });
   }
@@ -51,6 +53,7 @@ export class TopicFormComponent implements OnInit {
     const data = {
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
+      userEmail: this.profileService.currentUser.email,
       ...this.question,
       ...this.description,
       ...this.topicForm.value

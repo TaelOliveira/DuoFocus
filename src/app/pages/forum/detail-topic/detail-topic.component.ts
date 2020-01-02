@@ -11,10 +11,12 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class DetailTopicComponent implements OnInit {
 
+  userProfile: any;
   replyForm: FormGroup;
   reply;
   replies;
   topic;
+  count = [];
 
   validation_messages = {
     'reply': [
@@ -31,6 +33,13 @@ export class DetailTopicComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.profileService
+        .getUserProfile()
+        .get()
+        .then(userProfileSnapshot => {
+            this.userProfile = userProfileSnapshot.data();
+        });
+    
     console.log(this.topic.id);
     const topicId = this.topic.id;
     this.replies = this.db.collection$('replies', ref =>
@@ -54,6 +63,7 @@ export class DetailTopicComponent implements OnInit {
       topicId: this.topic.id,
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
+      userEmail: this.profileService.currentUser.email,
       ...this.reply,
       ...this.replyForm.value
     };

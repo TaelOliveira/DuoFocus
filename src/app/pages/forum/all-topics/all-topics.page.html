@@ -12,11 +12,14 @@
   <ion-list>
     <ion-item *ngFor="let topic of topics | async; trackBy: trackById">
       <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="10">
+        <ion-row>
+          <ion-col>
             <ion-label (click)="presentDetailTopic(topic)" class="ion-text-wrap">
-              <p>{{topic.question}}</p>
+              <p>{{topic.question}}</p><br>
             </ion-label>
+            <div class="ion-text-end">
+              <p>by {{topic.userEmail}}</p>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

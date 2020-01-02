@@ -13,13 +13,19 @@
       <ion-card-title>{{topic.question}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p><strong>{{topic.description}}</strong></p>
+      <p><strong>{{topic.description}}</strong></p><br>
+      <div class="ion-text-end">
+        <p>by {{topic.userEmail}}</p>
+      </div>
     </ion-card-content>
   </ion-card>
 
   <ion-item *ngFor="let reply of replies | async; trackBy: trackById">
     <ion-label class="ion-text-wrap">
-      <p>{{reply.reply}}</p>
+      <p>{{reply.reply}}</p><br>
+      <div class="ion-text-end">
+        <p>by {{reply.userEmail}}</p>
+      </div>
     </ion-label>
   </ion-item>
 
@@ -27,6 +33,7 @@
 
     <ion-textarea [(ngModel)]="count" placeholder="Write your reply here." rows="8" formControlName="reply"></ion-textarea>
     <span><em>{{ 350 - count.length }} characters left</em></span>
+
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">
         <div class="error-message" *ngIf="replyForm.get('reply').hasError(validation.type) && (replyForm.get('reply').dirty || replyForm.get('reply').touched)">
