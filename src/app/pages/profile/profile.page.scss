@@ -4,6 +4,17 @@ ion-segment {
 
 ion-content{
   --ion-background-color: var(--ion-color-myPrimaryColor);
+
+    ion-item{
+      margin-top: 10px;
+
+    ion-avatar{
+        margin: auto;
+        margin-bottom: 10px;
+        width: 150px;
+        height: 150px;
+    }
+  }
 }
 
 .placeholder-profile {

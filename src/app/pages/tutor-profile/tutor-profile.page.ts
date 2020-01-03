@@ -50,16 +50,13 @@ export class TutorProfilePage implements OnInit {
     else{
       this.navCtrl.navigateBack('');
     }
-    this.refreshUserProfile();
 
     const userEmail = this.authService.userDetails().email;
     this.user = this.db.collection$('userProfile', ref =>
     ref
       .where('email', '==', userEmail)
     );
-  }
 
-  refreshUserProfile() {
     this.profileService
         .getUserProfile()
         .get()

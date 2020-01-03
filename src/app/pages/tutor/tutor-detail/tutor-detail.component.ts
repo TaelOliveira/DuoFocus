@@ -58,13 +58,14 @@ export class TutorDetailComponent implements OnInit {
   }
 rating;
   async postReview(): Promise<void> {
+    const starRating = new Number(this.reviewForm.value['starRating']).toString();
     const id = this.review ? this.review.id : '';
     const data = {
       tutorId: this.tutor.id,
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
       userEmail: this.profileService.currentUser.email,
-      //rating: this.logRatingChange(this.rating),
+      starRating,
       ...this.review,
       ...this.reviewForm.value
     };

@@ -40,22 +40,31 @@
   </ion-card>
 
   <ion-item *ngFor="let review of tutorReviews | async;">
+
     <ion-label class="ion-text-wrap">
+
+      <ion-icon name="star" *ngIf="review.starRating > 0"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 1"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 2"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 3"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 4"></ion-icon>
+      <br>
+
       <p>{{review.review}}</p><br>
       <div class="ion-text-end">
         <p>by {{review.userEmail}}</p>
       </div>
     </ion-label>
+
   </ion-item>
-  
 
   <h2>Leave a review</h2>
 
   <form [formGroup]="reviewForm" onsubmit="processForm(event)">
 
     <ionic4-star-rating #rating 
-        activeIcon = "ios-star"
-        defaultIcon = "ios-star-outline"
+        activeIcon = "star"
+        defaultIcon = "star-outline"
         activeColor = "#d1301a"
         defaultColor = "#aaaaaa"
         readonly = "false"

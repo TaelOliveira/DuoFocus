@@ -10,37 +10,37 @@
 <ion-content class="ion-padding">
 
   <form [formGroup]="nameForm" onsubmit="processForm(event)">
-    <ion-item>
-      <ion-label class="myClass" position="floating" color="primary">First Name</ion-label>
-      <ion-input class="myClass" formControlName="firstName" type="text"></ion-input>
+    <ion-item *ngFor="let user of user | async">
+      <ion-label class="myClass1" position="floating" color="primary">First Name</ion-label><br>
+      <ion-input class="myClass2" [(ngModel)]="user.firstName" formControlName="firstName" type="text"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label class="myClass" position="floating" color="primary">Last Name</ion-label>
-      <ion-input class="myClass" formControlName="lastName" type="text"></ion-input>
+    <ion-item *ngFor="let user of user | async">
+      <ion-label class="myClass1" position="floating" color="primary">Last Name</ion-label><br>
+      <ion-input class="myClass2" [(ngModel)]="user.lastName" formControlName="lastName" type="text"></ion-input>
     </ion-item>
   </form>
   <ion-button [disabled]="!nameForm.valid" shape="round" color="success" (click)="updateName(firstName, lastName)">Update Name</ion-button>
 
   <form [formGroup]="descriptionForm" onsubmit="processForm(event)">
-    <ion-item>
-      <ion-label class="myClass" position="floating" color="primary">Description</ion-label>
-      <ion-textarea class="myClass" formControlName="description" type="text" rows="6"></ion-textarea>
+    <ion-item *ngFor="let user of user | async">
+      <ion-label class="myClass1" position="floating" color="primary">Description</ion-label><br>
+      <ion-textarea class="myClass2" [(ngModel)]="user.description" formControlName="description" type="text" rows="8"></ion-textarea>
     </ion-item>
   </form>
   <ion-button [disabled]="!descriptionForm.valid" shape="round" color="success" (click)="updateDescription(description)">Update Description</ion-button>
 
   <form [formGroup]="subjectsForm" onsubmit="processForm(event)">
-    <ion-item>
-      <ion-label class="myClass" position="floating" color="primary">Subjects</ion-label>
-      <ion-textarea class="myClass" formControlName="subjects" type="text" rows="6"></ion-textarea>
+    <ion-item *ngFor="let user of user | async">
+      <ion-label class="myClass1" position="floating" color="primary">Subjects</ion-label><br>
+      <ion-textarea class="myClass2" [(ngModel)]="user.subjects" formControlName="subjects" type="text" rows="6"></ion-textarea>
     </ion-item>
   </form>
   <ion-button [disabled]="!subjectsForm.valid" shape="round" color="success" (click)="updateSubjects(subjects)">Update Subjects</ion-button>
 
   <form [formGroup]="tagsForm" onsubmit="processForm(event)">
-    <ion-item>
-      <ion-label class="myClass" position="floating" color="primary">Tags</ion-label>
-      <ion-textarea class="myClass" formControlName="tags" type="text" rows="6"></ion-textarea>
+    <ion-item *ngFor="let user of user | async">
+      <ion-label class="myClass1" position="floating" color="primary">Tags</ion-label><br>
+      <ion-textarea class="myClass2" [(ngModel)]="user.tags" formControlName="tags" type="text" rows="6"></ion-textarea>
     </ion-item>
   </form>
   <ion-button [disabled]="!tagsForm.valid" shape="round" color="success" (click)="updateTags(tags)">Update Tags</ion-button>

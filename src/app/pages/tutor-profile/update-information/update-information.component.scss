@@ -13,7 +13,16 @@ ion-content{
     --ion-background-color: var(--ion-color-myPrimaryColor);
 }
 
-.myClass{
+.myClass1{
+    max-width: 100% !important;
+    display: flex;
+    word-wrap: break-word;
+    color: var(--ion-color-Contrast);
+    font-size: large;
+    white-space: pre-line;
+}
+
+.myClass2{
     max-width: 100% !important;
     display: flex;
     word-wrap: break-word;

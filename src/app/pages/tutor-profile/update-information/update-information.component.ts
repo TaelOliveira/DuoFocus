@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ModalController } from '@ionic/angular';
+import { DatabaseService } from 'src/app/services/database.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-update-information',
@@ -14,15 +16,24 @@ export class UpdateInformationComponent implements OnInit {
   descriptionForm: FormGroup;
   subjectsForm: FormGroup;
   tagsForm: FormGroup;
+  user;
 
   constructor(
     private formBuilder: FormBuilder,
     public modal: ModalController,
+    public db: DatabaseService,
+    private authService: AuthenticationService,
     private profileService: ProfileService
   ) { }
 
   ngOnInit() {
     this.validateForm();
+
+    const userEmail = this.authService.userDetails().email;
+    this.user = this.db.collection$('userProfile', ref =>
+    ref
+      .where('email', '==', userEmail)
+    );
   }
 
   validateForm(){

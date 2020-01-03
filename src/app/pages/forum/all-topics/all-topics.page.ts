@@ -4,6 +4,7 @@ import { ModalController, LoadingController } from '@ionic/angular';
 import { DetailTopicComponent } from '../detail-topic/detail-topic.component';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
+import { TopicFormComponent } from '../topic-form/topic-form.component';
 
 @Component({
   selector: 'app-all-topics',
@@ -39,6 +40,14 @@ export class AllTopicsPage implements OnInit {
     ref
       .orderBy('createdAt', 'desc')
     );
+  }
+
+  async presentTopicForm(topic?: any){
+    const modal = await this.modal.create({
+      component: TopicFormComponent,
+      componentProps: {topic}
+    });
+    return await modal.present();
   }
 
   async presentDetailTopic(topic?: any){

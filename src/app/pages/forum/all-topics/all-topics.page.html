@@ -9,6 +9,10 @@
 
 <ion-content class="ion-padding">
 
+  <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-button>
+
   <ion-list>
     <ion-item *ngFor="let topic of topics | async; trackBy: trackById">
       <ion-grid>
