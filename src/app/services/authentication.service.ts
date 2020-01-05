@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class AuthenticationService {
     public toastController: ToastController,
     public ngZone: NgZone,
     private storage: Storage,
+    public loadingController: LoadingController,
     private navCtrl: NavController,
     public router: Router
   ) { 
@@ -63,13 +64,14 @@ export class AuthenticationService {
    loginUser(value): Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(value.email, value.password)
       .then(
-        res => {
+        async res => {
           if (res.user.emailVerified !== true) {
             console.log('Please validate your email address.');
             this.presentToast('Please validate your email address.', false, 'bottom', 3000);
           }
           else{
-            this.ngZone.run(async () => {
+            await this.presentLoading();
+            await this.ngZone.run(async () => {
               //this.router.navigate(['/first-sign-in']);
               if(await this.storage.get('firstSignInComplete') == true){
                 this.router.navigate(['/dashboard']);
@@ -104,5 +106,16 @@ export class AuthenticationService {
    userDetails(){
      return firebase.auth().currentUser;
    }
+
+   // loading alert
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
 
  }

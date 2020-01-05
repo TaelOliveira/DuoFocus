@@ -9,10 +9,84 @@
 
 <ion-content class="ion-padding">
 
-  <h1 class="ion-text-center">Welcome to Duo&Focus</h1>
+  <ion-item lines="none" *ngFor="let user of user | async">
+    <ion-label>
+      <h1 class="ion-text-center ion-text-wrap">Welcome {{user.firstName}} {{user.lastName}}</h1>
+      <br>
+      <br>
+      <p class="ion-text-center">{{getDate | date:'EEEE dd MMMM yyyy'}}</p>
+    </ion-label>
+  </ion-item>
 
-  <ion-img src="/assets/Login/logo.png"></ion-img>
+  <ion-grid>
 
-  <h2 class="ion-text-center">Click on the Menu button to get started!</h2>
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="student" routerLink="/profile" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="person"></ion-icon>
+            <label>Profile</label>
+          </div>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="student" routerLink="/tutor" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="search"></ion-icon>
+            <label>Find a Tutor</label>
+          </div>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="student" routerLink="/contact" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="school"></ion-icon><br>
+            <label>Be a Tutor</label>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col offset="1">
+        <ion-button *ngIf="student" routerLink="/forum" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="list-box"></ion-icon>
+            <label>Forum</label>
+          </div>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="student" routerLink="/my-tutors" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="time"></ion-icon><br>
+            <label>My Tutors</label>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="1">
+        <ion-button *ngIf="tutor" routerLink="/tutor-profile" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="person"></ion-icon>
+            <label>Profile</label>
+          </div>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="tutor" routerLink="/messages" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="text"></ion-icon>
+            <label>Messages</label>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
