@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button fill="clear" (click)="dismissModal()">
+      <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+      <ion-title>{{userProfile?.firstName}} & {{chat.chatName}}</ion-title>
+    </ion-button> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+    <p>{{ msg.content }}</p>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <form [formGroup]="messageForm">
+    <div>
+      <ion-row>
+        <ion-input formControlName="message" [(ngModel)]="newMsg" placeholder="Enter your message here" type="text"></ion-input>
+        <ion-button [disabled]="!messageForm.valid" (click)="submit()" color="success">Send</ion-button>
+      </ion-row>
+    </div>
+  </form>
+</ion-footer>

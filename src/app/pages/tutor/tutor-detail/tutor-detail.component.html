@@ -2,7 +2,7 @@
   <ion-toolbar color="dark">
     <ion-button fill="clear" (click)="dismissModal()">
       <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-      <ion-title>Tutor View</ion-title>
+      <ion-title>{{tutor.firstName}}</ion-title>
     </ion-button> 
   </ion-toolbar>
 </ion-header>
@@ -30,7 +30,7 @@
   
     <ion-row>
       <ion-col class="align-self-center ion-text-center">
-        <ion-button color="warning">
+        <ion-button color="warning" (click)="[dismissModal(), presentChatModal(tutor, chat)]">
           <ion-icon slot="start" name="text"></ion-icon>
           Message
         </ion-button>
@@ -38,6 +38,8 @@
     </ion-row>
   
   </ion-card>
+
+  <h2>Reviews</h2>
 
   <ion-item *ngFor="let review of tutorReviews | async;">
 
@@ -48,6 +50,13 @@
       <ion-icon name="star" *ngIf="review.starRating > 2"></ion-icon>
       <ion-icon name="star" *ngIf="review.starRating > 3"></ion-icon>
       <ion-icon name="star" *ngIf="review.starRating > 4"></ion-icon>
+
+      <ion-icon name="star-outline" *ngIf="review.starRating < 1"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 2"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 3"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 4"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 5"></ion-icon>
+
       <br>
 
       <p>{{review.review}}</p><br>

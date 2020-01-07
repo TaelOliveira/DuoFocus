@@ -4,11 +4,15 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ToastController, NavController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  user$: Observable<any>;
 
   constructor(
     public angularFireAuth: AngularFireAuth,
@@ -18,8 +22,7 @@ export class AuthenticationService {
     public loadingController: LoadingController,
     private navCtrl: NavController,
     public router: Router
-  ) { 
-  }
+  ) { }
 
   emailSent: string = 'Please, validate your email address.';
   emailError: string = 'The email address is already in use by another account.';

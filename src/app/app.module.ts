@@ -29,12 +29,29 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { UpdateInformationComponent } from './pages/tutor-profile/update-information/update-information.component';
 import { TutorDetailComponent } from './pages/tutor/tutor-detail/tutor-detail.component';
 import { StarRatingModule } from 'ionic4-star-rating';
+import { ChatComponent } from './pages/tutor/chat/chat.component';
+import { ChatViewComponent } from './pages/my-tutors/chat-view/chat-view.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
-  declarations: [AppComponent, TopicFormComponent, DetailTopicComponent, UpdateInformationComponent, TutorDetailComponent ],
-  entryComponents: [TopicFormComponent, DetailTopicComponent, UpdateInformationComponent, TutorDetailComponent ],
+  declarations: [
+                AppComponent,
+                TopicFormComponent,
+                DetailTopicComponent,
+                UpdateInformationComponent,
+                TutorDetailComponent,
+                ChatComponent,
+                ChatViewComponent
+              ],
+  entryComponents: [
+                    TopicFormComponent,
+                    DetailTopicComponent,
+                    UpdateInformationComponent,
+                    TutorDetailComponent,
+                    ChatComponent,
+                    ChatViewComponent
+                  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -59,6 +76,6 @@ firebase.initializeApp(environment.firebaseConfig);
     WebView,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,45 @@
+    ion-header{
+    
+    ion-button{
+        color: white;
+  
+        ion-icon{
+            font-size: 32px;
+          }
+    }
+  }
+  
+  ion-content{
+    --ion-background-color: var(--ion-color-myPrimaryColor);
+    --ion-text-color: white;
+
+    .chat {
+        padding: 10px;
+        margin: 70px auto 100px;
+        width: 100%;
+    }
+      
+    .msg {
+        display: flex;
+        align-items: flex-start;
+        margin-left: auto;
+        order: 2;
+        text-align: left;
+        border-bottom: 1px solid #e9e9e9;
+        padding: 10px;
+        width: 90vw;
+        font-size: 1.3em;
+        animation-delay: 0ms;
+        animation-duration: 600ms;
+      
+        .user {
+            margin-right: 10px;
+            min-width: 100px;
+            border-right: 1px solid #e9e9e9;
+        }
+    }
+}
+
+  
+  
+    

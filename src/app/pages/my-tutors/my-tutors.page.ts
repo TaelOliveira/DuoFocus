@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
+import { ProfileService } from 'src/app/services/profile.service';
+import { DatabaseService } from 'src/app/services/database.service';
+import { Router } from '@angular/router';
+import { ChatViewComponent } from './chat-view/chat-view.component';
 
 @Component({
   selector: 'app-my-tutors',
@@ -7,18 +11,45 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./my-tutors.page.scss'],
 })
 export class MyTutorsPage implements OnInit {
-  
-  section: any;
+
+  chats;
 
   constructor(
-    public menu: MenuController
+    public db: DatabaseService,
+    public modal: ModalController,
+    public menu: MenuController,
+    public router: Router,
+    private profileService: ProfileService,
   ) { }
 
   ngOnInit() {
+    const uid = this.profileService.currentUser.uid;
+    this.chats = this.db.collection$('chats', ref =>
+    ref
+      .where('createdBy', '==', uid)
+      .orderBy('createdAt', 'desc')
+    );
   }
 
-  ionViewWillEnter(){
-    this.section = "activeTutors"; 
+  trackById(chat){
+    return chat.id;
+    
+  }
+
+  deleteChat(chat){
+    this.db.delete(`chats/${chat.id}`);
+    console.log(chat.id);
+  }
+
+  async openChat(chat){
+    console.log(chat.id);
+
+    const modal = await this.modal.create({
+      component: ChatViewComponent,
+      componentProps: {chat}
+    });
+    return await modal.present();
+
   }
 
 }

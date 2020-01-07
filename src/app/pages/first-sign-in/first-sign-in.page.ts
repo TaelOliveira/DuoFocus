@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, AlertController, LoadingController, NavController } from '@ionic/angular';
+import { MenuController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { DatabaseService } from '../../services/database.service';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -30,6 +30,7 @@ export class FirstSignInPage implements OnInit {
     private formBuilder: FormBuilder,
     public profileService: ProfileService,
     public loadingController: LoadingController,
+    public toastController: ToastController,
     public db: DatabaseService,
     private storage: Storage,
     private router: Router,
@@ -112,9 +113,21 @@ export class FirstSignInPage implements OnInit {
   }
 
   async finish(){
+    const message = "Upload a picture in your profile page!"
     await this.storage.set('firstSignInComplete', true);
+    await this.presentToast(message, false, 'bottom', 3000);
     await this.presentLoading();
     this.router.navigateByUrl('/profile');
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
   
 
