@@ -12,29 +12,42 @@
     ion-content {
         --ion-background-color: var(--ion-color-myPrimaryColor);
         --ion-text-color: white;
+
+        ng-container {
+            ion-item {
+                ion-grid {
+                    ion-row {
+                        display: inline;
+                        flex-wrap: nowrap;
+                        align-items: center;
+                        padding: 5px;
+                    }
+                }
+            }
+        }
     }
 
-    .chat {
-        padding: 10px;
-        margin: 70px auto 100px;
-        width: 100%;
+    .msg{
+        font-size: 1.3em;
+        animation-delay: 0ms;
+        animation-duration: 600ms;
     }
 
-    .msg {
+    /* .msg {
         display: flex;
         align-items: flex-start;
         margin-left: auto;
         order: 2;
         text-align: left;
         border-bottom: 1px solid #e9e9e9;
-        padding: 10px;
+        padding: 3px;
         width: 90vw;
         font-size: 1.3em;
         animation-delay: 0ms;
         animation-duration: 600ms;
 
         .user {
-            margin-right: 10px;
+            margin-right: 3px;
             min-width: 100px;
         }
-    }
+    } */

@@ -16,7 +16,7 @@ export class DetailTopicComponent implements OnInit {
   reply;
   replies;
   topic;
-  count = [];
+  numberOfCharacters = 0;
 
   validation_messages = {
     'reply': [
@@ -70,6 +70,11 @@ export class DetailTopicComponent implements OnInit {
 
     this.db.updateAt(`replies/${id}`, data);
     this.replyForm.reset();
+    this.numberOfCharacters = 0;
+  }
+
+  onKeyUp(event: any): void {
+    this.numberOfCharacters = event.target.value.length;
   }
 
   dismissModal() {

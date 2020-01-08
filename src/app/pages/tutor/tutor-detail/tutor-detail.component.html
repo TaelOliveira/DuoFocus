@@ -39,6 +39,29 @@
   
   </ion-card>
 
+  <h2>Leave a review</h2>
+
+  <form [formGroup]="reviewForm" onsubmit="processForm(event)">
+
+    <ionic4-star-rating #rating 
+        activeIcon = "star"
+        defaultIcon = "star-outline"
+        activeColor = "#d1301a"
+        defaultColor = "#aaaaaa"
+        readonly = "false"
+        fontSize = "32px"
+        (ratingChanged)="logRatingChange($event)"
+        formControlName="starRating">
+    </ionic4-star-rating>
+
+    <ion-item>
+      <ion-textarea (keyup)="onKeyUp($event)" formControlName="review" type="text" rows="3"></ion-textarea>
+    </ion-item>
+  </form>
+  <span><em>{{200 - numberOfCharacters}} characters left</em></span>
+  <br><br>
+  <ion-button [disabled]="!reviewForm.valid" shape="round" color="success" (click)="postReview()">Post Review</ion-button>
+
   <h2>Reviews</h2>
 
   <ion-item *ngFor="let review of tutorReviews | async;">
@@ -66,28 +89,5 @@
     </ion-label>
 
   </ion-item>
-
-  <h2>Leave a review</h2>
-
-  <form [formGroup]="reviewForm" onsubmit="processForm(event)">
-
-    <ionic4-star-rating #rating 
-        activeIcon = "star"
-        defaultIcon = "star-outline"
-        activeColor = "#d1301a"
-        defaultColor = "#aaaaaa"
-        readonly = "false"
-        fontSize = "32px"
-        (ratingChanged)="logRatingChange($event)"
-        formControlName="starRating">
-    </ionic4-star-rating>
-
-    <ion-item>
-      <ion-textarea [(ngModel)]="count" formControlName="review" type="text" rows="3"></ion-textarea>
-    </ion-item>
-  </form>
-  <span><em>{{ 350 - count.length }} characters left</em></span>
-  <br><br>
-  <ion-button [disabled]="!reviewForm.valid" shape="round" color="success" (click)="postReview()">Post Review</ion-button>
 
 </ion-content>

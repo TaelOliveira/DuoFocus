@@ -31,8 +31,8 @@
 
   <form [formGroup]="replyForm" (ngSubmit)='createReply()'>
 
-    <ion-textarea [(ngModel)]="count" placeholder="Write your reply here." rows="8" formControlName="reply"></ion-textarea>
-    <span><em>{{ 350 - count.length }} characters left</em></span>
+    <ion-textarea (keyup)="onKeyUp($event)" placeholder="Write your reply here." rows="8" formControlName="reply"></ion-textarea>
+    <span><em>{{350 - numberOfCharacters}} characters left</em></span>
 
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">

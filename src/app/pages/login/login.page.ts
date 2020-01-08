@@ -20,7 +20,6 @@ export class LoginPage implements OnInit {
     public menu: MenuController,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private navCtrl: NavController,
     public router: Router,
     private storage: Storage,
     private formBuilder: FormBuilder

@@ -29,7 +29,6 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { UpdateInformationComponent } from './pages/tutor-profile/update-information/update-information.component';
 import { TutorDetailComponent } from './pages/tutor/tutor-detail/tutor-detail.component';
 import { StarRatingModule } from 'ionic4-star-rating';
-import { ChatComponent } from './pages/tutor/chat/chat.component';
 import { ChatViewComponent } from './pages/my-tutors/chat-view/chat-view.component';
 
 firebase.initializeApp(environment.firebaseConfig);
@@ -41,7 +40,6 @@ firebase.initializeApp(environment.firebaseConfig);
                 DetailTopicComponent,
                 UpdateInformationComponent,
                 TutorDetailComponent,
-                ChatComponent,
                 ChatViewComponent
               ],
   entryComponents: [
@@ -49,7 +47,6 @@ firebase.initializeApp(environment.firebaseConfig);
                     DetailTopicComponent,
                     UpdateInformationComponent,
                     TutorDetailComponent,
-                    ChatComponent,
                     ChatViewComponent
                   ],
   imports: [

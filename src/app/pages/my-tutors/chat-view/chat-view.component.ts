@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
 import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chat-view',
@@ -17,6 +17,7 @@ export class ChatViewComponent implements OnInit {
   userProfile: any;
   messageForm: FormGroup;
   chat;
+  chat$: Observable<any>;
 
   constructor(
     private profileService: ProfileService,
@@ -24,7 +25,6 @@ export class ChatViewComponent implements OnInit {
     public modal: ModalController,
     public db: DatabaseService,
     public loadingController: LoadingController,
-    private authService: AuthenticationService,
     private afs: AngularFirestore,
   ) { }
 

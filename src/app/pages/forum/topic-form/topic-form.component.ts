@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -14,8 +14,8 @@ export class TopicFormComponent implements OnInit {
   topicForm: FormGroup;
   question;
   description;
-  descriptionCount = [];
-  questionCount = [];
+  numberOfCharacters1 = 0;
+  numberOfCharacters2 = 0;
 
   validation_messages = {
     'question': [
@@ -31,6 +31,7 @@ export class TopicFormComponent implements OnInit {
   constructor(
     public db: DatabaseService,
     public modal: ModalController,
+    public toastController: ToastController,
     private profileService: ProfileService,
     private formBuilder: FormBuilder
   ) { }
@@ -61,12 +62,33 @@ export class TopicFormComponent implements OnInit {
 
     this.db.updateAt(`topics/${id}`, data);
     await this.modal.dismiss();
+    this.presentToast("Topic added!", false, 'bottom', 3000);
+    this.numberOfCharacters1 = 0;
+    this.numberOfCharacters2 = 0;
+  }
+
+  onKeyUp(event: any): void {
+    this.numberOfCharacters1 = event.target.value.length;
+  }
+
+  onKeyUp2(event: any): void {
+    this.numberOfCharacters2 = event.target.value.length;
   }
 
   dismissModal() {
     this.modal.dismiss({
       'dismissed': true
     });
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

@@ -3,15 +3,15 @@
     <ion-button fill="clear" (click)="dismissModal()">
       <ion-icon slot="start" name="arrow-round-back"></ion-icon>
       <ion-title>{{chat.chatName}}</ion-title>
-    </ion-button> 
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
   <ng-container>
 
-    <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages | async; trackBy: trackByCreated">
+    <!-- <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages trackBy: trackByCreated;">
 
       <div class="user">
         <ion-avatar>
@@ -19,13 +19,39 @@
         </ion-avatar>
       </div>
 
-      <button *ngIf="chat.createdBy === profileService.uid || msg.uid === profileService.uid" class="button is-danger is-small" (click)="deleteMessage(chat, msg)">Delete</button>
+      <ion-item *ngIf="chat.createdBy === profileService.uid || msg.uid === profileService.uid">
+        <button color="danger" size="small" (click)="deleteMessage(chat, msg)">Delete</button>
+      </ion-item>
 
       <div class="user ion-text-wrap">
         <p>{{ msg.content }}</p>
       </div>
 
-    </div>
+    </div> -->
+
+    <ion-item lines="none" *ngFor="let msg of chat.messages trackBy: trackByCreated;">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="3">
+            <div>
+              <ion-avatar>
+                <img [src]="msg.photoURL || 'assets/avatar.png'">
+              </ion-avatar>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div class="ion-text-wrap">
+              <p class="msg">{{ msg.content }}</p>
+            </div>
+          </ion-col>
+          <ion-col size="2" class="ion-align-items-end">
+            <ion-button color="danger" size="small" (click)="deleteMessage(chat, msg)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
   </ng-container>
 
@@ -35,7 +61,7 @@
   <form [formGroup]="messageForm">
     <div>
       <ion-row>
-        <ion-input formControlName="message" [(ngModel)]="newMsg" placeholder="Enter your message here" type="text"></ion-input>
+        <ion-input formControlName="message" placeholder="Enter your message here" type="text"></ion-input>
         <ion-button [disabled]="!messageForm.valid" (click)="submit()" color="success">Send</ion-button>
       </ion-row>
     </div>

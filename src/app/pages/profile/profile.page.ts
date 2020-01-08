@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private imagePicker: ImagePicker,
-    public loadingCtrl: LoadingController,
+    public loadingController: LoadingController,
     private authService: AuthenticationService,
     private profileService: ProfileService,
     public db: DatabaseService,
@@ -36,6 +36,7 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit(){
+    this.presentLoading();
     if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
     }
@@ -137,14 +138,14 @@ export class ProfilePage implements OnInit {
   }
 
   async uploadImageToFirebase(image){
-    const loading = await this.loadingCtrl.create({
+    const loading = await this.loadingController.create({
       message: 'Please wait...'
     });
     const toast = await this.toastController.create({
       message: 'Image was updated successfully',
       duration: 3000
     });
-    this.presentLoading(loading);
+    this.presentLoading();
     let image_src = this.webview.convertFileSrc(image);
     let randomId = Math.random().toString(36).substr(2, 5);
 
@@ -159,8 +160,14 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  async presentLoading(loading) {
-    return await loading.present();
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

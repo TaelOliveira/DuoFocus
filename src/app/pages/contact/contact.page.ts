@@ -14,6 +14,9 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class ContactPage implements OnInit {
 
   contactForm: FormGroup;
+  numberOfCharacters1 = 0;
+  numberOfCharacters2 = 0;
+  numberOfCharacters3 = 0;
 
   validation_messages = {
     'question1': [
@@ -39,11 +42,23 @@ export class ContactPage implements OnInit {
 
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
-      question1: new FormControl('', [Validators.required, Validators.minLength(20)]),
-      question2: new FormControl('', [Validators.required, Validators.minLength(20)]),
-      question3: new FormControl('', [Validators.required, Validators.minLength(20)])
+      question1: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ]),
+      question2: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ]),
+      question3: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ])
     });
 
+  }
+
+  onKeyUp1(event: any): void {
+    this.numberOfCharacters1 = event.target.value.length;
+  }
+
+  onKeyUp2(event: any): void {
+    this.numberOfCharacters2 = event.target.value.length;
+  }
+
+  onKeyUp3(event: any): void {
+    this.numberOfCharacters3 = event.target.value.length;
   }
 
   addForm(){
@@ -53,6 +68,9 @@ export class ContactPage implements OnInit {
       this.firebaseData.saveForm(this.contactForm.value.question1, this.contactForm.value.question2,
         this.contactForm.value.question3, this.profileService.currentUser.email).then( () => {
           this.contactForm.reset();
+          this.numberOfCharacters1 = 0;
+          this.numberOfCharacters2 = 0;
+          this.numberOfCharacters3 = 0;
         });
         this.presentAlert();
         console.log(this.profileService.currentUser.email);

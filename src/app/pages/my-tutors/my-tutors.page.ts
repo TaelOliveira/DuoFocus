@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, LoadingController } from '@ionic/angular';
+import { MenuController, ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ export class MyTutorsPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public toastController: ToastController,
     public loadingController: LoadingController,
     public modal: ModalController,
     public menu: MenuController,
@@ -38,7 +39,12 @@ export class MyTutorsPage implements OnInit {
   }
 
   deleteChat(chat){
-    this.db.delete(`chats/${chat.id}`);
+    if(this.db.delete(`chats/${chat.id}`)){
+      this.presentToast("Chat deleted!", false, 'bottom', 3000);
+    }
+    else{
+      this.presentToast("Sorry, couldn't delete. Try again later!!", false, 'bottom', 3000);
+    }
     console.log(chat.id);
   }
 
@@ -61,6 +67,16 @@ export class MyTutorsPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

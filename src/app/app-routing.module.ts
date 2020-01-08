@@ -3,8 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { FirstSignInGuard } from './guards/first-sign-in.guard'
-import { AllTopicsPage } from './pages/forum/all-topics/all-topics.page';
-import { ChatComponent } from './pages/tutor/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -21,7 +21,7 @@ export class TutorDetailComponent implements OnInit {
   rating;
   user;
   chat;
-  count = [];
+  numberOfCharacters = 0;
 
   constructor(
     public modal: ModalController,
@@ -57,6 +57,10 @@ export class TutorDetailComponent implements OnInit {
     
   }
 
+  onKeyUp(event: any): void {
+    this.numberOfCharacters = event.target.value.length;
+  }
+
   trackById(idx, tutor){
     return tutor.id;
   }
@@ -76,6 +80,7 @@ export class TutorDetailComponent implements OnInit {
 
     this.db.updateAt(`tutorReviews/${id}`, data);
     this.reviewForm.reset();
+    this.numberOfCharacters = 0;
   }
 
   logRatingChange(rating){

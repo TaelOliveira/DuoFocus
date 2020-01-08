@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
 import { TopicFormComponent } from '../forum/topic-form/topic-form.component'
 import { ProfileService } from 'src/app/services/profile.service';
@@ -18,6 +18,7 @@ export class ForumPage implements OnInit {
   constructor(
     public db: DatabaseService,
     public loadingController: LoadingController,
+    public toastController: ToastController,
     private profileService: ProfileService,
     public modal: ModalController
   ) { }
@@ -38,8 +39,14 @@ export class ForumPage implements OnInit {
   }
 
   deleteTopic(topic){
-    this.db.delete(`topics/${topic.id}`);
+    if(this.db.delete(`topics/${topic.id}`)){
+      this.presentToast("Topic deleted!", false, 'bottom', 3000);
+    }
+    else{
+      this.presentToast("Sorry, try again later!", false, 'bottom', 3000);
+    }
     console.log(topic.id);
+    
   }
 
   async presentTopicForm(topic?: any){
@@ -66,6 +73,16 @@ export class ForumPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }
