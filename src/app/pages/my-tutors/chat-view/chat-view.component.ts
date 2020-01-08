@@ -3,8 +3,9 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-chat-view',
@@ -19,8 +20,11 @@ export class ChatViewComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
+    public toastController: ToastController,
     public modal: ModalController,
     public db: DatabaseService,
+    public loadingController: LoadingController,
+    private authService: AuthenticationService,
     private afs: AngularFirestore,
   ) { }
 
@@ -31,6 +35,8 @@ export class ChatViewComponent implements OnInit {
         .then(userProfileSnapshot => {
             this.userProfile = userProfileSnapshot.data();
         });
+    
+    this.presentLoading();
 
     this.messageForm = new FormGroup({message: new FormControl('', [Validators.required, Validators.maxLength(100)])});
     this.scrollBottom();
@@ -41,6 +47,7 @@ export class ChatViewComponent implements OnInit {
 
     const data = {
       userId,
+      photoURL: this.userProfile.photoURL,
       content,
       createdAt: new Date(),
     };
@@ -64,6 +71,24 @@ export class ChatViewComponent implements OnInit {
     return newMsg.createdAt;
   }
 
+  async deleteMessage(chat, msg) {
+    const uid = await this.profileService.currentUser.uid;
+
+    const ref = this.afs.collection('chats').doc(this.chat.id);
+    console.log(msg);
+    if (chat.createdBy === uid || msg.uid === uid) {
+      // Allowed to delete
+      delete msg.user;
+      this.presentToast("Message deleted!", false, 'bottom', 3000);
+      return ref.update({
+        messages: firestore.FieldValue.arrayRemove(msg)
+      });
+    }
+    else{
+      this.presentToast("You are not allowed to delete!", false, 'bottom', 3000);
+    }
+  }
+
   private scrollBottom() {
     setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
   }
@@ -72,6 +97,26 @@ export class ChatViewComponent implements OnInit {
     this.modal.dismiss({
       'dismissed': true
     });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

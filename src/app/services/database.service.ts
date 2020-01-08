@@ -6,10 +6,11 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DatabaseService {
 
   constructor(
-    private afs:AngularFirestore
+    private afs:AngularFirestore,
   ) { }
 
   collection$(path, query?){

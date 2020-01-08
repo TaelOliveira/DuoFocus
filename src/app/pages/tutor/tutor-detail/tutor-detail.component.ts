@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { ChatComponent } from '../chat/chat.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -26,6 +25,7 @@ export class TutorDetailComponent implements OnInit {
 
   constructor(
     public modal: ModalController,
+    public toastController: ToastController,
     public chatModal: ModalController,
     private afs: AngularFirestore,
     public db: DatabaseService,
@@ -94,7 +94,7 @@ export class TutorDetailComponent implements OnInit {
     console.log('Loading dismissed!');
   }
 
-  async presentChatModal(tutor?: any, chatID?: any){
+  async startChat(tutor?: any, chatID?: any){
 
     const userId = await this.profileService.currentUser.uid;
 
@@ -102,7 +102,7 @@ export class TutorDetailComponent implements OnInit {
       createdBy: userId,
       tutorId: this.tutor.id,
       createdAt: new Date(),
-      chatName: this.tutor.firstName,
+      chatName: this.tutor.firstName + " & " + this.userProfile.firstName,
       messages: []
     };
 
@@ -110,17 +110,23 @@ export class TutorDetailComponent implements OnInit {
     chatID = this.chat;
     console.log(chatID.id);
 
-    const chatModal = await this.chatModal.create({
-      component: ChatComponent,
-      componentProps: {tutor, chatID}
-    });
-    return await chatModal.present();
+    this.presentToast("Go to your 'My Tutor' page to see your chat!", false, 'bottom', 4000);
   }
 
   dismissModal() {
     this.modal.dismiss({
       'dismissed': true
     });
+  }
+
+  async presentToast(message, show_button, position, duration) {
+    const toast = await this.toastController.create({
+      message: message,
+      showCloseButton: show_button,
+      position: position,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

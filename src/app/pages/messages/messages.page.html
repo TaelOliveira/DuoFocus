@@ -1,9 +1,26 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>messages</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+      <ion-title>Messages</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  
+  <ion-list>
+    <ion-item *ngFor="let chat of chats | async; trackBy: trackById">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="10">
+            <ion-label (click)="openChat(chat)" class="ion-text-wrap">
+              <h2>{{chat.chatName}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

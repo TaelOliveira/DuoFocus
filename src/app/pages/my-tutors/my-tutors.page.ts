@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController, LoadingController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
@@ -16,24 +16,25 @@ export class MyTutorsPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public loadingController: LoadingController,
     public modal: ModalController,
     public menu: MenuController,
     public router: Router,
     private profileService: ProfileService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    
+    this.presentLoading();
+
     const uid = this.profileService.currentUser.uid;
-    this.chats = this.db.collection$('chats', ref =>
-    ref
+    this.chats = this.db.collection$('chats', ref => ref
       .where('createdBy', '==', uid)
-      .orderBy('createdAt', 'desc')
-    );
+      .orderBy('createdAt', 'desc'));
   }
 
   trackById(chat){
     return chat.id;
-    
   }
 
   deleteChat(chat){
@@ -50,6 +51,16 @@ export class MyTutorsPage implements OnInit {
     });
     return await modal.present();
 
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

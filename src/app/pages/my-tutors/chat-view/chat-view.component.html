@@ -2,16 +2,32 @@
   <ion-toolbar color="dark">
     <ion-button fill="clear" (click)="dismissModal()">
       <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-      <ion-title>{{userProfile?.firstName}} & {{chat.chatName}}</ion-title>
+      <ion-title>{{chat.chatName}}</ion-title>
     </ion-button> 
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
-  <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
-    <p>{{ msg.content }}</p>
-  </div>
+  <ng-container>
+
+    <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages | async; trackBy: trackByCreated">
+
+      <div class="user">
+        <ion-avatar>
+          <img [src]="msg.photoURL || 'assets/avatar.png'">
+        </ion-avatar>
+      </div>
+
+      <button *ngIf="chat.createdBy === profileService.uid || msg.uid === profileService.uid" class="button is-danger is-small" (click)="deleteMessage(chat, msg)">Delete</button>
+
+      <div class="user ion-text-wrap">
+        <p>{{ msg.content }}</p>
+      </div>
+
+    </div>
+
+  </ng-container>
 
 </ion-content>
 
