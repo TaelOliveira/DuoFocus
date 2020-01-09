@@ -56,8 +56,9 @@ export class FirstSignInPage implements OnInit {
 
   validateForm(){
     this.nameForm = this.formBuilder.group({
-      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(3)])
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)])
     });
     this.schoolForm = new FormGroup({schoolName: new FormControl('', Validators.required)});
     this.courseForm = new FormGroup({courseName: new FormControl('', Validators.required)});
@@ -88,6 +89,13 @@ export class FirstSignInPage implements OnInit {
 
     console.log(firstName, lastName);
     this.profileService.updateName(firstName, lastName);
+  }
+
+  async updateUsername(): Promise<void> {
+    const username = this.nameForm.value['username'];
+
+    console.log(username);
+    this.profileService.updateUsername(username);
   }
 
   async updateSchool(): Promise<void> {

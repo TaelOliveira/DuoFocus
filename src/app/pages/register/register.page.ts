@@ -58,6 +58,7 @@ export class RegisterPage implements OnInit {
        this.successMessage = "Your account has been created. Please validate your email.";
        //this.presentToastUnsuccessful(this.errorMessage);
        this.presentToastSuccessful(this.successMessage);
+       this.validations_form.reset();
      }, async err => {
        console.log(err);
        await this.presentLoading();

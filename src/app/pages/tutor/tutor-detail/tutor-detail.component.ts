@@ -72,7 +72,7 @@ export class TutorDetailComponent implements OnInit {
       tutorId: this.tutor.id,
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
-      userEmail: this.profileService.currentUser.email,
+      username: this.userProfile.username,
       starRating,
       ...this.review,
       ...this.reviewForm.value

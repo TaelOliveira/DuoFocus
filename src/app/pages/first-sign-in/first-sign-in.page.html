@@ -17,14 +17,23 @@
       <form [formGroup]="nameForm" onsubmit="processForm(event)">
         <ion-item>
           <ion-label class="myClass" position="floating" color="primary">First Name</ion-label>
-          <ion-input class="myClass" formControlName="firstName" type="text"></ion-input>
+          <ion-input class="myClass2" formControlName="firstName" type="text"></ion-input>
         </ion-item>
+        <br>
         <ion-item>
           <ion-label class="myClass" position="floating" color="primary">Last Name</ion-label>
-          <ion-input class="myClass" formControlName="lastName" type="text"></ion-input>
+          <ion-input class="myClass2" formControlName="lastName" type="text"></ion-input>
+        </ion-item>
+        <br>
+        <br>
+        <ion-label class="myClass2">Choose a username to be used across the App!</ion-label>
+        <br>
+        <ion-item>
+          <ion-label class="myClass" position="floating" color="primary">Username</ion-label>
+          <ion-input class="myClass2" formControlName="username" type="text"></ion-input>
         </ion-item>
       </form>
-      <ion-button [disabled]="!nameForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateName(firstName, lastName)]">Next</ion-button>
+      <ion-button [disabled]="!nameForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateName(firstName, lastName), updateUsername(username)]">Next</ion-button>
     </ion-slide>
 
     <!-- step two: choose school -->

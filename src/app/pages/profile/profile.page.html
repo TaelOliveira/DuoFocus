@@ -42,6 +42,28 @@
     </ion-item>
 
     <ion-item *ngFor="let user of user | async">
+      <ion-item (click)="updateUsername()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass1 ion-text-start">Username</ion-label>
+            </ion-col>          
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="myClass2 ion-text-start">{{user.username}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of user | async">
       <ion-item>
         <ion-grid>
           <ion-row>
@@ -76,7 +98,7 @@
     </ion-item>
 
     <ion-item *ngFor="let user of user | async">
-      <ion-item>
+      <ion-item (click)="getCourses()">
         <ion-grid>
           <ion-row>
             <ion-col>
@@ -86,6 +108,18 @@
           <ion-row>
             <ion-col>
               <ion-label class="myClass2 ion-text-wrap ion-text-start">{{user.courseName}}</ion-label>
+              
+              <form [formGroup]="courseForm">
+                <ion-item>
+                  <ion-select class="myClass ion-text-wrap" formControlName="courseName" placeholder="Select your course">
+                    <ion-select-option *ngFor="let course of courses | async">
+                      {{course.name}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-button [disabled]="!courseForm.valid" (click)="updateCourse()" shape="round" color="success">Update</ion-button>
+              </form>
+              
             </ion-col>
           </ion-row>
         </ion-grid>

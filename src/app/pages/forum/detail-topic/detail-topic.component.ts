@@ -63,7 +63,7 @@ export class DetailTopicComponent implements OnInit {
       topicId: this.topic.id,
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
-      userEmail: this.profileService.currentUser.email,
+      username: this.userProfile.username,
       ...this.reply,
       ...this.replyForm.value
     };

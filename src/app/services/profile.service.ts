@@ -34,6 +34,10 @@ export class ProfileService {
     return this.userProfile.update({ firstName, lastName });
   }
 
+  updateUsername(username: string): Promise<any> {
+    return this.userProfile.update({ username });
+  }
+
   updateSchool(schoolName: string): Promise<any> {
     return this.userProfile.update({ schoolName });
   }

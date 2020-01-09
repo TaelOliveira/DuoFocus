@@ -12,7 +12,7 @@ ion-button{
 
 ion-item{
     ion-label{
-        color: white;
+        color: var(--ion-color-Contrast);
     }
 }
 
@@ -26,6 +26,17 @@ ion-content{
 }
 
 .myClass{
+    max-width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-content: center;
+    word-wrap: break-word;
+    color: var(--ion-color-Contrast);
+    font-size: large;
+}
+
+.myClass2{
     max-width: 100% !important;
     display: flex;
     flex-wrap: wrap;

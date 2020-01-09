@@ -1,0 +1,36 @@
+ion-content {
+    --ion-background-color: var(--ion-color-myPrimaryColor);
+    --ion-text-color: white;
+
+    h2 {
+        color: var(--ion-color-Contrast);
+        font-size: x-large;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-left: 10px;
+    }
+
+    ion-item {
+
+        ion-label {
+
+            ion-icon {
+                font-size: 32px;
+                color: greenyellow;
+            }
+
+            p {
+                font-size: large;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            div {
+                p {
+                    font-style: italic;
+                    font-size: medium;
+                    color: black;
+                }
+            }
+        }
+    }
+}

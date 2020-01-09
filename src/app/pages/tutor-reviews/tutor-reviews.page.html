@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+      <ion-title>Reviews</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>My Reviews</h2>
+
+  <ion-item *ngFor="let review of reviews | async;">
+  
+    <ion-label class="ion-text-wrap">
+  
+      <ion-icon name="star" *ngIf="review.starRating > 0"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 1"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 2"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 3"></ion-icon>
+      <ion-icon name="star" *ngIf="review.starRating > 4"></ion-icon>
+  
+      <ion-icon name="star-outline" *ngIf="review.starRating < 1"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 2"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 3"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 4"></ion-icon>
+      <ion-icon name="star-outline" *ngIf="review.starRating < 5"></ion-icon>
+  
+      <br>
+  
+      <p>{{review.review}}</p><br>
+      <div class="ion-text-end">
+        <p>by {{review.username}}</p>
+      </div>
+    </ion-label>
+  
+  </ion-item>
+
+</ion-content>

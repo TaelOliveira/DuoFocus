@@ -13,7 +13,7 @@
 
     <ion-item>
       <ion-avatar>
-        <img src="../../../../assets/avatar.png">
+        <img [src]="tutor.photoURL || 'assets/avatar.png'">
       </ion-avatar>
     </ion-item>
 
@@ -84,7 +84,7 @@
 
       <p>{{review.review}}</p><br>
       <div class="ion-text-end">
-        <p>by {{review.userEmail}}</p>
+        <p>by {{review.username}}</p>
       </div>
     </ion-label>
 

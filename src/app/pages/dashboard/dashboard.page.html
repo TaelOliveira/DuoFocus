@@ -70,7 +70,7 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col offset="1">
+      <ion-col>
         <ion-button *ngIf="tutor" routerLink="/tutor-profile" class="ion-focused ion-text-wrap">
           <div>
             <ion-icon name="person"></ion-icon>
@@ -83,6 +83,14 @@
           <div>
             <ion-icon name="text"></ion-icon>
             <label>Messages</label>
+          </div>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="tutor" routerLink="/tutor-reviews" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="star-outline"></ion-icon>
+            <label>Reviews</label>
           </div>
         </ion-button>
       </ion-col>

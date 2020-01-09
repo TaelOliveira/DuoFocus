@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { TutorDetailComponent } from './tutor-detail/tutor-detail.component';
@@ -15,11 +15,14 @@ export class TutorPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public loadingController: LoadingController,
     private profileService: ProfileService,
     public modal: ModalController
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
+    
     this.tutor = this.db.collection$('userProfile', ref =>
     ref
       .where('tutor', '==', 'true')
@@ -37,6 +40,16 @@ export class TutorPage implements OnInit {
       componentProps: {tutor}
     });
     return await modal.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

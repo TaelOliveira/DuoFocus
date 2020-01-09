@@ -49,6 +49,11 @@
             <ion-label>Messages</ion-label>
           </ion-item>
 
+          <ion-item *ngIf="tutor" routerLink="/tutor-reviews">
+            <ion-icon name="star-outline" slot="start"></ion-icon>
+            <ion-label>Reviews</ion-label>
+          </ion-item>
+
         </ion-list>
       
       </ion-menu-toggle>

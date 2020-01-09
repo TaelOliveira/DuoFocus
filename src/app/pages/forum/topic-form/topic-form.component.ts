@@ -12,6 +12,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class TopicFormComponent implements OnInit {
 
   topicForm: FormGroup;
+  userProfile: any;
   question;
   description;
   numberOfCharacters1 = 0;
@@ -37,6 +38,13 @@ export class TopicFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.profileService
+      .getUserProfile()
+      .get()
+      .then(userProfileSnapshot => {
+        this.userProfile = userProfileSnapshot.data();
+      });
+      
     const data = {
       question: '',
       description: '',
@@ -54,7 +62,7 @@ export class TopicFormComponent implements OnInit {
     const data = {
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
-      userEmail: this.profileService.currentUser.email,
+      username: this.userProfile.username,
       ...this.question,
       ...this.description,
       ...this.topicForm.value

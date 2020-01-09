@@ -17,7 +17,7 @@
 
         <ion-item >
           <ion-avatar item-start>
-            <img src="../../../assets/avatar.png">
+            <img [src]="tutor.photoURL || 'assets/avatar.png'">
           </ion-avatar>
           <h2>{{tutor.firstName}} {{tutor.lastName}}</h2>
         </ion-item >

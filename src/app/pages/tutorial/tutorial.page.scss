@@ -20,8 +20,11 @@ p{
 }
 
 .step-one{
-    background: var(--ion-color-primary);
+    background: var(--ion-color-myPrimaryColor);
     color: var(--ion-color-primary-constrast);
+    h1{
+        color: var(--ion-color-Contrast);
+    }
     p{
         color: white;
     }
@@ -29,15 +32,19 @@ p{
 
 .step-two{
     background: var(--ion-color-success);
-    color: var(--ion-color-success-constrast);
+    h1{
+        color: var(--ion-color-Contrast);
+    }
     p{
         color: white;
     }
 }
 
 .step-three{
-    background: var(--ion-color-Contrast);
-    color: var(--ion-color-dark-constrast);
+    background: red;
+    h1{
+        color: var(--ion-color-Contrast);
+    }
     p{
         color: white;
     }
