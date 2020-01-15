@@ -60,8 +60,14 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button [disabled]="!courseForm.valid" shape="round" size="large" color="dark" (click)="[finish(), updateCourse()]">Next</ion-button>
+        <ion-button [disabled]="!courseForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateCourse()]">Next</ion-button>
       </form>
+    </ion-slide>
+
+    <!-- step four: upload picture -->
+    <ion-slide class="step-four myClass ion-text-wrap">
+      <ion-button (click)="uploadPicture.openImagePicker()" color="secondary" expand="full">Upload a Picture</ion-button>
+      <ion-button shape="round" size="large" color="success" (click)="finish()">Next</ion-button>
     </ion-slide>
 
   </ion-slides>

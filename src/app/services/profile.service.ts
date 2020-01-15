@@ -30,6 +30,10 @@ export class ProfileService {
     return this.userProfile;
   }
 
+  updatePhotoURL(photoURL: string){
+    return this.userProfile.update({ photoURL });
+  }
+
   updateName(firstName: string, lastName: string): Promise<any> {
     return this.userProfile.update({ firstName, lastName });
   }

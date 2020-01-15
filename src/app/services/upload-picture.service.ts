@@ -4,16 +4,74 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadPictureService {
 
+  image;
+
   constructor(
     public afs: AngularFirestore,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    private imagePicker: ImagePicker,
+    public loadingController: LoadingController,
+    public toastController: ToastController,
+    public profileService: ProfileService,
+    private webview: WebView,
   ) { }
+
+  openImagePicker() {
+    this.imagePicker.hasReadPermission()
+      .then((result) => {
+        if (result == false) {
+          // no callbacks required as this opens a popup which returns async
+          this.imagePicker.requestReadPermission();
+        }
+        else if (result == true) {
+          this.imagePicker.getPictures({
+            maximumImagesCount: 1
+          }).then(
+            (results) => {
+              for (var i = 0; i < results.length; i++) {
+                this.uploadImageToFirebase(results[i]);
+              }
+            }, (err) => console.log(err)
+          );
+        }
+      }, (err) => {
+        console.log(err);
+      });
+  }
+
+  async uploadImageToFirebase(image) {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    const toast = await this.toastController.create({
+      message: 'Image was updated successfully',
+      duration: 3000
+    });
+    this.presentLoading();
+    let image_src = this.webview.convertFileSrc(image);
+    let randomId = Math.random().toString(36).substr(2, 5);
+
+    //uploads img to firebase storage
+    this.uploadImage(image_src, randomId)
+      .then(photoURL => {
+        this.image = photoURL;
+        this.profileService.updatePhotoURL(photoURL);
+        loading.dismiss();
+        toast.present();
+      }, err => {
+        console.log(err);
+      })
+  }
 
   encodeImageUri(imageUri, callback) {
     var c = document.createElement('canvas');
@@ -44,5 +102,15 @@ export class UploadPictureService {
         })
       })
     })
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 }

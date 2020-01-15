@@ -3,9 +3,7 @@ import { NavController, AlertController, ToastController, LoadingController } fr
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { UploadPictureService } from 'src/app/services/upload-picture.service';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -28,14 +26,12 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private imagePicker: ImagePicker,
     public loadingController: LoadingController,
     private authService: AuthenticationService,
     private profileService: ProfileService,
     public db: DatabaseService,
     public uploadPicture: UploadPictureService,
     public toastController: ToastController,
-    private webview: WebView,
     private alertController: AlertController,
   ) { }
 
@@ -193,52 +189,6 @@ export class ProfilePage implements OnInit {
     else{
       this.presentToast("Course not updated!", true, 'bottom', 3000);
     }
-  }
-
-  openImagePicker() {
-    this.imagePicker.hasReadPermission()
-      .then((result) => {
-        if (result == false) {
-          // no callbacks required as this opens a popup which returns async
-          this.imagePicker.requestReadPermission();
-        }
-        else if (result == true) {
-          this.imagePicker.getPictures({
-            maximumImagesCount: 1
-          }).then(
-            (results) => {
-              for (var i = 0; i < results.length; i++) {
-                this.uploadImageToFirebase(results[i]);
-              }
-            }, (err) => console.log(err)
-          );
-        }
-      }, (err) => {
-        console.log(err);
-      });
-  }
-
-  async uploadImageToFirebase(image) {
-    const loading = await this.loadingController.create({
-      message: 'Please wait...'
-    });
-    const toast = await this.toastController.create({
-      message: 'Image was updated successfully',
-      duration: 3000
-    });
-    this.presentLoading();
-    let image_src = this.webview.convertFileSrc(image);
-    let randomId = Math.random().toString(36).substr(2, 5);
-
-    //uploads img to firebase storage
-    this.uploadPicture.uploadImage(image_src, randomId)
-      .then(photoURL => {
-        this.image = photoURL;
-        loading.dismiss();
-        toast.present();
-      }, err => {
-        console.log(err);
-      })
   }
 
   async presentLoading() {

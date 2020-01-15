@@ -6,6 +6,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { ProfileService } from '../../services/profile.service'
 import { AuthenticationService } from '../../services/authentication.service';
 import { Storage } from '@ionic/storage';
+import { UploadPictureService } from 'src/app/services/upload-picture.service';
 
 @Component({
   selector: 'app-first-sign-in',
@@ -31,6 +32,7 @@ export class FirstSignInPage implements OnInit {
     public profileService: ProfileService,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    public uploadPicture: UploadPictureService,
     public db: DatabaseService,
     private storage: Storage,
     private router: Router,
@@ -121,9 +123,9 @@ export class FirstSignInPage implements OnInit {
   }
 
   async finish(){
-    const message = "Upload a picture in your profile page!"
+    const message = "You can change your profile photo in your Profile page!"
     await this.storage.set('firstSignInComplete', true);
-    await this.presentToast(message, false, 'bottom', 3000);
+    await this.presentToast(message, true, 'bottom', 3000);
     await this.presentLoading();
     this.router.navigateByUrl('/profile');
   }
