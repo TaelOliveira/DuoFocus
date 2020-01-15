@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { firestore } from 'firebase';
 import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chat-view',
@@ -14,10 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class ChatViewComponent implements OnInit {
 
+  @ViewChild('content', { static: true }) private content: any;
+
   userProfile: any;
   messageForm: FormGroup;
   chat;
-  chat$: Observable<any>;
+  chatMessages: any;
 
   constructor(
     private profileService: ProfileService,
@@ -25,10 +24,10 @@ export class ChatViewComponent implements OnInit {
     public modal: ModalController,
     public db: DatabaseService,
     public loadingController: LoadingController,
-    private afs: AngularFirestore,
   ) { }
 
   ngOnInit() {
+
     this.profileService
         .getUserProfile()
         .get()
@@ -38,59 +37,43 @@ export class ChatViewComponent implements OnInit {
     
     this.presentLoading();
 
+    const chatId = this.chat.id;
+    this.chatMessages = this.db.collection$('chatMessages', ref =>
+    ref
+      .where('chatId', '==', chatId)
+      .orderBy('createdAt', 'asc')
+    );
+
     this.messageForm = new FormGroup({message: new FormControl('', [Validators.required, Validators.maxLength(100)])});
-    this.scrollBottom();
-  }
-
-  async sendMessage(content) {
-    const userId = await this.profileService.currentUser.uid;
-
-    const data = {
-      userId,
-      photoURL: this.userProfile.photoURL,
-      content,
-      createdAt: new Date(),
-    };
-
-    if (userId) {
-      const ref = this.afs.collection('chats').doc(this.chat.id);
-      return ref.update({
-        messages: firestore.FieldValue.arrayUnion(data)
-      });
-    }
+    this.ScrollToBottom();
   }
 
   async submit() {
     const newMsg = this.messageForm.value['message'];
-    this.sendMessage(newMsg);
+    const id = this.chat ? this.chat.id : '';
+    const data = {
+      chatId: this.chat.id,
+      content: newMsg,
+      createdAt: new Date(),
+      createdBy: this.profileService.currentUser.uid,
+      photoURL: this.userProfile.photoURL,
+    };
+
+    this.db.updateAt(`chatMessages/`, data);
     this.messageForm.reset();
-    this.scrollBottom();
+    this.ScrollToBottom();
   }
 
   trackByCreated(i, newMsg) {
     return newMsg.createdAt;
   }
 
-  async deleteMessage(chat, msg) {
-    const uid = await this.profileService.currentUser.uid;
-
-    const ref = this.afs.collection('chats').doc(this.chat.id);
-    console.log(msg);
-    if (chat.createdBy === uid || msg.uid === uid) {
-      // Allowed to delete
-      delete msg.user;
-      this.presentToast("Message deleted!", false, 'bottom', 3000);
-      return ref.update({
-        messages: firestore.FieldValue.arrayRemove(msg)
-      });
-    }
-    else{
-      this.presentToast("You are not allowed to delete!", false, 'bottom', 3000);
-    }
-  }
-
-  private scrollBottom() {
-    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
+  ScrollToBottom(){
+    setTimeout(() => {
+      if (this.content.scrollToBottom) {
+          this.content.scrollToBottom(400);
+      }
+  }, 500);
   }
 
   dismissModal() {

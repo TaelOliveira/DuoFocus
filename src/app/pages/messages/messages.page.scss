@@ -1,28 +1,39 @@
-ion-content{
-    --ion-background-color: var(--ion-color-myPrimaryColor);
-  
-    ion-list{
-  
-      ion-item{
-        padding-top: 10px;
-        --box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-        --background: white;
-        --border-radius: 10px;
-  
-        ion-grid{
-  
-          h2{
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: larger;
-            color:var(--ion-color-myPrimaryColor);
-          }
-    
-          ion-row{
-            flex-wrap: nowrap;
-            padding-top: 10px;
-          }
-  
+ion-content {
+  --ion-background-color: var(--ion-color-myPrimaryColor);
+
+  ion-list {
+
+    ion-item {
+      padding-top: 10px;
+      --box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+      --background: white;
+      --border-radius: 10px;
+
+      ion-grid {
+
+        h2 {
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: x-large;
+          color: var(--ion-color-myPrimaryColor);
         }
+
+        ion-row {
+          flex-wrap: nowrap;
+          padding-top: 10px;
+        }
+
       }
     }
   }
+}
+
+.myClass {
+  color: black;
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+.icon{
+  color: var(--ion-color-Contrast);
+  font-size: 40px;
+}

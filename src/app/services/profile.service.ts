@@ -69,12 +69,12 @@ export class ProfileService {
       .then(() => {
         this.currentUser.updatePassword(newPassword).then(() => {
           console.log('Password Changed');
-          this.presentToast('Password updated', false, 'bottom', 2000);
+          this.presentToast('Password updated', true, 'bottom', 3000);
         });
       })
       .catch(error => {
         console.error(error);
-        this.presentToast('Password not updated', false, 'bottom', 2000);
+        this.presentToast('Password not updated', true, 'bottom', 3000);
       });
   }
 

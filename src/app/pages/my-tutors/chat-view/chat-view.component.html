@@ -7,47 +7,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true" #content>
 
   <ng-container>
 
-    <!-- <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages trackBy: trackByCreated;">
-
-      <div class="user">
-        <ion-avatar>
-          <img [src]="msg.photoURL || 'assets/avatar.png'">
-        </ion-avatar>
-      </div>
-
-      <ion-item *ngIf="chat.createdBy === profileService.uid || msg.uid === profileService.uid">
-        <button color="danger" size="small" (click)="deleteMessage(chat, msg)">Delete</button>
-      </ion-item>
-
-      <div class="user ion-text-wrap">
-        <p>{{ msg.content }}</p>
-      </div>
-
-    </div> -->
-
-    <ion-item lines="none" *ngFor="let msg of chat.messages trackBy: trackByCreated;">
+    <ion-item class="msg animated zoomInUp" lines="none" *ngFor="let message of chatMessages | async; trackBy: trackByCreated;">
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="3">
             <div>
               <ion-avatar>
-                <img [src]="msg.photoURL || 'assets/avatar.png'">
+                <img [src]="message.photoURL || 'assets/avatar.png'">
               </ion-avatar>
             </div>
           </ion-col>
           <ion-col>
-            <div class="ion-text-wrap">
-              <p class="msg">{{ msg.content }}</p>
+            <div class="box ion-text-wrap">
+              <p class="content">{{ message.content }}</p>
+              <div class="myClass ion-text-end">
+                <span>{{message.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</span>
+              </div>
             </div>
-          </ion-col>
-          <ion-col size="2" class="ion-align-items-end">
-            <ion-button color="danger" size="small" (click)="deleteMessage(chat, msg)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -62,7 +42,7 @@
     <div>
       <ion-row>
         <ion-input formControlName="message" placeholder="Enter your message here" type="text"></ion-input>
-        <ion-button [disabled]="!messageForm.valid" (click)="submit()" color="success">Send</ion-button>
+        <ion-button [disabled]="!messageForm.valid" (keyup.enter)="submit()" (click)="submit()" color="success">Send</ion-button>
       </ion-row>
     </div>
   </form>

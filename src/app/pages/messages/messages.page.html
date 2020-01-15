@@ -13,10 +13,20 @@
     <ion-item *ngFor="let chat of chats | async; trackBy: trackById">
       <ion-grid>
         <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-icon class="icon" name="contacts"></ion-icon>
+          </ion-col>
           <ion-col size="10">
             <ion-label (click)="openChat(chat)" class="ion-text-wrap">
               <h2>{{chat.chatName}}</h2>
             </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="myClass ion-text-end">
+              <span>{{chat.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</span>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -11,7 +11,7 @@ ion-content {
 
       h2 {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
+        font-size: x-large;
         color: var(--ion-color-myPrimaryColor);
       }
 
@@ -21,4 +21,15 @@ ion-content {
 
     }
   }
+}
+
+.myClass {
+  color: black;
+  font-style: italic;
+  font-size: 1em;
+}
+
+.icon{
+  color: var(--ion-color-Contrast);
+  font-size: 40px;
 }

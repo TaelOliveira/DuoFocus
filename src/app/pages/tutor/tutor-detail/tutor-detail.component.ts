@@ -108,14 +108,13 @@ export class TutorDetailComponent implements OnInit {
       tutorId: this.tutor.id,
       createdAt: new Date(),
       chatName: this.tutor.firstName + " & " + this.userProfile.firstName,
-      messages: []
     };
 
     this.chat = await this.afs.collection('chats').add(data);
     chatID = this.chat;
     console.log(chatID.id);
 
-    this.presentToast("Go to your 'My Tutor' page to see your chat!", false, 'bottom', 4000);
+    this.presentToast("Go to your 'My Tutor' page to see your chat!", true, 'bottom', 4000);
   }
 
   dismissModal() {

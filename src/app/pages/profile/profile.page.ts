@@ -89,7 +89,7 @@ export class ProfilePage implements OnInit {
         {
           text: 'Cancel',
           handler: data => {
-            this.presentToast("Name and last name not updated!", false, 'bottom', 3000);
+            this.presentToast("Name and last name not updated!", true, 'bottom', 3000);
           }
         },
         {
@@ -103,10 +103,10 @@ export class ProfilePage implements OnInit {
             lastNameInput.addEventListener('keyup', () => lastName$.next(lastNameInput.value));
             if (firstNameInput.value && lastNameInput.value) {
               this.profileService.updateName(data.firstName, data.lastName);
-              this.presentToast("Name and last name updated!", false, 'bottom', 3000);
+              this.presentToast("Name and last name updated!", true, 'bottom', 3000);
             }
             else {
-              this.presentToast("Name and last name not updated!", false, 'bottom', 3000);
+              this.presentToast("Name and last name not updated!", true, 'bottom', 3000);
             }
           },
         },
@@ -131,7 +131,7 @@ export class ProfilePage implements OnInit {
         {
           text: 'Cancel',
           handler: data => {
-            this.presentToast("Username not updated!", false, 'bottom', 3000);
+            this.presentToast("Username not updated!", true, 'bottom', 3000);
           }
         },
         {
@@ -142,10 +142,10 @@ export class ProfilePage implements OnInit {
             usernameInput.addEventListener('keyup', () => username$.next(usernameInput.value));
             if (usernameInput.value) {
               this.profileService.updateUsername(data.username);
-              this.presentToast("Username updated!", false, 'bottom', 3000);
+              this.presentToast("Username updated!", true, 'bottom', 3000);
             }
             else {
-              this.presentToast("Username not updated!", false, 'bottom', 3000);
+              this.presentToast("Username not updated!", true, 'bottom', 3000);
             }
           },
         },
@@ -187,11 +187,11 @@ export class ProfilePage implements OnInit {
     const course = this.courseForm.value['courseName'];
     console.log(course);
     if(this.profileService.updateCourse(course)){
-      this.presentToast("Couse updated!", false, 'bottom', 3000);
+      this.presentToast("Couse updated!", true, 'bottom', 3000);
       this.courseForm.reset();
     }
     else{
-      this.presentToast("Course not updated!", false, 'bottom', 3000);
+      this.presentToast("Course not updated!", true, 'bottom', 3000);
     }
   }
 

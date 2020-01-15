@@ -40,10 +40,10 @@ export class MyTutorsPage implements OnInit {
 
   deleteChat(chat){
     if(this.db.delete(`chats/${chat.id}`)){
-      this.presentToast("Chat deleted!", false, 'bottom', 3000);
+      this.presentToast("Chat deleted!", true, 'bottom', 3000);
     }
     else{
-      this.presentToast("Sorry, couldn't delete. Try again later!!", false, 'bottom', 3000);
+      this.presentToast("Sorry, couldn't delete. Try again later!!", true, 'bottom', 3000);
     }
     console.log(chat.id);
   }

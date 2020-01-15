@@ -12,15 +12,25 @@
   <ion-item *ngFor="let chat of chats | async; trackBy: trackById">
     <ion-grid>
       <ion-row class="ion-align-items-center">
-        <ion-col size="10">
+        <ion-col size="2">
+          <ion-icon class="icon" name="contacts"></ion-icon>
+        </ion-col>
+        <ion-col size="8">
           <ion-label (click)="openChat(chat)" class="ion-text-wrap">
             <h2>{{chat.chatName}}</h2>
           </ion-label>
         </ion-col>
-        <ion-col class="ion-align-items-end">
+        <ion-col size="2" class="ion-align-items-end">
           <ion-button color="danger" (click)="deleteChat(chat)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="myClass ion-text-end">
+            <span>{{chat.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</span>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
