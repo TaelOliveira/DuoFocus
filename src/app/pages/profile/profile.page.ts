@@ -21,8 +21,10 @@ export class ProfilePage implements OnInit {
   section: any;
   error: string;
   image: any;
+  schools;
   courses;
   courseForm: FormGroup;
+  schoolForm: FormGroup;
 
   constructor(
     private navCtrl: NavController,
@@ -50,7 +52,9 @@ export class ProfilePage implements OnInit {
       ref
         .where('email', '==', userEmail)
     );
+    
     this.courseForm = new FormGroup({courseName: new FormControl('', Validators.required)});
+    this.schoolForm = new FormGroup({schoolName: new FormControl('', Validators.required)});
   }
 
   refreshUserProfile() {
@@ -71,14 +75,12 @@ export class ProfilePage implements OnInit {
           name: 'firstName',
           placeholder: 'Your first name',
           id: 'firstName'
-          //value: this.userProfile.firstName,
         },
         {
           type: 'text',
           name: 'lastName',
           placeholder: 'Your last name',
           id: 'lastName'
-          //value: this.userProfile.lastName,
         },
       ],
       buttons: [
@@ -120,7 +122,6 @@ export class ProfilePage implements OnInit {
           name: 'username',
           placeholder: 'Your username',
           id: 'username'
-          //value: this.userProfile.username,
         },
       ],
       buttons: [
@@ -188,6 +189,25 @@ export class ProfilePage implements OnInit {
     }
     else{
       this.presentToast("Course not updated!", true, 'bottom', 3000);
+    }
+  }
+
+  getSchools(){
+    this.schools = this.db.collection$('schools', ref =>
+    ref
+      .orderBy('name', 'desc')
+    );
+  }
+
+  async updateSchool(): Promise<void> {
+    const school = this.schoolForm.value['schoolName'];
+    console.log(school);
+    if(this.profileService.updateSchool(school)){
+      this.presentToast("School updated!", true, 'bottom', 3000);
+      this.schoolForm.reset();
+    }
+    else{
+      this.presentToast("School not updated!", true, 'bottom', 3000);
     }
   }
 

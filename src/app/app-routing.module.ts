@@ -78,6 +78,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tutor-reviews/tutor-reviews.module').then( m => m.TutorReviewsPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./pages/feedback/feedback.module').then( m => m.FeedbackPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

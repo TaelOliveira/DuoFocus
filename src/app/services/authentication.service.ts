@@ -52,7 +52,7 @@ export class AuthenticationService {
       firebase
         .firestore()
         .doc(`/userProfile/${newUserCredential.user.uid}`)
-        .set({'email': value.email, 'student': 'true'});
+        .set({'email': value.email, 'student': 'true', 'phptoURL': 'https://firebasestorage.googleapis.com/v0/b/duofocus-c5eca.appspot.com/o/avatar.png?alt=media&token=f232e127-8584-4638-ab2c-489a8f6343c5'});
     })
     .catch((error) => {
       console.log(error.message)

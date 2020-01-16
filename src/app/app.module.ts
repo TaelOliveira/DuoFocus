@@ -63,7 +63,6 @@ firebase.initializeApp(environment.firebaseConfig);
     ReactiveFormsModule
   ],
   providers: [
-    Firebase,
     StatusBar,
     SplashScreen,
     FirstSignInGuard,

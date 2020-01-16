@@ -12,7 +12,7 @@
   <p class="ion-padding-horizontal ion-padding-top">Would you like to help other students in your school with their assignments?</p>
   <p class="ion-padding-horizontal">This is your opportunity, apply now and help other students.</p>
 
-  <form [formGroup]="contactForm" class="ion-padding" (submit)="addForm()">
+  <form [formGroup]="contactForm" class="ion-padding" (submit)="submitForm()">
 
     <ion-item>
       <ion-label class="ion-text-wrap">What subjects would you like to teach?</ion-label>
@@ -44,7 +44,7 @@
       </ng-container>
     </div>
     <label class="error-message">{{errorMessage}}</label>
-    <span><em>{{350 - numberOfCharacters2}} characters left</em></span>
+    <span><em>{{500 - numberOfCharacters2}} characters left</em></span>
 
     <ion-item class="ion-padding-top">
       <ion-label class="ion-text-wrap">Tell us a little bit about yourself.</ion-label>
@@ -60,7 +60,7 @@
       </ng-container>
     </div>
     <label class="error-message">{{errorMessage}}</label>
-    <span><em>{{350 - numberOfCharacters3}} characters left</em></span>
+    <span><em>{{500 - numberOfCharacters3}} characters left</em></span>
 
     <ion-item class="ion-padding-top">
       <ion-button size="large" type="submit" color="success" [disabled]="!contactForm.valid">Submit</ion-button>

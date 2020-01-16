@@ -39,6 +39,11 @@
             <ion-label>My Tutors</ion-label>
           </ion-item>
 
+          <ion-item *ngIf="student" routerLink="/feedback">
+            <ion-icon name="thumbs-up" slot="start"></ion-icon>
+            <ion-label>Feedback</ion-label>
+          </ion-item>
+
           <ion-item *ngIf="tutor" routerLink="/tutor-profile">
             <ion-icon name="person" slot="start"></ion-icon>
             <ion-label>Profile</ion-label>

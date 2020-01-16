@@ -31,10 +31,8 @@
             <ion-col>
               <ion-label class="myClass2 ion-text-start">{{user.firstName}} {{user.lastName}}</ion-label>
             </ion-col>
-          </ion-row>
-          <ion-row>
             <ion-col>
-              <span class="myClass3 ion-text-end">Tap here to edit.</span>
+              <ion-icon class="icon" name="create"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -53,11 +51,11 @@
             <ion-col>
               <ion-label class="myClass2 ion-text-start">{{user.username}}</ion-label>
             </ion-col>
+            <ion-col>
+              <ion-icon class="icon" name="create"></ion-icon>
+            </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col>
-              <span class="myClass3 ion-text-end">Tap here to edit.</span>
-            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -91,6 +89,18 @@
           <ion-row>
             <ion-col>
               <ion-label class="myClass2 ion-text-wrap ion-text-start">{{user.schoolName}}</ion-label>
+
+              <form [formGroup]="schoolForm">
+                <ion-item (click)="getSchools()">
+                  <ion-select class="myClass" formControlName="schoolName" placeholder="Change your school">
+                    <ion-select-option *ngFor="let school of schools | async">
+                      <p>{{school.name}}</p>
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-button [disabled]="!schoolForm.valid" shape="round" color="success" (click)="updateSchool()">Update</ion-button>
+              </form>
+
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -111,7 +121,7 @@
               
               <form [formGroup]="courseForm">
                 <ion-item>
-                  <ion-select class="myClass ion-text-wrap" formControlName="courseName" placeholder="Select your course">
+                  <ion-select class="myClass ion-text-wrap" formControlName="courseName" placeholder="Change your course">
                     <ion-select-option *ngFor="let course of courses | async">
                       {{course.name}}
                     </ion-select-option>
@@ -129,8 +139,11 @@
     <ion-item (click)="updatePassword()">
       <ion-grid>
         <ion-row>
+          <ion-col size="2">
+            <ion-icon class="icon" name="create"></ion-icon>
+          </ion-col>
           <ion-col>
-            <span class="myClass3 ion-text-end">Tap here to edit password.</span>
+            <ion-label class="myClass2 ion-text-start">Edit Password</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>

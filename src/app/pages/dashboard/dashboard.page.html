@@ -22,14 +22,6 @@
 
     <ion-row>
       <ion-col>
-        <ion-button *ngIf="student" routerLink="/profile" class="ion-focused ion-text-wrap">
-          <div>
-            <ion-icon name="person"></ion-icon>
-            <label>Profile</label>
-          </div>
-        </ion-button>
-      </ion-col>
-      <ion-col>
         <ion-button *ngIf="student" routerLink="/tutor" class="ion-focused ion-text-wrap">
           <div>
             <ion-icon name="search"></ion-icon>
@@ -48,7 +40,7 @@
     </ion-row>
 
     <ion-row>
-      <ion-col offset="1">
+      <ion-col>
         <ion-button *ngIf="student" routerLink="/forum" class="ion-focused ion-text-wrap">
           <div>
             <ion-icon name="list-box"></ion-icon>
@@ -66,18 +58,21 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="student" routerLink="/feedback" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <label>Feedback</label>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-button *ngIf="tutor" routerLink="/tutor-profile" class="ion-focused ion-text-wrap">
-          <div>
-            <ion-icon name="person"></ion-icon>
-            <label>Profile</label>
-          </div>
-        </ion-button>
-      </ion-col>
       <ion-col>
         <ion-button *ngIf="tutor" routerLink="/messages" class="ion-focused ion-text-wrap">
           <div>

@@ -14,18 +14,51 @@
     </ion-card-header>
     <ion-card-content>
       <p><strong>{{topic.description}}</strong></p><br>
-      <div class="ion-text-end">
-        <p>by {{topic.username}}</p>
-      </div>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-button size="small" fill="outline" (click)="reportTopic()">
+              <ion-icon slot="start" name="flag"></ion-icon>
+              Report
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <p>by {{topic.username}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 
   <ion-item *ngFor="let reply of replies | async; trackBy: trackById">
     <ion-label class="ion-text-wrap">
-      <p>{{reply.reply}}</p><br>
-      <div class="ion-text-end">
-        <p>by {{reply.username}}</p>
-      </div>
+      <ion-row>
+        <ion-col size="10">
+          <p>{{reply.reply}}</p>
+        </ion-col>
+        <ion-col class="ion-align-items-end">
+          <ion-button color="danger" (click)="deleteReply(reply)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-button fill="outline" (click)="reportReply(reply)">
+              <ion-icon slot="start" name="flag"></ion-icon>
+              Report
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <p>by {{reply.username}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-label>
   </ion-item>
 

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Feedback</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <p class="ion-padding-horizontal ion-padding-top">Send to us your Feedback!</p>
+
+  <form [formGroup]="feedbackForm" class="ion-padding" (submit)="submitForm()">
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">What you think avout the app? Where could we improve?</ion-label>
+    </ion-item>
+    <ion-item class="myClass">
+      <ion-textarea (keyup)="onKeyUp($event)" rows="10" type="text" formControlName="feedback" placeholder="Type your answer here....."></ion-textarea>
+    </ion-item>
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.question1">
+        <div class="error-message" *ngIf="feedbackForm.get('question1').hasError(validation.type) && (feedbackForm.get('question1').dirty || feedbackForm.get('question1').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <label class="error-message">{{errorMessage}}</label>
+    <span><em>{{500 - numberOfCharacters}} characters left</em></span>
+
+    <ion-item class="ion-padding-top">
+      <ion-button size="large" type="submit" color="success" [disabled]="!feedbackForm.valid">Submit</ion-button>
+    </ion-item>
+
+  </form>
+
+</ion-content>

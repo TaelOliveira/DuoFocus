@@ -22,6 +22,7 @@ export class TutorDetailComponent implements OnInit {
   user;
   chat;
   numberOfCharacters = 0;
+  chats;
 
   constructor(
     public modal: ModalController,
@@ -36,32 +37,32 @@ export class TutorDetailComponent implements OnInit {
   ngOnInit() {
     console.log(this.tutor.id);
     this.profileService
-        .getUserProfile()
-        .get()
-        .then(userProfileSnapshot => {
-            this.userProfile = userProfileSnapshot.data();
-        });
-    
+      .getUserProfile()
+      .get()
+      .then(userProfileSnapshot => {
+        this.userProfile = userProfileSnapshot.data();
+      });
+
     this.presentLoading();
     const tutorId = this.tutor.id;
     this.tutorReviews = this.db.collection$('tutorReviews', ref =>
-    ref
-      .where('tutorId', '==', tutorId)
-      .orderBy('createdAt', 'desc')
+      ref
+        .where('tutorId', '==', tutorId)
+        .orderBy('createdAt', 'desc')
     );
 
     this.reviewForm = new FormGroup({
       review: new FormControl('', [Validators.required, Validators.maxLength(200)]),
       starRating: new FormControl('', Validators.required),
     });
-    
+
   }
 
   onKeyUp(event: any): void {
     this.numberOfCharacters = event.target.value.length;
   }
 
-  trackById(idx, tutor){
+  trackById(idx, tutor) {
     return tutor.id;
   }
 
@@ -83,7 +84,7 @@ export class TutorDetailComponent implements OnInit {
     this.numberOfCharacters = 0;
   }
 
-  logRatingChange(rating){
+  logRatingChange(rating) {
     console.log("changed rating: ", rating);
     // do your stuff
   }
@@ -99,7 +100,7 @@ export class TutorDetailComponent implements OnInit {
     console.log('Loading dismissed!');
   }
 
-  async startChat(tutor?: any, chatID?: any){
+  async startChat(tutor?: any, chatID?: any) {
 
     const userId = await this.profileService.currentUser.uid;
 
@@ -132,5 +133,25 @@ export class TutorDetailComponent implements OnInit {
     });
     toast.present();
   }
+
+  getUserChats() {
+    const uid = this.profileService.currentUser.uid;
+    this.chats = this.db.collection$('chats', ref => ref
+      .where('tutorId', '==', this.tutor.id)
+      .where('createdBy', '==', uid));
+    return this.chats;
+  }
+
+  checkChats() {
+    if (this.chats == 1) {
+      this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
+      this.dismissModal();
+    }
+    else {
+      this.startChat();
+      this.dismissModal();
+    }
+  }
+
 
 }

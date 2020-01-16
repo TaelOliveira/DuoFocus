@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { FirebaseService } from '../../services/firebase.service';
 import { AlertController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-contact',
@@ -17,11 +17,12 @@ export class ContactPage implements OnInit {
   numberOfCharacters1 = 0;
   numberOfCharacters2 = 0;
   numberOfCharacters3 = 0;
+  beTutor;
 
   validation_messages = {
     'question1': [
       { type: 'required', message: 'This answer is required.' },
-      { type: 'minLength', message: 'Answer cannot be less than 20 characters long.' }
+      { type: 'minLength', message: 'Answer cannot be less than 10 characters long.' }
     ],
     'question2': [
       { type: 'required', message: 'This answer is required.' },
@@ -37,14 +38,14 @@ export class ContactPage implements OnInit {
     private formBuilder: FormBuilder,
     public alertController: AlertController,
     private profileService: ProfileService,
-    public firebaseData: FirebaseService
+    public db: DatabaseService
   ) { }
 
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
-      question1: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ]),
-      question2: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ]),
-      question3: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(350) ])
+      question1: new FormControl('', [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
+      question2: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(500) ]),
+      question3: new FormControl('', [ Validators.required, Validators.minLength(20), Validators.maxLength(500) ])
     });
 
   }
@@ -61,27 +62,36 @@ export class ContactPage implements OnInit {
     this.numberOfCharacters3 = event.target.value.length;
   }
 
-  addForm(){
-    if (!this.contactForm.valid){
-      console.log("Nice try!");
-    } else {
-      this.firebaseData.saveForm(this.contactForm.value.question1, this.contactForm.value.question2,
-        this.contactForm.value.question3, this.profileService.currentUser.email).then( () => {
-          this.contactForm.reset();
-          this.numberOfCharacters1 = 0;
-          this.numberOfCharacters2 = 0;
-          this.numberOfCharacters3 = 0;
-        });
-        this.presentAlert();
-        console.log(this.profileService.currentUser.email);
+  async submitForm(){
+
+    const id = this.beTutor ? this.beTutor.id : '';
+    const data = {
+      createdAt: new Date(),
+      createdBy: this.profileService.currentUser.uid,
+      userEmail: this.profileService.currentUser.email,
+      question1: this.contactForm.value.question1,
+      question2: this.contactForm.value.question2,
+      question3: this.contactForm.value.question3
+    };
+    const send = "We will revise your application and get in touch."
+    const error = "Please, try again!"
+    if(this.db.updateAt(`beTutor/${id}`, data)){
+      this.contactForm.reset();
+      this.numberOfCharacters1 = 0;
+      this.numberOfCharacters2 = 0;
+      this.numberOfCharacters3 = 0;
+      await this.presentAlert(send);
+    }
+    else{
+      await this.presentAlert(error);
     }
   
   }
 
-  async presentAlert() {
+  async presentAlert(message) {
     const alert = await this.alertController.create({
       header: 'Thanks for applying to be part of our team.',
-      subHeader: 'We will revise your application and get in touch.',
+      subHeader: message,
       buttons: ['OK']
     });
 
