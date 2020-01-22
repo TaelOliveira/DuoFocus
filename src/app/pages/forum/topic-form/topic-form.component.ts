@@ -70,7 +70,7 @@ export class TopicFormComponent implements OnInit {
 
     this.db.updateAt(`topics/${id}`, data);
     await this.modal.dismiss();
-    this.presentToast("Topic added!", false, 'bottom', 3000);
+    this.presentToast("Topic added!", true, 'bottom', 3000);
     this.numberOfCharacters1 = 0;
     this.numberOfCharacters2 = 0;
   }

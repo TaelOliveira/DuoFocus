@@ -17,15 +17,15 @@
       <ion-row>
         <ion-col>
           <div>
-            <ion-button size="small" fill="outline" (click)="reportTopic()">
-              <ion-icon slot="start" name="flag"></ion-icon>
-              Report
+            <ion-button color="danger" fill="outline" (click)="reportTopic()">
+              <ion-icon name="flag"></ion-icon>
             </ion-button>
           </div>
         </ion-col>
         <ion-col>
           <div class="ion-text-end">
             <p>by {{topic.username}}</p>
+            <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
           </div>
         </ion-col>
       </ion-row>
@@ -47,15 +47,15 @@
       <ion-row>
         <ion-col>
           <div>
-            <ion-button fill="outline" (click)="reportReply(reply)">
-              <ion-icon slot="start" name="flag"></ion-icon>
-              Report
+            <ion-button fill="outline" color="danger" (click)="reportReply(reply)">
+              <ion-icon name="flag"></ion-icon>
             </ion-button>
           </div>
         </ion-col>
         <ion-col>
           <div class="ion-text-end">
             <p>by {{reply.username}}</p>
+            <p>{{reply.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
           </div>
         </ion-col>
       </ion-row>

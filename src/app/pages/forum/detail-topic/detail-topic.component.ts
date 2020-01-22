@@ -159,6 +159,7 @@ export class DetailTopicComponent implements OnInit {
               topicId: this.topic.id,
               sentBy: this.profileService.currentUser.uid,
               reason: data,
+              content: this.topic.question,
               createdAt: new Date(),
             };
             if (this.db.updateAt(`reportTopic/${id}`, data2)) {
@@ -234,6 +235,7 @@ export class DetailTopicComponent implements OnInit {
               replyId: reply.id,
               sentBy: this.profileService.currentUser.uid,
               reason: data,
+              content: reply.reply,
               createdAt: new Date(),
             };
             if(this.db.updateAt(`reportReply/${id}`, data2)){

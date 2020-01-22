@@ -15,30 +15,40 @@
 
   <h1>My Topics</h1>
 
-  <ion-list>
-    <ion-item *ngFor="let topic of topics | async; trackBy: trackById">
-      <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="10">
-            <ion-label (click)="presentDetailTopic(topic)" class="ion-text-wrap">
-              <p>{{topic.question}}</p>
-            </ion-label>
-          </ion-col>
-          <ion-col class="ion-align-items-end">
-            <ion-button color="danger" (click)="deleteTopic(topic)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
-
-  <ion-footer>
+  <div>
     <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-button>
-  </ion-footer>
+  </div>
+
+  <ion-list>
+    <ion-item lines="none" *ngFor="let topic of topics | async; trackBy: trackById">
+      <ion-card>
+        <ion-card-header class="ion-text-wrap">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="10">
+              <ion-card-title (click)="presentDetailTopic(topic)">{{topic.question}}</ion-card-title>
+            </ion-col>
+            <ion-col size="2" class="ion-align-items-end">
+              <ion-button color="danger" (click)="deleteTopic(topic)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-end">
+                <p>by {{topic.username}}</p>
+                <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
   
 </ion-content>
 

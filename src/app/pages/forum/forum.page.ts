@@ -40,10 +40,10 @@ export class ForumPage implements OnInit {
 
   deleteTopic(topic){
     if(this.db.delete(`topics/${topic.id}`)){
-      this.presentToast("Topic deleted!", false, 'bottom', 3000);
+      this.presentToast("Topic deleted!", true, 'bottom', 3000);
     }
     else{
-      this.presentToast("Sorry, try again later!", false, 'bottom', 3000);
+      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
     }
     console.log(topic.id);
     

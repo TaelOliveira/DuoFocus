@@ -42,7 +42,9 @@
     <div>
       <ion-row>
         <ion-input formControlName="message" placeholder="Enter your message here" type="text"></ion-input>
-        <ion-button [disabled]="!messageForm.valid" (keyup.enter)="submit()" (click)="submit()" color="success">Send</ion-button>
+        <ion-button [disabled]="!messageForm.valid" (click)="submit()" color="success">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
       </ion-row>
     </div>
   </form>

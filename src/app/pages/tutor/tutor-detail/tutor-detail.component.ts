@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase';
 
 @Component({
   selector: 'app-tutor-detail',
@@ -23,6 +24,7 @@ export class TutorDetailComponent implements OnInit {
   chat;
   numberOfCharacters = 0;
   chats;
+  userChats;
 
   constructor(
     public modal: ModalController,
@@ -134,24 +136,48 @@ export class TutorDetailComponent implements OnInit {
     toast.present();
   }
 
-  getUserChats() {
-    const uid = this.profileService.currentUser.uid;
-    this.chats = this.db.collection$('chats', ref => ref
-      .where('tutorId', '==', this.tutor.id)
-      .where('createdBy', '==', uid));
-    return this.chats;
-  }
-
   checkChats() {
-    if (this.chats == 1) {
+
+    let userChat= [];
+
+    var db = firestore();
+    const uid = this.profileService.currentUser.uid;
+    db.collection("chats")
+      .where('tutorId', '==', this.tutor.id)
+      .where('createdBy', '==', uid)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          //console.log(doc.id, " => ", doc.data()["tutorId"]);
+          //console.log("userchat", doc.data()["tutorId"])
+          userChat["tutorId"] = doc.data()["tutorId"];
+          console.log(userChat);
+          
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+
+    console.log("TUTOR ID", this.tutor.id);
+    console.log("USER CHAT => TUTOR ID", userChat)
+
+    if (this.tutor.id == userChat) {
+      console.log("dfdsfdsfdsfdsfdsfds")
       this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
-      this.dismissModal();
     }
     else {
       this.startChat();
-      this.dismissModal();
+      //console.log("tutorID", tutorId)
     }
   }
 
+  noChat() {
+    this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
+  }
 
+  yesChat() {
+    this.startChat();
+    this.dismissModal();
+  }
 }
