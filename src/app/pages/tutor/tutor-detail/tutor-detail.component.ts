@@ -138,7 +138,7 @@ export class TutorDetailComponent implements OnInit {
 
   checkChats() {
 
-    let userChat= [];
+    var userChat= [];
 
     var db = firestore();
     const uid = this.profileService.currentUser.uid;
@@ -151,8 +151,7 @@ export class TutorDetailComponent implements OnInit {
           //console.log(doc.id, " => ", doc.data()["tutorId"]);
           //console.log("userchat", doc.data()["tutorId"])
           userChat["tutorId"] = doc.data()["tutorId"];
-          console.log(userChat);
-          
+          console.log("MY CHATS", userChat);
         });
       })
       .catch(function (error) {
@@ -160,15 +159,14 @@ export class TutorDetailComponent implements OnInit {
       });
 
     console.log("TUTOR ID", this.tutor.id);
-    console.log("USER CHAT => TUTOR ID", userChat)
+    console.log("USER CHAT => TUTOR ID", userChat);
 
-    if (this.tutor.id == userChat) {
+    if (typeof userChat !== undefined && userChat.length > 0) {
       console.log("dfdsfdsfdsfdsfdsfds")
       this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
     }
-    else {
+    else{
       this.startChat();
-      //console.log("tutorID", tutorId)
     }
   }
 

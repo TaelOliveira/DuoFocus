@@ -33,7 +33,7 @@
           <ion-input class="myClass2" formControlName="username" type="text"></ion-input>
         </ion-item>
       </form>
-      <ion-button [disabled]="!nameForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateName(firstName, lastName), updateUsername(username)]">Next</ion-button>
+      <ion-button [disabled]="!nameForm.valid" shape="round" size="large" color="success" (click)="[slides.slideNext(), updateName(firstName, lastName), updateUsername(username)]">Next</ion-button>
     </ion-slide>
 
     <!-- step two: choose school -->
@@ -46,7 +46,7 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button [disabled]="!schoolForm.valid" shape="round" size="large" color="dark" (click)="[slides.slideNext(), updateSchool()]">Next</ion-button>
+        <ion-button [disabled]="!schoolForm.valid" shape="round" size="large" color="success" (click)="[slides.slideNext(), updateSchool()]">Next</ion-button>
       </form>
     </ion-slide>
 
@@ -60,15 +60,16 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button [disabled]="!courseForm.valid" shape="round" size="large" color="dark" (click)="[finish(), updateCourse()]">Next</ion-button>
+        <ion-button [disabled]="!courseForm.valid" shape="round" size="large" color="success" (click)="[slides.slideNext(), updateCourse()]">Next</ion-button>
       </form>
     </ion-slide>
 
-    <!-- step four: upload picture
+    <!-- step four: upload picture -->
     <ion-slide class="step-four myClass ion-text-wrap">
+      <ion-label>You can upload a picture later on your Profile.</ion-label>
       <ion-button (click)="uploadPicture.openImagePicker()" color="secondary" expand="full">Upload a Picture</ion-button>
       <ion-button shape="round" size="large" color="success" (click)="finish()">Next</ion-button>
-    </ion-slide>-->
+    </ion-slide>
 
   </ion-slides>
   

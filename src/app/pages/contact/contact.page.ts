@@ -73,7 +73,7 @@ export class ContactPage implements OnInit {
       question2: this.contactForm.value.question2,
       question3: this.contactForm.value.question3
     };
-    const send = "We will revise your application and get in touch."
+    const send = "We have received your application and will get in touch."
     const error = "Please, try again!"
     if(this.db.updateAt(`beTutor/${id}`, data)){
       this.contactForm.reset();

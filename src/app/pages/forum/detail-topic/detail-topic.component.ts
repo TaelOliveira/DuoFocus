@@ -4,6 +4,7 @@ import { ModalController, LoadingController, AlertController, ToastController } 
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
 
 @Component({
   selector: 'app-detail-topic',
@@ -34,6 +35,7 @@ export class DetailTopicComponent implements OnInit {
     public toastController: ToastController,
     private alertController: AlertController,
     public modal: ModalController,
+    public userModal: ModalController,
     private afs: AngularFirestore,
     public loadingController: LoadingController,
     private profileService: ProfileService,
@@ -274,5 +276,15 @@ export class DetailTopicComponent implements OnInit {
     });
     toast.present();
   }
+
+  async presentUserProfile(topic?: any){
+    const userModal = await this.userModal.create({
+      component: UserProfileViewComponent,
+      componentProps: {topic}
+    });
+    return await userModal.present();
+  }
+
+  
 
 }

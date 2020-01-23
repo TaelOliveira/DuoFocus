@@ -123,9 +123,7 @@ export class FirstSignInPage implements OnInit {
   }
 
   async finish(){
-    const message = "You change your profile photo in your Profile page!"
     await this.storage.set('firstSignInComplete', true);
-    await this.presentToast(message, true, 'bottom', 3000);
     await this.presentLoading();
     this.router.navigateByUrl('/profile');
   }

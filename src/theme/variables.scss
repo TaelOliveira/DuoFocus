@@ -86,11 +86,21 @@
 
   /** set the text color of all pages
   --ion-text-color: white; **/
-  
+
   /* .myAlert{
     --background: black;
     --ion-text-color: white;
     --ion-inputs-color: white;
   } */
-  
+
+  .alert-radio-label {
+    white-space: pre-line;
+  }
+
+  .alert-tappable.alert-radio {
+    height: auto;
+    contain: content;
+  }
+
+
 }

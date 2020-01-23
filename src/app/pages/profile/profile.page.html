@@ -92,9 +92,9 @@
 
               <form [formGroup]="schoolForm">
                 <ion-item (click)="getSchools()">
-                  <ion-select class="myClass" formControlName="schoolName" placeholder="Change your school">
+                  <ion-select class="myClass ion-text-wrap" formControlName="schoolName" placeholder="Change your school">
                     <ion-select-option *ngFor="let school of schools | async">
-                      <p>{{school.name}}</p>
+                      {{school.name}}
                     </ion-select-option>
                   </ion-select>
                 </ion-item>

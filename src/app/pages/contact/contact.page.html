@@ -23,7 +23,7 @@
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question1">
         <div class="error-message" *ngIf="contactForm.get('question1').hasError(validation.type) && (contactForm.get('question1').dirty || contactForm.get('question1').touched)">
-          {{ validation.message }}
+          <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
         </div>
       </ng-container>
     </div>
@@ -39,7 +39,7 @@
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question2">
         <div class="error-message" *ngIf="contactForm.get('question2').hasError(validation.type) && (contactForm.get('question2').dirty || contactForm.get('question2').touched)">
-          {{ validation.message }}
+          <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
         </div>
       </ng-container>
     </div>
@@ -55,7 +55,7 @@
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question3">
         <div class="error-message" *ngIf="contactForm.get('question3').hasError(validation.type) && (contactForm.get('question3').dirty || contactForm.get('question3').touched)">
-          {{ validation.message }}
+          <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
         </div>
       </ng-container>
     </div>
