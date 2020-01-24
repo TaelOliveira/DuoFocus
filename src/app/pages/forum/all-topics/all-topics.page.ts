@@ -5,6 +5,7 @@ import { DetailTopicComponent } from '../detail-topic/detail-topic.component';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { TopicFormComponent } from '../topic-form/topic-form.component';
+import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
 
 @Component({
   selector: 'app-all-topics',
@@ -22,7 +23,8 @@ export class AllTopicsPage implements OnInit {
     public loadingController: LoadingController,
     private profileService: ProfileService,
     public router: Router,
-    public modal: ModalController
+    public modal: ModalController,
+    public userModal: ModalController
   ) { }
 
   ngOnInit() {
@@ -70,6 +72,14 @@ export class AllTopicsPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  async presentUserProfile(topic?: any){
+    const userModal = await this.userModal.create({
+      component: UserProfileViewComponent,
+      componentProps: {topic}
+    });
+    return await userModal.present();
   }
 
 }

@@ -21,9 +21,10 @@
         </ion-card-header>
         <ion-card-content>
           <ion-row>
+            <ion-icon name="help"></ion-icon>
             <ion-col>
               <div class="ion-text-end">
-                <p>by {{topic.username}}</p>
+                <p class="user" (click)="presentUserProfile(topic)">by {{topic.username}}</p>
                 <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
               </div>
             </ion-col>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
 import { firestore } from 'firebase';
+import { ModalController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-profile-view',
@@ -9,29 +10,40 @@ import { firestore } from 'firebase';
 })
 export class UserProfileViewComponent implements OnInit {
 
-  profile;
   topic;
+  profile;
 
   constructor(
     public db: DatabaseService,
+    public loadingController: LoadingController,
+    public userModal: ModalController,
   ) { }
 
   ngOnInit() {
 
-    const createdBy = this.topic.createdBy;
-    var db = firestore();
-    this.profile = db.collection("userProfile").doc(createdBy);
+    this.presentLoading();
 
-    /* this.user = profile.get().then(function (doc) {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    }); */
-
+    const createdBy = this.topic.email;
+    this.profile = this.db.collection$('userProfile', ref =>
+    ref
+      .where('email', '==', createdBy)
+    );
   }
+
+  dismissModal() {
+    this.userModal.dismiss({
+      'dismissed': true
+    });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
 }

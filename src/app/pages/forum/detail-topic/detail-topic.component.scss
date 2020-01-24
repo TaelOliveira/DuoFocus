@@ -1,24 +1,24 @@
-ion-header{
-    
-    ion-button{
+ion-header {
+
+    ion-button {
         color: white;
 
-        ion-icon{
+        ion-icon {
             font-size: 32px;
-          }
+        }
     }
 }
 
-ion-content{
+ion-content {
     --ion-background-color: white;
 
-    ion-card{
+    ion-card {
 
-        ion-card-content{
+        ion-card-content {
 
-            div{
+            div {
 
-                p{
+                p {
                     font-style: italic;
                     font-size: medium;
                     color: black;
@@ -27,17 +27,17 @@ ion-content{
         }
     }
 
-    ion-item{
+    ion-item {
 
-        p{
+        p {
             font-size: medium;
             color: black;
             line-height: 1.5em;
         }
 
-        div{
+        div {
 
-            p{
+            p {
                 font-style: italic;
                 font-size: medium;
                 color: black;
@@ -45,24 +45,28 @@ ion-content{
         }
     }
 
-    ion-textarea{
+    ion-textarea {
         border: solid 2px black;
         font-family: Arial, Helvetica, sans-serif;
         font-size: large;
     }
 
-    error-message{
+    error-message {
         color: gold;
         font-size: larger;
         font-family: Arial, Helvetica, sans-serif;
     }
 
-    ion-button{
+    ion-button {
         margin-top: 20px;
     }
 }
 
-.myAlert{
+.myAlert {
     --background: black;
     --ion-text-color: white;
+}
+
+.user {
+    text-decoration: underline;
 }

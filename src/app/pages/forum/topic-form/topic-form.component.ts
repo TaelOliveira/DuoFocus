@@ -63,6 +63,7 @@ export class TopicFormComponent implements OnInit {
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
       username: this.userProfile.username,
+      email: this.profileService.currentUser.email,
       ...this.question,
       ...this.description,
       ...this.topicForm.value
