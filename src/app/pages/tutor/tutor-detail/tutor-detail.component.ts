@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { firestore } from 'firebase';
 
 @Component({
   selector: 'app-tutor-detail',
@@ -20,11 +19,8 @@ export class TutorDetailComponent implements OnInit {
   userProfile: any;
   reviewForm: FormGroup;
   rating;
-  user;
   chat;
   numberOfCharacters = 0;
-  chats;
-  userChats;
 
   constructor(
     public modal: ModalController,
@@ -105,12 +101,16 @@ export class TutorDetailComponent implements OnInit {
   async startChat(tutor?: any, chatID?: any) {
 
     const userId = await this.profileService.currentUser.uid;
+    const date = new Date();
+    const date2 = new Date();
+    date2.setDate( date2.getDate() + 2 );
 
     const data = {
       createdBy: userId,
       tutorId: this.tutor.id,
-      createdAt: new Date(),
-      chatName: this.tutor.firstName + " & " + this.userProfile.firstName,
+      createdAt: date,
+      chatName: "Tutor name: " + this.tutor.firstName,
+      finishAt: date2
     };
 
     this.chat = await this.afs.collection('chats').add(data);
@@ -136,46 +136,24 @@ export class TutorDetailComponent implements OnInit {
     toast.present();
   }
 
-  checkChats() {
+  async checkChats() {
 
-    var userChat= [];
-
-    var db = firestore();
     const uid = this.profileService.currentUser.uid;
-    db.collection("chats")
-      .where('tutorId', '==', this.tutor.id)
-      .where('createdBy', '==', uid)
+
+    await this.afs.collection('chats', (ref) =>
+      ref
+        .where('createdBy', '==', uid)
+        .where('tutorId', '==', this.tutor.id)
+        .limit(1))
       .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          //console.log(doc.id, " => ", doc.data()["tutorId"]);
-          //console.log("userchat", doc.data()["tutorId"])
-          userChat["tutorId"] = doc.data()["tutorId"];
-          console.log("MY CHATS", userChat);
-        });
+      .subscribe(chat => {
+        if (chat.size > 0) {
+          this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
+        }
+        else {
+          this.startChat();
+        }
       })
-      .catch(function (error) {
-        console.log("Error getting documents: ", error);
-      });
-
-    console.log("TUTOR ID", this.tutor.id);
-    console.log("USER CHAT => TUTOR ID", userChat);
-
-    if (typeof userChat !== undefined && userChat.length > 0) {
-      console.log("dfdsfdsfdsfdsfdsfds")
-      this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
-    }
-    else{
-      this.startChat();
-    }
   }
 
-  noChat() {
-    this.presentToast("You cannot start another chat with this tutor!", true, 'bottom', 4000);
-  }
-
-  yesChat() {
-    this.startChat();
-    this.dismissModal();
-  }
 }

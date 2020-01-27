@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-      <ion-title>My Tutors</ion-title>
+    <ion-title>My Tutors</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,21 +17,32 @@
             <ion-col size="2">
               <ion-icon class="icon" name="contacts"></ion-icon>
             </ion-col>
-            <ion-col size="8">
+            <ion-col size="10">
               <ion-card-title (click)="openChat(chat)">{{chat.chatName}}</ion-card-title>
-            </ion-col>
-            <ion-col size="2" class="ion-align-items-end">
-              <ion-button color="danger" (click)="deleteChat(chat)">
-                <ion-icon name="trash"></ion-icon>
-              </ion-button>
+              <div class="ion-text-start">
+                <ion-card-subtitle>Chat started at: {{chat.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}
+                </ion-card-subtitle>
+              </div>
             </ion-col>
           </ion-row>
         </ion-card-header>
         <ion-card-content>
+          <ion-row class="ion-align-items-end">
+            <div>
+              <ion-col>
+                <ion-button color="danger" (click)="deleteChat(chat)">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </div>
+          </ion-row>
           <ion-row>
             <ion-col>
+              <div class="ion-text-start">
+                <p>Your chat will be deleted at:</p>
+              </div>
               <div class="ion-text-end">
-                <p>{{chat.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
+                <p>{{chat.finishAt.toDate() | date : 'dd-MM-yyyy HH:mm:ss'}}</p>
               </div>
             </ion-col>
           </ion-row>

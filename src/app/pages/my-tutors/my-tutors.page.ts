@@ -25,7 +25,7 @@ export class MyTutorsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    
+
     this.presentLoading();
 
     const uid = this.profileService.currentUser.uid;
@@ -34,26 +34,26 @@ export class MyTutorsPage implements OnInit {
       .orderBy('createdAt', 'desc'));
   }
 
-  trackById(chat){
+  trackById(chat) {
     return chat.id;
   }
 
-  deleteChat(chat){
-    if(this.db.delete(`chats/${chat.id}`)){
+  deleteChat(chat) {
+    if (this.db.delete(`chats/${chat.id}`)) {
       this.presentToast("Chat deleted!", true, 'bottom', 3000);
     }
-    else{
+    else {
       this.presentToast("Sorry, couldn't delete. Try again later!!", true, 'bottom', 3000);
     }
     console.log(chat.id);
   }
 
-  async openChat(chat){
+  async openChat(chat) {
     console.log(chat.id);
 
     const modal = await this.modal.create({
       component: ChatViewComponent,
-      componentProps: {chat}
+      componentProps: { chat }
     });
     return await modal.present();
 
