@@ -13,12 +13,16 @@
     <ion-button routerLink="/all-topics" expand="full" size="large">All Topics</ion-button>
   </section>
 
-  <h1>My Topics</h1>
-
   <div>
     <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-button>
+  </div>
+
+  <div class="ion-text-center" *ngIf="show">
+    <ng-container>
+      <h2>Create new Topics to see them here!</h2>
+    </ng-container>
   </div>
 
   <ion-list>

@@ -9,6 +9,12 @@
 
 <ion-content class="ion-padding">
 
+  <div class="ion-text-center" *ngIf="show">
+    <ng-container>
+      <h2>Start chatting with a Tutor to see them here!</h2>
+    </ng-container>
+  </div>
+
   <ion-list>
     <ion-item lines="none" *ngFor="let chat of chats | async; trackBy: trackById">
       <ion-card>

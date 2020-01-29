@@ -4,6 +4,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { TopicFormComponent } from '../forum/topic-form/topic-form.component'
 import { ProfileService } from 'src/app/services/profile.service';
 import { DetailTopicComponent } from './detail-topic/detail-topic.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-forum',
@@ -14,9 +15,11 @@ export class ForumPage implements OnInit {
   
   topics;
   topicId: string;
+  show = true;
 
   constructor(
     public db: DatabaseService,
+    private afs: AngularFirestore,
     public loadingController: LoadingController,
     public toastController: ToastController,
     private profileService: ProfileService,
@@ -25,6 +28,8 @@ export class ForumPage implements OnInit {
 
   ngOnInit() {
     this.presentLoading();
+    this.checkTopics();
+    
     //get all topics of user
     const uid = this.profileService.currentUser.uid;
     this.topics = this.db.collection$('topics', ref =>
@@ -38,6 +43,10 @@ export class ForumPage implements OnInit {
     return topic.id;
   }
 
+  ionViewWillEnter() {
+    this.checkTopics();
+  }
+
   deleteTopic(topic){
     if(this.db.delete(`topics/${topic.id}`)){
       this.presentToast("Topic deleted!", true, 'bottom', 3000);
@@ -46,7 +55,7 @@ export class ForumPage implements OnInit {
       this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
     }
     console.log(topic.id);
-    
+    this.checkTopics();
   }
 
   async presentTopicForm(topic?: any){
@@ -73,6 +82,7 @@ export class ForumPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+    this.checkTopics();
   }
 
   async presentToast(message, show_button, position, duration) {
@@ -83,6 +93,25 @@ export class ForumPage implements OnInit {
       duration: duration
     });
     toast.present();
+  }
+
+  async checkTopics() {
+
+    const uid = this.profileService.currentUser.uid;
+
+    await this.afs.collection('topics', (ref) =>
+      ref
+        .where('createdBy', '==', uid)
+        .limit(1))
+      .get()
+      .subscribe(topic => {
+        if(topic.size > 0){
+          this.show = false;
+        }
+        else{
+          this.show = true;
+        }
+      })
   }
 
 }

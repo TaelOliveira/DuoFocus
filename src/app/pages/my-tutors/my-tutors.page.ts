@@ -4,6 +4,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
 import { ChatViewComponent } from './chat-view/chat-view.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-my-tutors',
@@ -13,9 +14,11 @@ import { ChatViewComponent } from './chat-view/chat-view.component';
 export class MyTutorsPage implements OnInit {
 
   chats;
+  show = true;
 
   constructor(
     public db: DatabaseService,
+    private afs: AngularFirestore,
     public toastController: ToastController,
     public loadingController: LoadingController,
     public modal: ModalController,
@@ -24,14 +27,19 @@ export class MyTutorsPage implements OnInit {
     private profileService: ProfileService,
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
 
     this.presentLoading();
+    this.checkChats();
 
     const uid = this.profileService.currentUser.uid;
     this.chats = this.db.collection$('chats', ref => ref
       .where('createdBy', '==', uid)
       .orderBy('createdAt', 'desc'));
+  }
+
+  ionViewWillEnter() {
+    this.checkChats();
   }
 
   trackById(chat) {
@@ -46,6 +54,7 @@ export class MyTutorsPage implements OnInit {
       this.presentToast("Sorry, couldn't delete. Try again later!!", true, 'bottom', 3000);
     }
     console.log(chat.id);
+    this.checkChats();
   }
 
   async openChat(chat) {
@@ -67,6 +76,7 @@ export class MyTutorsPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+    this.checkChats();
   }
 
   async presentToast(message, show_button, position, duration) {
@@ -77,6 +87,25 @@ export class MyTutorsPage implements OnInit {
       duration: duration
     });
     toast.present();
+  }
+
+  async checkChats() {
+
+    const uid = this.profileService.currentUser.uid;
+
+    await this.afs.collection('chats', (ref) =>
+      ref
+        .where('createdBy', '==', uid)
+        .limit(1))
+      .get()
+      .subscribe(chat => {
+        if(chat.size > 0){
+          this.show = false;
+        }
+        else{
+          this.show = true;
+        }
+      })
   }
 
 }

@@ -152,6 +152,7 @@ export class TutorDetailComponent implements OnInit {
         }
         else {
           this.startChat();
+          this.dismissModal();
         }
       })
   }
