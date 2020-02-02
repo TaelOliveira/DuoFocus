@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Admin Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="none" *ngFor="let user of user | async">
+    <ion-label>
+      <h1 class="ion-text-center ion-text-wrap">Welcome {{user.firstName}}!</h1>
+      <br>
+      <br>
+      <p class="ion-text-center">{{getDate | date:'EEEE dd MMMM yyyy'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-grid>
+
+    <ion-row>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/topics" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="clipboard"></ion-icon>
+            <label>Topics</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{topicsNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+      
+    </ion-row>
+
+  </ion-grid>
+
+
+
+</ion-content>

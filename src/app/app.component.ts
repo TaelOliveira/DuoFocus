@@ -18,6 +18,7 @@ export class AppComponent {
 
   public student = false;
   public tutor = false;
+  public admin = false;
 
   constructor(
     private platform: Platform,
@@ -46,6 +47,7 @@ export class AppComponent {
           .then(userProfileSnapshot => {
             this.student = userProfileSnapshot.data().student;
             this.tutor = userProfileSnapshot.data().tutor;
+            this.admin = userProfileSnapshot.data().admin;
           });
       }
     });

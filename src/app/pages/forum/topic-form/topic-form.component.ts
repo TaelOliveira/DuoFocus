@@ -20,12 +20,12 @@ export class TopicFormComponent implements OnInit {
 
   validation_messages = {
     'question': [
-      { type: 'maxLength', message: 'Cannot have more than 100 characters long.' },
-      { type: 'minLength', message: 'Cannot have less than 10 characters long.' }
+      { type: 'minLength', message: 'Cannot have less than 10 characters long.' },
+      { type: 'required', message: 'This answer is required.' },
     ],
     'description': [
-      { type: 'maxLength', message: 'Cannot have more than 350 characters long.' },
-      { type: 'minLength', message: 'Cannot have less than 10 characters long.' }
+      { type: 'minLength', message: 'Cannot have less than 10 characters long.' },
+      { type: 'required', message: 'This answer is required.' },
     ]
   };
 
@@ -52,8 +52,8 @@ export class TopicFormComponent implements OnInit {
       ...this.description
     };
     this.topicForm = this.formBuilder.group({
-      question: new FormControl (data.question, [ Validators.required, Validators.minLength(1), Validators.maxLength(100) ]),
-      description: new FormControl (data.description, [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
+      question: new FormControl ('', [ Validators.required, Validators.minLength(1), Validators.maxLength(100) ]),
+      description: new FormControl ('', [ Validators.required, Validators.minLength(10), Validators.maxLength(350) ]),
     });
   }
 

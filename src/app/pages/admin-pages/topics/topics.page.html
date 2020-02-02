@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Topic</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+    <ion-item lines="none" *ngFor="let topic of topics | async; trackBy: trackById">
+      <ion-card>
+        <ion-card-header class="ion-text-wrap">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="10">
+              <ion-card-title (click)="presentDetailTopic(topic)">{{topic.question}}</ion-card-title>
+            </ion-col>
+            <ion-col size="2" class="ion-align-items-end">
+              <ion-button color="danger" (click)="deleteTopic(topic)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-end">
+                <p>by {{topic.username}}</p>
+                <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

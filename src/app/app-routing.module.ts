@@ -83,6 +83,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/feedback/feedback.module').then( m => m.FeedbackPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'admin-dash',
+    loadChildren: () => import('./pages/admin-pages/admin-dash/admin-dash.module').then( m => m.AdminDashPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'topics',
+    loadChildren: () => import('./pages/admin-pages/topics/topics.module').then( m => m.TopicsPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

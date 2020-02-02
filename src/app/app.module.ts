@@ -31,6 +31,7 @@ import { TutorDetailComponent } from './pages/tutor/tutor-detail/tutor-detail.co
 import { StarRatingModule } from 'ionic4-star-rating';
 import { ChatViewComponent } from './pages/my-tutors/chat-view/chat-view.component';
 import { UserProfileViewComponent } from './pages/forum/user-profile-view/user-profile-view.component';
+import { TopicDetailComponent } from './pages/admin-pages/topics/topic-detail/topic-detail.component';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -42,7 +43,8 @@ firebase.initializeApp(environment.firebaseConfig);
                 UpdateInformationComponent,
                 TutorDetailComponent,
                 UserProfileViewComponent,
-                ChatViewComponent
+                ChatViewComponent,
+                TopicDetailComponent
               ],
   entryComponents: [
                     TopicFormComponent,
@@ -50,7 +52,8 @@ firebase.initializeApp(environment.firebaseConfig);
                     UpdateInformationComponent,
                     TutorDetailComponent,
                     UserProfileViewComponent,
-                    ChatViewComponent
+                    ChatViewComponent,
+                    TopicDetailComponent
                   ],
   imports: [
     BrowserModule,

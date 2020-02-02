@@ -16,11 +16,12 @@
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.question">
         <div class="error-message" *ngIf="topicForm.get('question').hasError(validation.type) && (topicForm.get('question').dirty || topicForm.get('question').touched)">
+          <ion-icon name="information-circle-outline"></ion-icon>
           {{ validation.message }}
         </div>
       </ng-container>
     </div>
-    <label class="error-message">{{errorMessage}}</label>
+    <ion-label class="error-message">{{errorMessage}}</ion-label>
     <span><em>{{100 - numberOfCharacters1}} characters left</em></span>
 
     <ion-text><h1>Description</h1></ion-text>
@@ -28,6 +29,7 @@
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.description">
         <div class="error-message" *ngIf="topicForm.get('description').hasError(validation.type) && (topicForm.get('description').dirty || topicForm.get('description').touched)">
+          <ion-icon name="information-circle-outline"></ion-icon>
           {{ validation.message }}
         </div>
       </ng-container>

@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button fill="clear" (click)="dismissModal()">
+      <ion-icon slot="start" name="close"></ion-icon>
+    </ion-button> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{topic.question}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>{{topic.description}}</strong></p><br>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-end">
+            <p class="user">by {{topic.username}}</p>
+            <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item *ngFor="let reply of replies | async; trackBy: trackById">
+    <ion-label class="ion-text-wrap">
+      <ion-row>
+        <ion-col size="10">
+          <p>{{reply.reply}}</p>
+        </ion-col>
+        <ion-col class="ion-align-items-end">
+          <ion-button color="danger" (click)="deleteReply(reply)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-end">
+            <p>by {{reply.username}}</p>
+            <p>{{reply.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-label>
+  </ion-item>
+
+</ion-content>
+
+

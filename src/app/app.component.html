@@ -59,6 +59,11 @@
             <ion-label>Reviews</ion-label>
           </ion-item>
 
+          <ion-item *ngIf="admin" routerLink="/admin-dash">
+            <ion-icon name="analytics" slot="start"></ion-icon>
+            <ion-label>Admin Dashboard</ion-label>
+          </ion-item>
+
         </ion-list>
       
       </ion-menu-toggle>

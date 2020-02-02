@@ -14,12 +14,13 @@
   <form [formGroup]="feedbackForm" class="ion-padding" (submit)="submitForm()">
 
     <ion-item class="myClass">
-      <ion-textarea (keyup)="onKeyUp($event)" rows="10" type="text" formControlName="feedback" placeholder="What you think avout the app? Where could we improve?"></ion-textarea>
+      <ion-textarea (keyup)="onKeyUp($event)" rows="10" type="text" formControlName="feedback" placeholder="What do you think about the app? Where could we improve?"></ion-textarea>
     </ion-item>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.feedback">
         <div class="error-message" *ngIf="feedbackForm.get('feedback').hasError(validation.type) && (feedbackForm.get('feedback').dirty || feedbackForm.get('feedback').touched)">
-          <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+          <ion-icon name="information-circle-outline"></ion-icon>
+          {{ validation.message }}
         </div>
       </ng-container>
     </div>

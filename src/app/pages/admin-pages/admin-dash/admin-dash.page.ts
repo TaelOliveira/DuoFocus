@@ -5,21 +5,25 @@ import { DatabaseService } from 'src/app/services/database.service';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-admin-dash',
+  templateUrl: './admin-dash.page.html',
+  styleUrls: ['./admin-dash.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class AdminDashPage implements OnInit {
 
   user;
+  public admin = false;
   public student = false;
   public tutor = false;
   getDate = new Date();
+  topicsNumber;
 
   constructor(
     public menu: MenuController,
+    private afs: AngularFirestore,
     public db: DatabaseService,
     private authService: AuthenticationService,
   ) { }
@@ -38,15 +42,24 @@ export class DashboardPage implements OnInit {
           .doc(`/userProfile/${user.uid}`)
           .get()
           .then(userProfileSnapshot => {
+            this.admin = userProfileSnapshot.data().student;
             this.student = userProfileSnapshot.data().student;
             this.tutor = userProfileSnapshot.data().tutor;
           });
       }
     });
+
+    this.getTopicsNumber();
   }
 
-  ionViewWillEnter() {
-    this.menu.enable(true);
+  async getTopicsNumber() {
+
+    await this.afs.collection('topics')
+      .get()
+      .subscribe(topic => {
+        this.topicsNumber = topic.size;
+        console.log(this.topicsNumber)
+      })
   }
 
 }

@@ -1,26 +1,26 @@
-ion-header{
-    
-    ion-button{
+ion-header {
+
+    ion-button {
         color: white;
 
-        ion-icon{
+        ion-icon {
             font-size: 32px;
-          }
+        }
     }
 }
 
-ion-content{
+ion-content {
     --ion-background-color: white;
 
-    ion-textarea{
+    ion-textarea {
         border: solid 2px black;
         font-family: Arial, Helvetica, sans-serif;
         font-size: large;
     }
-    error-message{
-        color: gold;
-        font-size: larger;
-        font-family: Arial, Helvetica, sans-serif;
-    }
 }
 
+.error-message {
+    color: var(--ion-color-Contrast);
+    font-size: larger;
+    font-family: Arial, Helvetica, sans-serif;
+}
