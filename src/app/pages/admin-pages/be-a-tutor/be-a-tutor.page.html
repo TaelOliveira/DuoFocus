@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Be A Tutor Emails</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item lines="none" *ngFor="let email of beTutor | async">
+      <ion-card>
+        <ion-card-header class="ion-text-wrap">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="10">
+              <ion-card-title>{{email.createdAt.toDate() | date:'dd MMMM yyyy HH:mm'}}</ion-card-title>
+            </ion-col>
+            <ion-col size="2" class="ion-align-items-end">
+              <ion-button color="danger" (click)="deleteEmail(email)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <strong>Sent by User ID: </strong>
+          <p>{{email.createdBy}}</p>
+          <strong>User email: </strong>
+          <p>{{email.userEmail}}</p>
+          <strong>Question 1: </strong>
+          <p>{{email.question1}}</p>
+          <strong>Question 2: </strong>
+          <p>{{email.question2}}</p>
+          <strong>Question 3: </strong>
+          <p>{{email.question3}}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

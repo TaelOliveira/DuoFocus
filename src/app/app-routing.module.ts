@@ -93,6 +93,26 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin-pages/topics/topics.module').then( m => m.TopicsPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'topics-reports',
+    loadChildren: () => import('./pages/admin-pages/topics-reports/topics-reports.module').then( m => m.TopicsReportsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'replies-reports',
+    loadChildren: () => import('./pages/admin-pages/replies-reports/replies-reports.module').then( m => m.RepliesReportsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'be-a-tutor',
+    loadChildren: () => import('./pages/admin-pages/be-a-tutor/be-a-tutor.module').then( m => m.BeATutorPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'feedback-emails',
+    loadChildren: () => import('./pages/admin-pages/feedback-emails/feedback-emails.module').then( m => m.FeedbackEmailsPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

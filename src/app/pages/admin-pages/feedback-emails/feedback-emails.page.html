@@ -3,37 +3,33 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Topic</ion-title>
+    <ion-title>Feedback</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
   <ion-list>
-    <ion-item lines="none" *ngFor="let topic of topics | async; trackBy: trackById">
+    <ion-item lines="none" *ngFor="let feedback of feedback | async">
       <ion-card>
         <ion-card-header class="ion-text-wrap">
           <ion-row class="ion-align-items-center">
             <ion-col size="10">
-              <ion-card-title (click)="presentDetailTopic(topic)">{{topic.question}}</ion-card-title>
-              Topic ID: {{topic.id}}
+              <ion-card-title>{{feedback.createdAt.toDate() | date:'dd MMMM yyyy HH:mm'}}</ion-card-title>
             </ion-col>
             <ion-col size="2" class="ion-align-items-end">
-              <ion-button color="danger" (click)="deleteTopic(topic)">
+              <ion-button color="danger" (click)="deleteFeedback(feedback)">
                 <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
         </ion-card-header>
         <ion-card-content>
-          <ion-row>
-            <ion-col>
-              <div class="ion-text-end">
-                <p>by {{topic.username}}</p>
-                <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
-              </div>
-            </ion-col>
-          </ion-row>
+          <strong>Sent by User ID: </strong>
+          <p>{{feedback.createdBy}}</p>
+          <strong>User email: </strong>
+          <p>{{feedback.userEmail}}</p><br>
+          <p>{{feedback.content}}</p>
         </ion-card-content>
       </ion-card>
     </ion-item>

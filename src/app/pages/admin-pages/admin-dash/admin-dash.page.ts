@@ -20,6 +20,10 @@ export class AdminDashPage implements OnInit {
   public tutor = false;
   getDate = new Date();
   topicsNumber;
+  topicsReportsNumber;
+  topicsRepliesNumber;
+  tutorEmails;
+  feedbackNumber;
 
   constructor(
     public menu: MenuController,
@@ -50,6 +54,10 @@ export class AdminDashPage implements OnInit {
     });
 
     this.getTopicsNumber();
+    this.getTopicsreportsNumber();
+    this.getTopicsrepliesNumber();
+    this.getTutorEmailsNumber();
+    this.getFeedbackNumber();
   }
 
   async getTopicsNumber() {
@@ -59,6 +67,46 @@ export class AdminDashPage implements OnInit {
       .subscribe(topic => {
         this.topicsNumber = topic.size;
         console.log(this.topicsNumber)
+      })
+  }
+
+  async getTopicsreportsNumber() {
+
+    await this.afs.collection('reportTopic')
+      .get()
+      .subscribe(reportTopic => {
+        this.topicsReportsNumber = reportTopic.size;
+        console.log(this.topicsReportsNumber)
+      })
+  }
+
+  async getTopicsrepliesNumber() {
+
+    await this.afs.collection('reportReply')
+      .get()
+      .subscribe(reportReply => {
+        this.topicsRepliesNumber = reportReply.size;
+        console.log(this.topicsRepliesNumber)
+      })
+  }
+
+  async getTutorEmailsNumber() {
+
+    await this.afs.collection('beTutor')
+      .get()
+      .subscribe(beTutor => {
+        this.tutorEmails = beTutor.size;
+        console.log(this.tutorEmails)
+      })
+  }
+
+  async getFeedbackNumber() {
+
+    await this.afs.collection('feedback')
+      .get()
+      .subscribe(feedback => {
+        this.feedbackNumber = feedback.size;
+        console.log(this.feedbackNumber)
       })
   }
 

@@ -11,6 +11,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{topic.question}}</ion-card-title>
+      Topic ID: {{topic.id}}
     </ion-card-header>
     <ion-card-content>
       <p><strong>{{topic.description}}</strong></p><br>
@@ -29,6 +30,7 @@
     <ion-label class="ion-text-wrap">
       <ion-row>
         <ion-col size="10">
+          <p>Reply ID: {{reply.id}}</p><br>
           <p>{{reply.reply}}</p>
         </ion-col>
         <ion-col class="ion-align-items-end">

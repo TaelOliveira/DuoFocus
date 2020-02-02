@@ -33,7 +33,55 @@
           </div>
         </ion-button>
       </ion-col>
-      
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/topics-reports" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="flag"></ion-icon>
+            <label>Topics Reports</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{topicsReportsNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/replies-reports" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="flag"></ion-icon>
+            <label>Replies Reports</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{topicsRepliesNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/be-a-tutor" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="school"></ion-icon><br>
+            <label>Be a Tutor Emails</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{tutorEmails}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/feedback-emails" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <label>Feedback</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{feedbackNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
     </ion-row>
 
   </ion-grid>
