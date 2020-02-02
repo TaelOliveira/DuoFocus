@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-toolbar color="secondary">
+    <ion-segment [(ngModel)]="users">
+      <ion-segment-button value="students" (click)="getAllStudents()">
+        <ion-icon name="contacts"></ion-icon>Students
+      </ion-segment-button>
+      <ion-segment-button value="tutors" (click)="getAllTutors()">
+        <ion-icon name="school"></ion-icon>Tutors
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="users">
+
+    <ion-list *ngSwitchCase="'students'">
+      <ion-item lines="none" *ngFor="let student of students | async">
+        <ion-card>
+          <ion-card-header class="ion-text-wrap">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="10">
+                <ion-card-title>{{student.id}}</ion-card-title>
+              </ion-col>
+              <ion-col size="2" class="ion-align-items-end">
+                <ion-button color="danger" (click)="delete()">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Full Name:</strong>
+            <p>{{student.firstName}} {{student.lastName}}</p>
+            <strong>Username:</strong>
+            <p>{{student.username}}</p>
+            <strong>Email:</strong>
+            <p>{{student.email}}</p>
+            <strong>Photo URL:</strong>
+            <p>{{student.photoURL}}</p>
+            <strong>School:</strong>
+            <p>{{student.schoolName}}</p>
+            <strong>Course:</strong>
+            <p>{{student.courseName}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  
+    <ion-list *ngSwitchCase="'tutors'">
+      <ion-item lines="none" *ngFor="let tutor of tutors | async">
+        <ion-card>
+          <ion-card-header class="ion-text-wrap">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="10">
+                <ion-card-title>{{tutor.id}}</ion-card-title>
+              </ion-col>
+              <ion-col size="2" class="ion-align-items-end">
+                <ion-button color="danger" (click)="delete()">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <strong>Full Name:</strong>
+            <p>{{tutor.firstName}} {{tutor.lastName}}</p>
+            <strong>Email:</strong>
+            <p>{{tutor.email}}</p>
+            <strong>Photo URL:</strong>
+            <p>{{tutor.photoURL}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+</ion-content>

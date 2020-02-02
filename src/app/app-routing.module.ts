@@ -113,6 +113,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin-pages/feedback-emails/feedback-emails.module').then( m => m.FeedbackEmailsPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'student-chats',
+    loadChildren: () => import('./pages/admin-pages/student-chats/student-chats.module').then( m => m.StudentChatsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reviews',
+    loadChildren: () => import('./pages/admin-pages/reviews/reviews.module').then( m => m.ReviewsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/admin-pages/users/users.module').then( m => m.UsersPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

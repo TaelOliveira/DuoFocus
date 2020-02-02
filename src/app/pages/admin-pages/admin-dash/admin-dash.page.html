@@ -23,6 +23,18 @@
     <ion-row>
 
       <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/users" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="contacts"></ion-icon>
+            <label>Users</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{usersNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
         <ion-button *ngIf="admin || tutor" routerLink="/topics" class="ion-focused ion-text-wrap">
           <div>
             <ion-icon name="clipboard"></ion-icon>
@@ -77,6 +89,30 @@
             <label>Feedback</label>
             <div class="ion-padding-top">
               <ion-badge color="danger" slot="middle">{{feedbackNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/student-chats" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="chatboxes"></ion-icon>
+            <label>Student Chats</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{chatsNumber}}</ion-badge>
+            </div>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button *ngIf="admin || tutor" routerLink="/reviews" class="ion-focused ion-text-wrap">
+          <div>
+            <ion-icon name="star"></ion-icon>
+            <label>Tutor Reviews</label>
+            <div class="ion-padding-top">
+              <ion-badge color="danger" slot="middle">{{reviewsNumber}}</ion-badge>
             </div>
           </div>
         </ion-button>

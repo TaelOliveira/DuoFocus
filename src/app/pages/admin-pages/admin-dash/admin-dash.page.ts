@@ -19,11 +19,14 @@ export class AdminDashPage implements OnInit {
   public student = false;
   public tutor = false;
   getDate = new Date();
+  usersNumber;
   topicsNumber;
   topicsReportsNumber;
   topicsRepliesNumber;
   tutorEmails;
   feedbackNumber;
+  chatsNumber;
+  reviewsNumber;
 
   constructor(
     public menu: MenuController,
@@ -53,11 +56,24 @@ export class AdminDashPage implements OnInit {
       }
     });
 
+    this.getUsersNumber();
     this.getTopicsNumber();
     this.getTopicsreportsNumber();
     this.getTopicsrepliesNumber();
     this.getTutorEmailsNumber();
     this.getFeedbackNumber();
+    this.getChatsNumber();
+    this.getReviewsNumber();
+  }
+
+  async getUsersNumber() {
+
+    await this.afs.collection('userProfile')
+      .get()
+      .subscribe(usersNumber => {
+        this.usersNumber = usersNumber.size;
+        console.log(this.usersNumber)
+      })
   }
 
   async getTopicsNumber() {
@@ -107,6 +123,26 @@ export class AdminDashPage implements OnInit {
       .subscribe(feedback => {
         this.feedbackNumber = feedback.size;
         console.log(this.feedbackNumber)
+      })
+  }
+
+  async getChatsNumber() {
+
+    await this.afs.collection('chats')
+      .get()
+      .subscribe(chatsNumber => {
+        this.chatsNumber = chatsNumber.size;
+        console.log(this.chatsNumber)
+      })
+  }
+
+  async getReviewsNumber() {
+
+    await this.afs.collection('tutorReviews')
+      .get()
+      .subscribe(reviewsNumber => {
+        this.reviewsNumber = reviewsNumber.size;
+        console.log(this.reviewsNumber)
       })
   }
 
