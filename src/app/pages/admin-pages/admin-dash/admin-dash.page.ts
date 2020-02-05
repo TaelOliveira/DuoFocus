@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import * as firebase from 'firebase/app';
@@ -30,12 +30,14 @@ export class AdminDashPage implements OnInit {
 
   constructor(
     public menu: MenuController,
+    public loadingController: LoadingController,
     private afs: AngularFirestore,
     public db: DatabaseService,
     private authService: AuthenticationService,
   ) { }
 
   ngOnInit() {
+    this.presentLoading();
     const userEmail = this.authService.userDetails().email;
     this.user = this.db.collection$('userProfile', ref =>
       ref
@@ -144,6 +146,16 @@ export class AdminDashPage implements OnInit {
         this.reviewsNumber = reviewsNumber.size;
         console.log(this.reviewsNumber)
       })
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
 }

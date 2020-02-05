@@ -11,7 +11,7 @@ export class UsersPage implements OnInit {
 
   students;
   tutors;
-  users: string;
+  users;
 
   constructor(
     public db: DatabaseService,
@@ -19,15 +19,15 @@ export class UsersPage implements OnInit {
     public toastController: ToastController,
   ) { }
 
-  ngOnInit() {
-    this.presentLoading();
-  }
+  ngOnInit() { }
 
   ionViewWillEnter(){
     this.users = "students";
+    this.getAllTutors();
   }
 
   getAllStudents(){
+    this.presentLoading();
     this.students = this.db.collection$('userProfile', ref =>
     ref
       .where('student', '==', 'true')
@@ -35,6 +35,7 @@ export class UsersPage implements OnInit {
   }
 
   getAllTutors(){
+    this.presentLoading();
     this.tutors = this.db.collection$('userProfile', ref =>
     ref
       .where('tutor', '==', 'true')

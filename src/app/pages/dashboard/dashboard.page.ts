@@ -5,6 +5,8 @@ import { DatabaseService } from 'src/app/services/database.service';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { ProfileService } from 'src/app/services/profile.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,10 +19,14 @@ export class DashboardPage implements OnInit {
   public student = false;
   public tutor = false;
   getDate = new Date();
+  chatsNumber;
+  reviewsNumber;
 
   constructor(
     public menu: MenuController,
     public db: DatabaseService,
+    private afs: AngularFirestore,
+    private profileService: ProfileService,
     private authService: AuthenticationService,
   ) { }
 
@@ -43,10 +49,39 @@ export class DashboardPage implements OnInit {
           });
       }
     });
+
+    this.getChatsNumber();
+    this.getReviewsNumber();
   }
 
   ionViewWillEnter() {
     this.menu.enable(true);
+  }
+
+  async getChatsNumber() {
+
+    const uid = this.profileService.currentUser.uid;
+
+    await this.afs.collection('chats', (ref) =>
+      ref
+        .where('tutorId', '==', uid))
+      .get()
+      .subscribe(chat => {
+        this.chatsNumber = chat.size;
+      })
+  }
+
+  async getReviewsNumber() {
+
+    const uid = this.profileService.currentUser.uid;
+
+    await this.afs.collection('tutorReviews', (ref) =>
+      ref
+        .where('tutorId', '==', uid))
+      .get()
+      .subscribe(reviews => {
+        this.reviewsNumber = reviews.size;
+      })
   }
 
 }
