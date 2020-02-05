@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { ModalController, ToastController, LoadingController } from '@ionic/angular';
+import { ModalController, ToastController, LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-topic-detail',
@@ -15,6 +15,7 @@ export class TopicDetailComponent implements OnInit {
   constructor(
     public db: DatabaseService,
     public modal: ModalController,
+    public alertController: AlertController,
     public toastController: ToastController,
     public loadingController: LoadingController,
   ) { }
@@ -32,12 +33,33 @@ export class TopicDetailComponent implements OnInit {
   }
 
   async deleteReply(reply) {
-    if (this.db.delete(`replies/${reply.id}`)) {
-      this.presentToast("Reply deleted!", true, 'bottom', 3000);
-    }
-    else {
-      this.presentToast("You are not allowed to delete this reply!", true, 'bottom', 3000);
-    }
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if (this.db.delete(`replies/${reply.id}`)) {
+              this.presentToast("Reply deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Reply not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    console.log(reply.id);
   }
 
   async presentToast(message, show_button, position, duration) {

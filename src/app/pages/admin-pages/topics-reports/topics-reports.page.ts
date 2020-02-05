@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-topics-reports',
@@ -14,6 +14,7 @@ export class TopicsReportsPage implements OnInit {
   constructor(
     public db: DatabaseService,
     public loadingController: LoadingController,
+    public alertController: AlertController,
     public toastController: ToastController,
   ) { }
 
@@ -23,13 +24,33 @@ export class TopicsReportsPage implements OnInit {
     this.topicsReports = this.db.collection$('reportTopic');
   }
 
-  deleteReport(report){
-    if(this.db.delete(`reportTopic/${report.id}`)){
-      this.presentToast("Report deleted!", true, 'bottom', 3000);
-    }
-    else{
-      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
-    }
+  async deleteReport(report){
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if(this.db.delete(`reportTopic/${report.id}`)){
+              this.presentToast("Report deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Report not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(report.id);
   }
 

@@ -28,15 +28,13 @@
           <ion-card-header class="ion-text-wrap">
             <ion-row class="ion-align-items-center">
               <ion-col>
-                <ion-card-title>{{student.id}}</ion-card-title>
+                <ion-card-title>{{student.username}}</ion-card-title>
               </ion-col>
             </ion-row>
           </ion-card-header>
           <ion-card-content>
             <strong>Full Name:</strong>
             <p>{{student.firstName}} {{student.lastName}}</p>
-            <strong>Username:</strong>
-            <p>{{student.username}}</p>
             <strong>Email:</strong>
             <p>{{student.email}}</p>
             <strong>School:</strong>
@@ -54,13 +52,11 @@
           <ion-card-header class="ion-text-wrap">
             <ion-row class="ion-align-items-center">
               <ion-col>
-                <ion-card-title>{{tutor.id}}</ion-card-title>
+                <ion-card-title>{{tutor.firstName}} {{tutor.lastName}}</ion-card-title>
               </ion-col>
             </ion-row>
           </ion-card-header>
           <ion-card-content>
-            <strong>Full Name:</strong>
-            <p>{{tutor.firstName}} {{tutor.lastName}}</p>
             <strong>Email:</strong>
             <p>{{tutor.email}}</p>
           </ion-card-content>

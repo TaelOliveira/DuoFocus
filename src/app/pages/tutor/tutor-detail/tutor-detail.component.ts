@@ -101,12 +101,14 @@ export class TutorDetailComponent implements OnInit {
   async startChat(tutor?: any, chatID?: any) {
 
     const userId = await this.profileService.currentUser.uid;
+    const username= this.userProfile.username;
     const date = new Date();
     const date2 = new Date();
     date2.setDate( date2.getDate() + 2 );
 
     const data = {
       createdBy: userId,
+      username: username,
       tutorId: this.tutor.id,
       createdAt: date,
       chatName: "Tutor name: " + this.tutor.firstName,

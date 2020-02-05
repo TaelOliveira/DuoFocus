@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-feedback-emails',
@@ -14,6 +14,7 @@ export class FeedbackEmailsPage implements OnInit {
   constructor(
     public db: DatabaseService,
     public loadingController: LoadingController,
+    public alertController: AlertController,
     public toastController: ToastController,
   ) { }
 
@@ -23,13 +24,33 @@ export class FeedbackEmailsPage implements OnInit {
     this.feedback = this.db.collection$('feedback');
   }
 
-  deleteFeedback(feedback){
-    if(this.db.delete(`feedback/${feedback.id}`)){
-      this.presentToast("Feedback deleted!", true, 'bottom', 3000);
-    }
-    else{
-      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
-    }
+  async deleteFeedback(feedback){
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if(this.db.delete(`feedback/${feedback.id}`)){
+              this.presentToast("Feedback deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Feedback not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(feedback.id);
   }
 

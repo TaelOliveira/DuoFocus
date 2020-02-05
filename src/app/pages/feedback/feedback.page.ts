@@ -13,13 +13,13 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class FeedbackPage implements OnInit {
 
   feedbackForm: FormGroup;
+  starsForm: FormGroup;
   numberOfCharacters = 0;
   feedback;
 
   validation_messages = {
     'feedback': [
       { type: 'required', message: 'This answer is required.' },
-      { type: 'minLength', message: 'Answer cannot be less than 10 characters long.' }
     ],
   };
 
@@ -31,8 +31,11 @@ export class FeedbackPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.starsForm = this.formBuilder.group({
+      starRating: new FormControl('', Validators.required),
+    });
     this.feedbackForm = this.formBuilder.group({
-      feedback: new FormControl('', [ Validators.required, Validators.minLength(10), Validators.maxLength(500) ])
+      feedback: new FormControl(''),
     });
   }
 
@@ -40,19 +43,27 @@ export class FeedbackPage implements OnInit {
     this.numberOfCharacters = event.target.value.length;
   }
 
+  logRatingChange(rating) {
+    console.log("changed rating: ", rating);
+    // do your stuff
+  }
+
   async submitForm(){
 
     const id = this.feedback ? this.feedback.id : '';
+    const starRating = new Number(this.starsForm.value['starRating']).toString();
     const data = {
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
       userEmail: this.profileService.currentUser.email,
       content: this.feedbackForm.value.feedback,
+      starRating,
     };
     const send = "Thanks for sending us your Feedback!"
     const error = "Please, try again!"
     if(this.db.updateAt(`feedback/${id}`, data)){
       this.feedbackForm.reset();
+      this.starsForm.reset();
       this.numberOfCharacters = 0;
       await this.presentAlert(send);
     }

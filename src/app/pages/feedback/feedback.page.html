@@ -11,24 +11,29 @@
 
   <p class="ion-padding-horizontal ion-padding-top">Tell us what you think about our app!</p>
 
+  <form class="ion-padding" [formGroup]="starsForm" (submit)="submitForm()">
+
+    <ionic4-star-rating #rating 
+        activeIcon = "star"
+        defaultIcon = "star-outline"
+        activeColor = "#d1301a"
+        defaultColor = "#aaaaaa"
+        readonly = "false"
+        fontSize = "32px"
+        (ratingChanged)="logRatingChange($event)"
+        formControlName="starRating">
+    </ionic4-star-rating>
+  </form>
+  
   <form [formGroup]="feedbackForm" class="ion-padding" (submit)="submitForm()">
 
     <ion-item class="myClass">
       <ion-textarea (keyup)="onKeyUp($event)" rows="10" type="text" formControlName="feedback" placeholder="What do you think about the app? Where could we improve?"></ion-textarea>
     </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.feedback">
-        <div class="error-message" *ngIf="feedbackForm.get('feedback').hasError(validation.type) && (feedbackForm.get('feedback').dirty || feedbackForm.get('feedback').touched)">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <label class="error-message">{{errorMessage}}</label>
     <span><em>{{500 - numberOfCharacters}} characters left</em></span>
 
     <ion-item lines="none" class="ion-padding-top">
-      <ion-button size="large" type="submit" color="success" [disabled]="!feedbackForm.valid">Submit</ion-button>
+      <ion-button size="large" type="submit" color="success" [disabled]="!starsForm.valid">Submit</ion-button>
     </ion-item>
 
   </form>

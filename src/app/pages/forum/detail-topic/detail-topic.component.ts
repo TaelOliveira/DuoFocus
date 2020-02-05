@@ -162,6 +162,7 @@ export class DetailTopicComponent implements OnInit {
               sentBy: this.profileService.currentUser.uid,
               reason: data,
               content: this.topic.question,
+              username: this.userProfile.username,
               createdAt: new Date(),
             };
             if (this.db.updateAt(`reportTopic/${id}`, data2)) {
@@ -238,12 +239,13 @@ export class DetailTopicComponent implements OnInit {
               sentBy: this.profileService.currentUser.uid,
               reason: data,
               content: reply.reply,
+              username: this.userProfile.username,
               createdAt: new Date(),
             };
-            if(this.db.updateAt(`reportReply/${id}`, data2)){
+            if (this.db.updateAt(`reportReply/${id}`, data2)) {
               this.presentToast("Report sent!", true, 'bottom', 3000);
             }
-            else{
+            else {
               this.presentToast("Please, try again!", true, 'bottom', 3000);
             }
           },
@@ -258,12 +260,36 @@ export class DetailTopicComponent implements OnInit {
     console.log(reply.id);
     console.log(this.topic.createdBy, userId);
 
-    if (this.topic.createdBy == userId) {
-      this.db.delete(`replies/${reply.id}`)
-      this.presentToast("Reply deleted!", true, 'bottom', 3000);
+    if (this.topic.createdBy !== userId) {
+      this.presentToast("You are not allowed to delete this reply!", true, 'bottom', 3000);
     }
     else {
-      this.presentToast("You are not allowed to delete this reply!", true, 'bottom', 3000);
+      const alert = await this.alertController.create({
+        header: 'Confirm!',
+        message: '<strong>Are you sure you want to delete it?</strong>!!!',
+        buttons: [
+          {
+            text: 'YES',
+            role: 'yes',
+            handler: data => {
+              if (this.topic.createdBy == userId) {
+                this.db.delete(`replies/${reply.id}`)
+                this.presentToast("Reply deleted!", true, 'bottom', 3000);
+              }
+              else {
+                this.presentToast("You are not allowed to delete this reply!", true, 'bottom', 3000);
+              }
+            }
+          }, {
+            text: 'NO',
+            handler: data => {
+              this.presentToast("Reply not deleted!", true, 'bottom', 3000);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
     }
   }
 
@@ -277,14 +303,14 @@ export class DetailTopicComponent implements OnInit {
     toast.present();
   }
 
-  async presentUserProfile(topic?: any){
+  async presentUserProfile(topic?: any) {
     const userModal = await this.userModal.create({
       component: UserProfileViewComponent,
-      componentProps: {topic}
+      componentProps: { topic }
     });
     return await userModal.present();
   }
 
-  
+
 
 }

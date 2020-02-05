@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { LoadingController, ToastController, ModalController } from '@ionic/angular';
+import { LoadingController, ToastController, ModalController, AlertController } from '@ionic/angular';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 
 @Component({
@@ -15,6 +15,7 @@ export class TopicsPage implements OnInit {
   constructor(
     public db: DatabaseService,
     public loadingController: LoadingController,
+    public alertController: AlertController,
     public toastController: ToastController,
     public modal: ModalController
   ) { }
@@ -25,13 +26,33 @@ export class TopicsPage implements OnInit {
     this.topics = this.db.collection$('topics');
   }
 
-  deleteTopic(topic){
-    if(this.db.delete(`topics/${topic.id}`)){
-      this.presentToast("Topic deleted!", true, 'bottom', 3000);
-    }
-    else{
-      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
-    }
+  async deleteTopic(topic){
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if(this.db.delete(`topics/${topic.id}`)){
+              this.presentToast("Topic deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Topic not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(topic.id);
   }
 

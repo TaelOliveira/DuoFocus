@@ -2,7 +2,7 @@
   <ion-toolbar color="dark">
     <ion-button fill="clear" (click)="dismissModal()">
       <ion-icon slot="start" name="arrow-round-back"></ion-icon>
-      <ion-title>User Profile</ion-title>
+      <ion-title *ngFor="let userProfile of profile | async">{{userProfile.username}}</ion-title>
     </ion-button> 
   </ion-toolbar>
 </ion-header>
@@ -18,12 +18,6 @@
   <ion-item lines="none" *ngFor="let userProfile of profile | async">
 
     <ion-grid>
-      <ion-row>
-        <ion-label class="myClass1 ion-text-start">Username</ion-label>
-      </ion-row>
-      <ion-row>
-        <ion-label class="myClass2 ion-text-start">{{userProfile.username}}</ion-label>
-      </ion-row>
       <ion-row>
         <ion-label class="myClass1 ion-text-start">School</ion-label>
       </ion-row>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
 import { TopicFormComponent } from '../forum/topic-form/topic-form.component'
 import { ProfileService } from 'src/app/services/profile.service';
@@ -22,6 +22,7 @@ export class ForumPage implements OnInit {
     private afs: AngularFirestore,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    public alertController: AlertController,
     private profileService: ProfileService,
     public modal: ModalController
   ) { }
@@ -47,13 +48,33 @@ export class ForumPage implements OnInit {
     this.checkTopics();
   }
 
-  deleteTopic(topic){
-    if(this.db.delete(`topics/${topic.id}`)){
-      this.presentToast("Topic deleted!", true, 'bottom', 3000);
-    }
-    else{
-      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
-    }
+  async deleteTopic(topic){
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if(this.db.delete(`topics/${topic.id}`)){
+              this.presentToast("Topic deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Topic not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(topic.id);
     this.checkTopics();
   }

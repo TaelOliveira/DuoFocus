@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-student-chats',
@@ -13,6 +13,7 @@ export class StudentChatsPage implements OnInit {
 
   constructor(
     public db: DatabaseService,
+    public alertController: AlertController,
     public loadingController: LoadingController,
     public toastController: ToastController,
   ) { }
@@ -23,13 +24,33 @@ export class StudentChatsPage implements OnInit {
     this.chats = this.db.collection$('chats');
   }
 
-  deleteChat(chat){
-    if(this.db.delete(`chats/${chat.id}`)){
-      this.presentToast("Chat deleted!", true, 'bottom', 3000);
-    }
-    else{
-      this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
-    }
+  async deleteChat(chat){
+
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if(this.db.delete(`chats/${chat.id}`)){
+              this.presentToast("Chat deleted!", true, 'bottom', 3000);
+            }
+            else{
+              this.presentToast("Sorry, try again later!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Chat not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(chat.id);
   }
 
