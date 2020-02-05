@@ -1,59 +1,64 @@
-ion-header{
-    
-    ion-button{
+ion-header {
+
+    ion-button {
         color: white;
 
-        ion-icon{
+        ion-icon {
             font-size: 32px;
-          }
+        }
     }
 }
 
-ion-content{
+ion-content {
     --ion-background-color: var(--ion-color-myPrimaryColor);
     --ion-text-color: white;
 
-    ion-card{
-      --ion-background-color: white;
-      background-color: white;
-      color: black;
+    ion-card {
+        --ion-background-color: white;
+        background-color: white;
+        color: black;
 
-      ion-item{
-          margin-top: 10px;
+        ion-item {
+            margin-top: 10px;
 
-        ion-avatar{
-            margin: auto;
-            margin-bottom: 10px;
-            width: 100px;
-            height: 100px;
+            ion-avatar {
+                margin: auto;
+                margin-bottom: 10px;
+                width: 100px;
+                height: 100px;
+            }
         }
-      }
 
-      h2{
-        color: var(--ion-color-myPrimaryColor);
-        font-size: x-large;
-        font-family: Arial, Helvetica, sans-serif;
-        margin-left: 10px;
-      }
+        h2 {
+            color: var(--ion-color-myPrimaryColor);
+            font-size: x-large;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-left: 10px;
+        }
+
+        h3 {
+            color: green;
+        }
 
     }
 
-    ion-item{
+    ion-item {
 
-        ion-label{
+        ion-label {
 
-            ion-icon{
+            ion-icon {
                 font-size: 32px;
                 color: greenyellow;
             }
 
-            p{
+            p {
                 font-size: large;
                 color: white;
                 font-family: Arial, Helvetica, sans-serif;
             }
-            div{
-                p{
+
+            div {
+                p {
                     font-style: italic;
                     font-size: medium;
                     color: black;
@@ -62,16 +67,16 @@ ion-content{
         }
     }
 
-    h2{
+    h2 {
         font-family: Arial, Helvetica, sans-serif;
         color: yellow;
     }
 
-    form{
+    form {
 
-        ion-item{
+        ion-item {
 
-            ion-textarea{
+            ion-textarea {
                 border: solid 2px black;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: large;

@@ -19,8 +19,16 @@
           <ion-avatar item-start>
             <img [src]="tutor.photoURL || 'assets/avatar.png'">
           </ion-avatar>
-          <h2>{{tutor.firstName}} {{tutor.lastName}}</h2>
+          <ion-card-header>
+            <ion-card-title>{{tutor.firstName}} {{tutor.lastName}}</ion-card-title>
+            <ion-card-subtitle *ngIf="tutor.avg; else elseBlock">
+              {{tutor.avg.AVG | number:'1.2-2'}}
+              <ion-icon name="star"></ion-icon>
+            </ion-card-subtitle>
+          </ion-card-header>
         </ion-item >
+
+        <ng-template #elseBlock></ng-template>
       
         <ion-card-content>
           <p>{{tutor.description | slice: 0:50}}...</p><br>

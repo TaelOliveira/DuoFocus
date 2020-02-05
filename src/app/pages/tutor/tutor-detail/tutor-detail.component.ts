@@ -3,7 +3,11 @@ import { ModalController, LoadingController, ToastController } from '@ionic/angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, fromDocRef } from '@angular/fire/firestore';
+
+import { FireSQL } from 'firesql';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-tutor-detail',
@@ -21,6 +25,7 @@ export class TutorDetailComponent implements OnInit {
   rating;
   chat;
   numberOfCharacters = 0;
+  avgRating;
 
   constructor(
     public modal: ModalController,
@@ -34,6 +39,7 @@ export class TutorDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.tutor.id);
+    this.getAvgRating();
     this.profileService
       .getUserProfile()
       .get()
@@ -80,11 +86,11 @@ export class TutorDetailComponent implements OnInit {
     this.db.updateAt(`tutorReviews/${id}`, data);
     this.reviewForm.reset();
     this.numberOfCharacters = 0;
+    this.getAvgRating();
   }
 
   logRatingChange(rating) {
     console.log("changed rating: ", rating);
-    // do your stuff
   }
 
   // loading alert
@@ -101,10 +107,10 @@ export class TutorDetailComponent implements OnInit {
   async startChat(tutor?: any, chatID?: any) {
 
     const userId = await this.profileService.currentUser.uid;
-    const username= this.userProfile.username;
+    const username = this.userProfile.username;
     const date = new Date();
     const date2 = new Date();
-    date2.setDate( date2.getDate() + 2 );
+    date2.setDate(date2.getDate() + 2);
 
     const data = {
       createdBy: userId,
@@ -157,6 +163,26 @@ export class TutorDetailComponent implements OnInit {
           this.dismissModal();
         }
       })
+  }
+
+  getAvgRating() {
+    const fireSQL = new FireSQL(firebase.firestore());
+    const tutorId = this.tutor.id;
+    const db = firebase.firestore()
+    const tutorProfile = db.collection("userProfile").doc(tutorId);
+
+    const avg = fireSQL.query(`
+        SELECT AVG(starRating) as AVG
+        FROM tutorReviews
+        WHERE tutorId = '${tutorId}'
+        `);
+
+    avg.then(rating => {
+      for (const avg of rating) {
+        console.log(avg);
+        tutorProfile.update({avg})
+      }
+    })
   }
 
 }

@@ -20,8 +20,14 @@
     <ion-row>
       <ion-col class="align-self-center ion-text-center">
         <h2>{{tutor.firstName}} {{tutor.lastName}}</h2>
+        <h3 *ngIf="tutor.avg; else elseBlock">
+          {{tutor.avg.AVG | number:'1.2-2'}}
+          <ion-icon name="star"></ion-icon>
+        </h3>
       </ion-col>
     </ion-row>
+
+    <ng-template #elseBlock></ng-template>
   
     <ion-card-content>
       <p>{{tutor.description}}</p><br>

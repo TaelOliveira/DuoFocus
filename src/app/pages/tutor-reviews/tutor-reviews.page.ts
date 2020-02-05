@@ -11,6 +11,7 @@ import { LoadingController } from '@ionic/angular';
 export class TutorReviewsPage implements OnInit {
 
   reviews;
+  tutorProfile;
 
   constructor(
     private profileService: ProfileService,
@@ -24,6 +25,8 @@ export class TutorReviewsPage implements OnInit {
     this.reviews = this.db.collection$('tutorReviews', ref => ref
       .where('tutorId', '==', uid)
       .orderBy('createdAt', 'desc'));
+
+    this.getAvgRating();
   }
 
   async presentLoading() {
@@ -34,6 +37,12 @@ export class TutorReviewsPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  getAvgRating() {
+    const email = this.profileService.currentUser.email;
+    this.tutorProfile = this.db.collection$('userProfile', ref => ref
+      .where('email', '==', email));
   }
 
 }

@@ -9,7 +9,11 @@
 
 <ion-content class="ion-padding">
 
-  <h2>My Reviews</h2>
+  <ion-item *ngFor="let tutor of tutorProfile | async;">
+    <h2>My Rating - {{tutor.avg.AVG | number:'1.2-2'}}
+      <ion-icon name="star"></ion-icon>
+    </h2>
+  </ion-item>
 
   <ion-item *ngFor="let review of reviews | async;">
   
