@@ -163,6 +163,24 @@ export class TutorDetailComponent implements OnInit {
           this.dismissModal();
         }
       })
+    }
+
+  async getChatsNumber() {
+
+    const uid = this.profileService.currentUser.uid;
+
+    await this.afs.collection('chats', (ref) =>
+      ref
+        .where('createdBy', '==', uid))
+      .get()
+      .subscribe(chat => {
+        if (chat.size > 2) {
+          this.presentToast("You cannot have more than 3 chats at the same time!", true, 'bottom', 4000);
+        }
+        else {
+          this.checkChats();
+        }
+      })
   }
 
   getAvgRating() {

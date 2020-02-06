@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { MenuController, ModalController, LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ export class MyTutorsPage implements OnInit {
   constructor(
     public db: DatabaseService,
     private afs: AngularFirestore,
+    public alertController: AlertController,
     public toastController: ToastController,
     public loadingController: LoadingController,
     public modal: ModalController,
@@ -46,13 +47,32 @@ export class MyTutorsPage implements OnInit {
     return chat.id;
   }
 
-  deleteChat(chat) {
-    if (this.db.delete(`chats/${chat.id}`)) {
-      this.presentToast("Chat deleted!", true, 'bottom', 3000);
-    }
-    else {
-      this.presentToast("Sorry, couldn't delete. Try again later!!", true, 'bottom', 3000);
-    }
+  async deleteChat(chat) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete it?</strong>!!!',
+      buttons: [
+        {
+          text: 'YES',
+          role: 'yes',
+          handler: data => {
+            if (this.db.delete(`chats/${chat.id}`)) {
+              this.presentToast("Chat deleted!", true, 'bottom', 3000);
+            }
+            else {
+              this.presentToast("Sorry, couldn't delete. Try again later!!", true, 'bottom', 3000);
+            }
+          }
+        }, {
+          text: 'NO',
+          handler: data => {
+            this.presentToast("Chat not deleted!", true, 'bottom', 3000);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
     console.log(chat.id);
     this.checkChats();
   }

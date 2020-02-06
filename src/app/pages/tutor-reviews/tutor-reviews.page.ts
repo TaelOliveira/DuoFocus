@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { LoadingController } from '@ionic/angular';
+import { FireSQL } from 'firesql';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-tutor-reviews',
@@ -26,6 +29,7 @@ export class TutorReviewsPage implements OnInit {
       .where('tutorId', '==', uid)
       .orderBy('createdAt', 'desc'));
 
+    this.calculateAvgRating();
     this.getAvgRating();
   }
 
@@ -43,6 +47,26 @@ export class TutorReviewsPage implements OnInit {
     const email = this.profileService.currentUser.email;
     this.tutorProfile = this.db.collection$('userProfile', ref => ref
       .where('email', '==', email));
+  }
+
+  calculateAvgRating() {
+    const fireSQL = new FireSQL(firebase.firestore());
+    const tutorId = this.profileService.currentUser.uid;
+    const db = firebase.firestore()
+    const tutorProfile = db.collection("userProfile").doc(tutorId);
+
+    const avg = fireSQL.query(`
+        SELECT AVG(starRating) as AVG
+        FROM tutorReviews
+        WHERE tutorId = '${tutorId}'
+        `);
+
+    avg.then(rating => {
+      for (const avg of rating) {
+        console.log(avg);
+        tutorProfile.update({avg})
+      }
+    })
   }
 
 }

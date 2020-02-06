@@ -41,6 +41,7 @@
     "firebase": "^7.8.0",
     "firesql": "^2.0.2",
     "ionic4-star-rating": "^1.1.1",
+    "ng2-search-filter": "^0.5.1",
     "ng4-date-countdown-timer": "^1.0.4",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",

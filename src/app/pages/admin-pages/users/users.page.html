@@ -23,10 +23,15 @@
   <div [ngSwitch]="users">
 
     <ion-list *ngSwitchCase="'students'">
-      <ion-item lines="none" *ngFor="let student of students | async">
+      <ion-item lines="none" *ngFor="let student of students | async" (click)="studentDetail(student)">
         <ion-card>
           <ion-card-header class="ion-text-wrap">
             <ion-row class="ion-align-items-center">
+              <ion-col size="2">
+                <ion-avatar item-start>
+                  <img [src]="student.photoURL || 'assets/avatar.png'">
+                </ion-avatar>
+              </ion-col>
               <ion-col>
                 <ion-card-title>{{student.username}}</ion-card-title>
               </ion-col>
@@ -45,13 +50,18 @@
         </ion-card>
       </ion-item>
     </ion-list>
-  
+
     <ion-list *ngSwitchCase="'tutors'">
-      <ion-item lines="none" *ngFor="let tutor of tutors | async">
+      <ion-item lines="none" *ngFor="let tutor of tutors | async" (click)="tutorDetail(tutor)">
         <ion-card>
           <ion-card-header class="ion-text-wrap">
             <ion-row class="ion-align-items-center">
-              <ion-col>
+              <ion-col size="2">
+                <ion-avatar item-start>
+                  <img [src]="tutor.photoURL || 'assets/avatar.png'">
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="10">
                 <ion-card-title>{{tutor.firstName}} {{tutor.lastName}}</ion-card-title>
               </ion-col>
             </ion-row>

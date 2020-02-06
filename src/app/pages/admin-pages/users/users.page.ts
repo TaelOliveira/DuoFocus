@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-users',
@@ -12,33 +14,36 @@ export class UsersPage implements OnInit {
   students;
   tutors;
   users;
+  searchTerm;
 
   constructor(
     public db: DatabaseService,
+    public alertController: AlertController,
     public loadingController: LoadingController,
+    private afs: AngularFirestore,
     public toastController: ToastController,
   ) { }
 
   ngOnInit() { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.users = "students";
-    this.getAllTutors();
+    this.getAllStudents();
   }
 
-  getAllStudents(){
+  getAllStudents() {
     this.presentLoading();
     this.students = this.db.collection$('userProfile', ref =>
-    ref
-      .where('student', '==', 'true')
+      ref
+        .where('student', '==', 'true')
     );
   }
 
-  getAllTutors(){
+  getAllTutors() {
     this.presentLoading();
     this.tutors = this.db.collection$('userProfile', ref =>
-    ref
-      .where('tutor', '==', 'true')
+      ref
+        .where('tutor', '==', 'true')
     );
   }
 
@@ -60,6 +65,107 @@ export class UsersPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  async studentDetail(student) {
+    console.log(student.id);
+
+    const alert = await this.alertController.create({
+      header: 'Update user role',
+      inputs: [
+        {
+          name: 'student',
+          type: 'radio',
+          label: 'Student',
+          value: 'student',
+          checked: true
+        },
+        {
+          name: 'tutor',
+          type: 'radio',
+          label: 'Tutor',
+          value: 'tutor'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            this.presentToast("User role not updated!", true, 'bottom', 3000);
+          }
+        },
+        {
+          text: 'Update',
+          handler: (data: string) => {
+
+            if (data == "student") {
+              this.presentToast("User is a student!", true, 'bottom', 3000);
+            }
+            else {
+              var userProfile = this.afs.collection('userProfile').doc(student.id);
+              // Remove the 'student' field from the document
+              var removeStudent = userProfile.update({
+                student: firebase.firestore.FieldValue.delete()
+              });
+              userProfile.update({ "tutor": "true" });
+              this.presentToast("User role updated! User is now a Tutor!", true, 'bottom', 3000);
+            }
+
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  async tutorDetail(tutor) {
+    console.log(tutor.id);
+
+    const alert = await this.alertController.create({
+      header: 'Update user role',
+      inputs: [
+        {
+          name: 'student',
+          type: 'radio',
+          label: 'Student',
+          value: 'student',
+        },
+        {
+          name: 'tutor',
+          type: 'radio',
+          label: 'Tutor',
+          value: 'tutor',
+          checked: true
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            this.presentToast("User role not updated!", true, 'bottom', 3000);
+          }
+        },
+        {
+          text: 'Update',
+          handler: (data: string) => {
+
+            if (data == "tutor") {
+              this.presentToast("User is a Tutor!", true, 'bottom', 3000);
+            }
+            else {
+              var userProfile = this.afs.collection('userProfile').doc(tutor.id);
+              // Remove the 'tutor' field from the document
+              var removeTutor = userProfile.update({
+                tutor: firebase.firestore.FieldValue.delete()
+              });
+              userProfile.update({ "student": "true" });
+              this.presentToast("User role updated! User is now a student!", true, 'bottom', 3000);
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
 }
