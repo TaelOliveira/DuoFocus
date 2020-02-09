@@ -50,8 +50,8 @@ export class DetailTopicComponent implements OnInit {
         this.userProfile = userProfileSnapshot.data();
       });
     this.presentLoading();
-    console.log(this.topic.id);
-    const topicId = this.topic.id;
+    console.log(this.topic.createdBy);
+    const topicId = this.topic.createdBy;
     this.replies = this.db.collection$('replies', ref =>
       ref
         .where('topicId', '==', topicId)
@@ -70,7 +70,7 @@ export class DetailTopicComponent implements OnInit {
   async createReply() {
     const id = this.reply ? this.reply.id : '';
     const data = {
-      topicId: this.topic.id,
+      topicId: this.topic.createdBy,
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
       username: this.userProfile.username,
@@ -158,7 +158,7 @@ export class DetailTopicComponent implements OnInit {
 
             const id = this.topicReport ? this.topicReport.id : '';
             const data2 = {
-              topicId: this.topic.id,
+              topicId: this.topic.createdBy,
               sentBy: this.profileService.currentUser.uid,
               reason: data,
               content: this.topic.question,

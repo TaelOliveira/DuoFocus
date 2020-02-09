@@ -3,7 +3,7 @@
     <ion-button fill="clear" (click)="goToForum()">
       <ion-icon slot="start" name="arrow-round-back"></ion-icon>
       <ion-title>All Topics</ion-title>
-    </ion-button> 
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -13,15 +13,20 @@
     <ion-icon name="add-circle-outline"></ion-icon>
   </ion-button>
 
+  <ion-searchbar color="light" (ionInput)="filter($event)" placeholder="Search forum"></ion-searchbar>
+
   <ion-list>
-    <ion-item lines="none" *ngFor="let topic of topics | async; trackBy: trackById">
+    <ion-item lines="none" *ngFor="let topic of topicList">
       <ion-card>
         <ion-card-header (click)="presentDetailTopic(topic)" class="ion-text-wrap">
-          <ion-card-title>{{topic.question}}</ion-card-title>
+          <ion-card-title>{{topic.question}}
+            <div class="ion-text-end">
+              <ion-icon class="icon" name="play"></ion-icon>
+            </div>
+          </ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-row>
-            <ion-icon name="help"></ion-icon>
             <ion-col>
               <div class="ion-text-end">
                 <p class="user" (click)="presentUserProfile(topic)">by {{topic.username}}</p>
@@ -33,5 +38,5 @@
       </ion-card>
     </ion-item>
   </ion-list>
-  
+
 </ion-content>
