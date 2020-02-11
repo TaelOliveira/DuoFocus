@@ -3,6 +3,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { ModalController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-topic-form',
@@ -32,6 +33,7 @@ export class TopicFormComponent implements OnInit {
   constructor(
     public db: DatabaseService,
     public modal: ModalController,
+    private afs: AngularFirestore,
     public toastController: ToastController,
     private profileService: ProfileService,
     private formBuilder: FormBuilder
@@ -58,11 +60,12 @@ export class TopicFormComponent implements OnInit {
   }
 
   async createTopic(){
-    const id = this.question ? this.question.id : '';
+    const id = this.afs.createId();
     const data = {
       createdAt: new Date(),
       createdBy: this.profileService.currentUser.uid,
       username: this.userProfile.username,
+      id: id,
       email: this.profileService.currentUser.email,
       ...this.question,
       ...this.description,
