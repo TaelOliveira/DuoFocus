@@ -42,17 +42,14 @@ export class AllTopicsPage implements OnInit {
 
     this.presentLoading();
 
-    this.afs.collection(`topics`).valueChanges()
+    this.afs.collection(`topics`, ref =>
+      ref
+        .orderBy('createdAt', 'desc'))
+      .valueChanges()
       .subscribe(topicList => {
         this.topicList = topicList;
         this.loadedTopicList = topicList;
       });
-
-    /* //get all topics
-    this.topics = this.db.collection$('topics', ref =>
-    ref
-      .orderBy('createdAt', 'desc')
-    ); */
   }
 
   async presentTopicForm(topic?: any) {

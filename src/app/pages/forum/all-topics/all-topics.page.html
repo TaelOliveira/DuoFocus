@@ -9,9 +9,11 @@
 
 <ion-content class="ion-padding">
 
-  <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
-    <ion-icon name="add-circle-outline"></ion-icon>
-  </ion-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="presentTopicForm(topic)">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <ion-searchbar color="light" (ionInput)="filter($event)" placeholder="Search forum"></ion-searchbar>
 
@@ -30,7 +32,7 @@
             <ion-col>
               <div class="ion-text-end">
                 <p class="user" (click)="presentUserProfile(topic)">by {{topic.username}}</p>
-                <!-- <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p> -->
+                <p>{{topic.createdAt.toDate() | date : 'dd-MM-yyyy HH:mm'}}</p>
               </div>
             </ion-col>
           </ion-row>

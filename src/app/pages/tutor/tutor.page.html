@@ -8,10 +8,12 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
+  <ion-searchbar color="light" (ionInput)="filter($event)" placeholder="Type your search here"></ion-searchbar>
   
   <ion-list>
 
-    <ion-item *ngFor="let tutor of tutor | async; trackBy: trackById">
+    <ion-item *ngFor="let tutor of tutorList">
 
       <ion-card class="cards-bg social-cards">
 

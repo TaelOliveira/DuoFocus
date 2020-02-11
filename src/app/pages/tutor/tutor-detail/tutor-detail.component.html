@@ -70,6 +70,12 @@
 
   <h2>Reviews</h2>
 
+  <div class="ion-text-center" *ngIf="show">
+    <ng-container>
+      <h2>No reviews yet!</h2>
+    </ng-container>
+  </div>
+
   <ion-item *ngFor="let review of tutorReviews | async;">
 
     <ion-label class="ion-text-wrap">

@@ -108,6 +108,9 @@ export class UsersPage implements OnInit {
                 student: firebase.firestore.FieldValue.delete()
               });
               userProfile.update({ "tutor": "true" });
+              userProfile.update({ "description": "" });
+              userProfile.update({ "subjects": "" });
+              userProfile.update({ "tags": "" });
               this.presentToast("User role updated! User is now a Tutor!", true, 'bottom', 3000);
             }
 
@@ -156,7 +159,10 @@ export class UsersPage implements OnInit {
               var userProfile = this.afs.collection('userProfile').doc(tutor.id);
               // Remove the 'tutor' field from the document
               var removeTutor = userProfile.update({
-                tutor: firebase.firestore.FieldValue.delete()
+                tutor: firebase.firestore.FieldValue.delete(),
+                description: firebase.firestore.FieldValue.delete(),
+                subjects: firebase.firestore.FieldValue.delete(),
+                tags: firebase.firestore.FieldValue.delete()
               });
               userProfile.update({ "student": "true" });
               this.presentToast("User role updated! User is now a student!", true, 'bottom', 3000);

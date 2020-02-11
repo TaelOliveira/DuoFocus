@@ -2,10 +2,6 @@ ion-content {
   --ion-background-color: var(--ion-color-myPrimaryColor);
   --ion-text-color: white;
 
-  ion-searchbar {
-    color: white;
-  }
-
   ion-card {
     --ion-background-color: white;
     background-color: white;
@@ -13,4 +9,8 @@ ion-content {
     width: 100%;
 
   }
+}
+
+.highlight {
+  background-color: #FFFF00;
 }

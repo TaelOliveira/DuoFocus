@@ -10,14 +10,14 @@
 <ion-content class="ion-padding">
 
   <section class="full-width ion-padding-top">
-    <ion-button routerLink="/all-topics" expand="full" size="large">All Topics</ion-button>
+    <ion-button routerLink="/all-topics" color="secondary" expand="full" size="large">All Topics</ion-button>
   </section>
 
-  <div>
-    <ion-button size="large" class="ion-margin-top" (click)="presentTopicForm(topic)">
-      <ion-icon name="add-circle-outline"></ion-icon>
-    </ion-button>
-  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="presentTopicForm(topic)">
+      <ion-icon class="icon" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <div class="ion-text-center" *ngIf="show">
     <ng-container>

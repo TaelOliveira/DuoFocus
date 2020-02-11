@@ -26,6 +26,7 @@ export class TutorDetailComponent implements OnInit {
   chat;
   numberOfCharacters = 0;
   avgRating;
+  show = true;
 
   constructor(
     public modal: ModalController,
@@ -60,6 +61,10 @@ export class TutorDetailComponent implements OnInit {
       starRating: new FormControl('', Validators.required),
     });
 
+  }
+
+  ionViewWillEnter() {
+    this.checkReviews();
   }
 
   onKeyUp(event: any): void {
@@ -201,6 +206,24 @@ export class TutorDetailComponent implements OnInit {
         tutorProfile.update({avg})
       }
     })
+  }
+
+  async checkReviews() {
+
+    const tutorId = this.tutor.id;
+
+    await this.afs.collection('tutorReviews', (ref) =>
+      ref
+        .where('tutorId', '==', tutorId))
+      .get()
+      .subscribe(review => {
+        if(review.size > 0){
+          this.show = false;
+        }
+        else{
+          this.show = true;
+        }
+      })
   }
 
 }
